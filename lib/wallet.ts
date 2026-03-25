@@ -113,6 +113,8 @@ export interface WalletStatus {
   lastResetAt: string | null;
   /** When next reset will occur (next billing date) */
   nextResetAt: string | null;
+  /** Purchased credits that persist across monthly resets (in cents) */
+  purchasedCreditsInCents: number;
 }
 
 /**
@@ -251,6 +253,66 @@ export const CREDIT_COSTS = {
 } as const;
 
 // =============================================================================
+// CREDIT PACKS (One-time purchases)
+// =============================================================================
+//
+// Users can buy credit packs when they run out of monthly plan credits.
+// Unlike plan credits, purchased credits PERSIST across billing cycles —
+// they are never forfeited on monthly reset.
+//
+// IMPORTANT: Create matching one-time payment products in Dodo dashboard.
+// Set the product IDs in .env as DODO_PRODUCT_CREDIT_10, etc.
+//
+// The $50 pack includes a $5 bonus to incentivize larger purchases.
+// =============================================================================
+
+export type CreditPackId = 'credit_10' | 'credit_25' | 'credit_50';
+
+export interface CreditPack {
+  id: CreditPackId;
+  /** Display name shown in UI */
+  name: string;
+  /** Price user pays in cents */
+  priceInCents: number;
+  /** Total credits received in cents (includes bonus if any) */
+  creditsInCents: number;
+  /** Bonus credits in cents (0 if no bonus) */
+  bonusInCents: number;
+}
+
+export const CREDIT_PACKS: Record<CreditPackId, CreditPack> = {
+  credit_10: {
+    id: 'credit_10',
+    name: 'Starter',
+    priceInCents: 1000,      // $10.00
+    creditsInCents: 1000,    // $10.00
+    bonusInCents: 0,
+  },
+  credit_25: {
+    id: 'credit_25',
+    name: 'Popular',
+    priceInCents: 2500,      // $25.00
+    creditsInCents: 2500,    // $25.00
+    bonusInCents: 0,
+  },
+  credit_50: {
+    id: 'credit_50',
+    name: 'Power',
+    priceInCents: 5000,      // $50.00
+    creditsInCents: 5500,    // $55.00 ($5 bonus)
+    bonusInCents: 500,       // $5.00
+  },
+};
+
+/**
+ * Validates a credit pack ID.
+ * Used to guard against invalid pack IDs in API routes and webhooks.
+ */
+export function isValidCreditPack(packId: string): packId is CreditPackId {
+  return packId in CREDIT_PACKS;
+}
+
+// =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
 
@@ -362,7 +424,7 @@ export async function getWalletStatus(userId: string): Promise<WalletStatus | nu
 
   const { data: user, error } = await supabase
     .from('users')
-    .select('wallet_balance, wallet_reset_at, plan')
+    .select('wallet_balance, wallet_reset_at, plan, purchased_credits')
     .eq('id', userId)
     .single();
 
@@ -380,6 +442,7 @@ export async function getWalletStatus(userId: string): Promise<WalletStatus | nu
     .single();
 
   const balanceInCents = user.wallet_balance || 0;
+  const purchasedCreditsInCents = user.purchased_credits || 0;
 
   return {
     balanceInCents,
@@ -387,6 +450,7 @@ export async function getWalletStatus(userId: string): Promise<WalletStatus | nu
     plan: user.plan || 'free',
     lastResetAt: user.wallet_reset_at,
     nextResetAt: subscription?.current_period_end || null,
+    purchasedCreditsInCents,
   };
 }
 
@@ -508,6 +572,96 @@ export async function deductCredits(
 }
 
 /**
+ * Adds purchased credits to a user's wallet using atomic database operation.
+ *
+ * HOW PURCHASED CREDITS WORK:
+ * ============================
+ * - User buys a credit pack ($10, $25, or $50) via one-time Dodo payment
+ * - Both wallet_balance and purchased_credits are incremented atomically
+ * - On monthly reset, purchased_credits are PRESERVED (not forfeited)
+ * - On deduction, plan credits are consumed FIRST (they expire), purchased LAST
+ * - On subscription cancellation, purchased credits survive (user paid for them)
+ *
+ * ATOMICITY:
+ * ==========
+ * Uses the add_purchased_credits RPC function which performs an atomic
+ * UPDATE ... RETURNING, ensuring both columns are updated in a single
+ * operation with an implicit row lock.
+ *
+ * @param userId - The user's ID
+ * @param amount - Amount to add in cents (positive number)
+ * @param packId - The credit pack ID (for transaction logging)
+ * @param metadata - Optional additional data (e.g., payment_id from Dodo)
+ * @param client - Optional Supabase client (pass admin client from webhook context)
+ * @returns Operation result with new balance and purchased total
+ */
+export async function addPurchasedCredits(
+  userId: string,
+  amount: number,
+  packId: string,
+  metadata?: Record<string, unknown>,
+  client?: SupabaseClient
+): Promise<WalletOperationResult & { newPurchased?: number }> {
+  if (amount <= 0) {
+    return { success: false, newBalance: 0, error: 'Amount must be positive' };
+  }
+
+  const supabase = client ?? await createClient();
+
+  const { data, error } = await supabase.rpc('add_purchased_credits', {
+    p_user_id: userId,
+    p_amount: amount,
+  });
+
+  if (error) {
+    console.error('[Wallet] RPC error during credit addition:', error);
+    return { success: false, newBalance: 0, error: 'Database error during credit addition' };
+  }
+
+  // The RPC returns an array with one row: { success, new_balance, new_purchased, error_message }
+  const result = data?.[0];
+
+  if (!result || !result.success) {
+    console.error('[Wallet] Failed to add purchased credits:', result?.error_message);
+    return {
+      success: false,
+      newBalance: 0,
+      error: result?.error_message || 'Failed to add credits',
+    };
+  }
+
+  // Log the transaction for audit trail
+  await supabase.from('wallet_transactions').insert({
+    user_id: userId,
+    amount: amount,
+    balance_after: result.new_balance,
+    type: 'credit',
+    reason: `Credit pack purchased (${packId})`,
+    action_type: null,
+    metadata: {
+      pack_id: packId,
+      purchased_credits_after: result.new_purchased,
+      ...metadata,
+    },
+    created_at: new Date().toISOString(),
+  });
+
+  console.log('[Wallet] Purchased credits added:', {
+    userId,
+    amount: formatCredits(amount),
+    newBalance: formatCredits(result.new_balance),
+    newPurchased: formatCredits(result.new_purchased),
+    packId,
+  });
+
+  return {
+    success: true,
+    newBalance: result.new_balance,
+    newPurchased: result.new_purchased,
+  };
+}
+
+/**
  * Resets wallet credits to the plan's allocation.
  *
  * This is called by the webhook handler when a subscription payment succeeds.
@@ -538,16 +692,20 @@ export async function resetWalletCredits(
 
   const supabase = client ?? await createClient();
 
-  // Get current balance for logging (to show how much was forfeited)
+  // Get current balance and purchased credits for reset calculation.
+  // Purchased credits survive the reset — only plan credits are forfeited.
   const { data: user } = await supabase
     .from('users')
-    .select('wallet_balance')
+    .select('wallet_balance, purchased_credits')
     .eq('id', userId)
     .single();
 
   const previousBalance = user?.wallet_balance || 0;
-  const forfeitedAmount = previousBalance; // All unused credits are lost
-  const newBalance = config.totalCredits;
+  const purchasedCredits = user?.purchased_credits || 0;
+  // Only plan credits are forfeited, not purchased credits
+  const forfeitedAmount = Math.max(0, previousBalance - purchasedCredits);
+  // New balance = fresh plan allocation + any remaining purchased credits
+  const newBalance = config.totalCredits + purchasedCredits;
 
   // Update balance and reset timestamp
   const { error: updateError } = await supabase
@@ -574,13 +732,15 @@ export async function resetWalletCredits(
     await supabase.from('wallet_transactions').insert({
       user_id: userId,
       amount: -forfeitedAmount,
-      balance_after: 0,
+      // After forfeiture, only purchased credits remain (before plan allocation)
+      balance_after: purchasedCredits,
       type: 'debit',
-      reason: `Credits forfeited at billing cycle end (unused: ${formatCredits(forfeitedAmount)})`,
+      reason: `Plan credits forfeited at billing cycle end (unused: ${formatCredits(forfeitedAmount)})`,
       action_type: null,
       metadata: {
         forfeited: true,
-        previousBalance: forfeitedAmount,
+        planCreditsForfeited: forfeitedAmount,
+        purchasedCreditsPreserved: purchasedCredits,
       },
       created_at: new Date().toISOString(),
     });
@@ -665,25 +825,31 @@ export async function clearWalletBalance(
 ): Promise<WalletOperationResult> {
   const supabase = client ?? await createClient();
 
-  // Get current balance for logging
+  // Get current balance and purchased credits.
+  // Purchased credits survive cancellation — user paid real money for them.
   const { data: user } = await supabase
     .from('users')
-    .select('wallet_balance')
+    .select('wallet_balance, purchased_credits')
     .eq('id', userId)
     .single();
 
   const previousBalance = user?.wallet_balance || 0;
+  const purchasedCredits = user?.purchased_credits || 0;
 
-  if (previousBalance <= 0) {
-    // Already zero, nothing to clear
-    return { success: true, newBalance: 0 };
+  // If only purchased credits remain (or less), nothing to clear
+  if (previousBalance <= purchasedCredits) {
+    return { success: true, newBalance: purchasedCredits };
   }
 
-  // Clear balance
+  // Preserve purchased credits — only forfeit the plan portion.
+  // User's wallet_balance is set to their purchased_credits amount.
+  const planCreditsCleared = previousBalance - purchasedCredits;
+  const newBalance = purchasedCredits;
+
   const { error: updateError } = await supabase
     .from('users')
     .update({
-      wallet_balance: 0,
+      wallet_balance: newBalance,
       plan: 'free',
       updated_at: new Date().toISOString(),
     })
@@ -698,26 +864,29 @@ export async function clearWalletBalance(
     };
   }
 
-  // Log the forfeiture
+  // Log the forfeiture (only plan credits, not purchased)
   await supabase.from('wallet_transactions').insert({
     user_id: userId,
-    amount: -previousBalance,
-    balance_after: 0,
+    amount: -planCreditsCleared,
+    balance_after: newBalance,
     type: 'debit',
     reason,
     action_type: null,
     metadata: {
       cleared: true,
-      previousBalance,
+      planCreditsCleared,
+      purchasedCreditsPreserved: purchasedCredits,
     },
     created_at: new Date().toISOString(),
   });
 
   console.log('[Wallet] Balance cleared:', {
     userId,
-    clearedAmount: formatCredits(previousBalance),
+    planCreditsCleared: formatCredits(planCreditsCleared),
+    purchasedCreditsPreserved: formatCredits(purchasedCredits),
+    newBalance: formatCredits(newBalance),
     reason,
   });
 
-  return { success: true, newBalance: 0 };
+  return { success: true, newBalance };
 }
