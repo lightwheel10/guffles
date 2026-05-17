@@ -171,7 +171,16 @@ export async function POST(request: NextRequest) {
     // SECURITY FIX (2nd Jan 2026): ALWAYS track and deduct credits for enrichments.
     // Previously this had a skipUsageTracking bypass that was a security vulnerability.
     // Credits are now always deducted - no user-controlled bypasses allowed.
-    await incrementEnrichmentUsage(user.id);
+    const usageResult = await incrementEnrichmentUsage(user.id);
+    if (!usageResult.success) {
+      return NextResponse.json(
+        {
+          error: usageResult.error || 'Unable to deduct wallet credits for enrichment.',
+          limitReached: true,
+        },
+        { status: 402 }
+      );
+    }
 
     // Get updated usage
     const updatedUsage = await canEnrich(user.id);

@@ -21,7 +21,8 @@ import {
   BarChart3,
   TrendingUp,
   Zap,
-  AlertTriangle
+  AlertTriangle,
+  Wallet
 } from "lucide-react";
 
 export default async function DashboardPage() {
@@ -182,44 +183,84 @@ export default async function DashboardPage() {
 
         {/* Sidebar - Usage & Tips */}
         <div className="space-y-4">
-          {/* Usage Card */}
+          {/* Wallet / Free Usage Card */}
           {billing && (
             <div className="rounded-lg border border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 p-4">
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className="rounded-md bg-primary/20 p-1.5">
-                  <BarChart3 className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">{billing.planName} Plan</p>
-                  <p className="text-lg font-bold">
-                    {billing.analysesUsed}/{billing.analysesLimit} analyses
+              {billing.plan !== 'free' ? (
+                <>
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="rounded-md bg-primary/20 p-1.5">
+                      <Wallet className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">{billing.planName} wallet</p>
+                      <p className="text-lg font-bold">{billing.walletFormatted}</p>
+                    </div>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-muted/50 overflow-hidden mb-2">
+                    <div
+                      className={`h-full transition-all ${
+                        billing.walletPercentUsed >= 95
+                          ? 'bg-red-500'
+                          : billing.walletPercentUsed >= 80
+                            ? 'bg-amber-500'
+                            : 'bg-primary'
+                      }`}
+                      style={{ width: `${billing.walletPercentUsed}%` }}
+                    />
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mb-1">
+                    {billing.walletSpentFormatted} used from {billing.walletAllocationFormatted}
                   </p>
-                </div>
-              </div>
-              <div className="h-1.5 rounded-full bg-muted/50 overflow-hidden mb-2">
-                <div
-                  className={`h-full transition-all ${
-                    billing.analysesUsed >= billing.analysesLimit 
-                      ? 'bg-red-500' 
-                      : billing.analysesUsed >= billing.analysesLimit * 0.8 
-                        ? 'bg-amber-500' 
-                        : 'bg-primary'
-                  }`}
-                  style={{ width: `${Math.min((billing.analysesUsed / billing.analysesLimit) * 100, 100)}%` }}
-                />
-              </div>
-              {billing.analysesUsed >= billing.analysesLimit && (
-                <div className="flex items-center gap-1.5 text-xs text-red-500 mb-2">
-                  <AlertTriangle className="h-3 w-3" />
-                  Limit reached - upgrade for more
-                </div>
+                  <p className="text-[10px] text-muted-foreground mb-3">
+                    {billing.walletDaysRemaining > 0 ? `Resets in ${billing.walletDaysRemaining} days` : 'Reset date unavailable'}
+                  </p>
+                  {billing.walletBalance < 500 && (
+                    <div className="flex items-center gap-1.5 text-xs text-amber-500 mb-2">
+                      <AlertTriangle className="h-3 w-3" />
+                      Low balance
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="rounded-md bg-primary/20 p-1.5">
+                      <BarChart3 className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Free Plan</p>
+                      <p className="text-lg font-bold">
+                        {billing.analysesUsed}/{billing.analysesLimit} analyses
+                      </p>
+                    </div>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-muted/50 overflow-hidden mb-2">
+                    <div
+                      className={`h-full transition-all ${
+                        billing.analysesUsed >= billing.analysesLimit
+                          ? 'bg-red-500'
+                          : billing.analysesUsed >= billing.analysesLimit * 0.8
+                            ? 'bg-amber-500'
+                            : 'bg-primary'
+                      }`}
+                      style={{ width: `${Math.min((billing.analysesUsed / billing.analysesLimit) * 100, 100)}%` }}
+                    />
+                  </div>
+                  {billing.analysesUsed >= billing.analysesLimit && (
+                    <div className="flex items-center gap-1.5 text-xs text-red-500 mb-2">
+                      <AlertTriangle className="h-3 w-3" />
+                      Limit reached - upgrade for more
+                    </div>
+                  )}
+                  <p className="text-[10px] text-muted-foreground mb-3">
+                    {billing.enrichmentsUsed}/{billing.enrichmentsLimit} enrichments used
+                  </p>
+                </>
               )}
-              <p className="text-[10px] text-muted-foreground mb-3">
-                {billing.enrichmentsUsed}/{billing.enrichmentsLimit} enrichments used
-              </p>
               <Link href="/dashboard/settings">
                 <Button variant="outline" size="sm" className="w-full h-7 text-xs">
-                  {billing.analysesUsed >= billing.analysesLimit ? 'Upgrade Plan' : 'Manage Plan'}
+                  {billing.plan === 'free' ? 'Upgrade Plan' : 'Manage Wallet'}
                 </Button>
               </Link>
             </div>

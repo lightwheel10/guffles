@@ -27,7 +27,8 @@ import {
   Send,
   Download,
   BarChart3,
-  AlertTriangle
+  AlertTriangle,
+  Wallet
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { fetchPostDetails, fetchReactions, fetchComments, trackAnalysisUsage, filterByICP, PostData, Reactor, Commenter } from "@/app/actions/analyze-post";
@@ -286,36 +287,44 @@ export default function AnalyzePage() {
   const [usage, setUsage] = useState<{
     analysesUsed: number;
     analysesLimit: number;
+    plan: string;
+    planName: string;
+    walletBalance: number;
+    walletFormatted: string;
+    walletAllocationFormatted: string;
+    walletSpentFormatted: string;
+    walletPercentUsed: number;
+    purchasedCreditsFormatted: string;
+    walletDaysRemaining: number;
   } | null>(null);
 
-  // Wallet balance for low-credit banner
-  const [walletBalance, setWalletBalance] = useState<number | null>(null);
   const [showTopUpDialog, setShowTopUpDialog] = useState(false);
   const [topUpLoading, setTopUpLoading] = useState<string | null>(null);
 
-  // Fetch current usage and wallet balance on mount
-  useEffect(() => {
-    fetch('/api/billing')
-      .then(res => res.json())
-      .then(data => {
-        if (data.billing) {
-          setUsage({
-            analysesUsed: data.billing.analysesUsed,
-            analysesLimit: data.billing.analysesLimit
-          });
-        }
-      })
-      .catch(() => {});
+  const refreshBilling = async () => {
+    try {
+      const res = await fetch('/api/billing');
+      const data = await res.json();
+      if (data.billing) {
+        setUsage({
+          analysesUsed: data.billing.analysesUsed,
+          analysesLimit: data.billing.analysesLimit,
+          plan: data.billing.plan,
+          planName: data.billing.planName,
+          walletBalance: data.billing.walletBalance,
+          walletFormatted: data.billing.walletFormatted,
+          walletAllocationFormatted: data.billing.walletAllocationFormatted,
+          walletSpentFormatted: data.billing.walletSpentFormatted,
+          walletPercentUsed: data.billing.walletPercentUsed,
+          purchasedCreditsFormatted: data.billing.purchasedCreditsFormatted,
+          walletDaysRemaining: data.billing.walletDaysRemaining,
+        });
+      }
+    } catch {}
+  };
 
-    // Fetch wallet balance for low-credit banner
-    fetch('/api/billing/wallet')
-      .then(res => res.json())
-      .then(data => {
-        if (data.balance) {
-          setWalletBalance(data.balance.current ?? null);
-        }
-      })
-      .catch(() => {});
+  useEffect(() => {
+    refreshBilling();
   }, []);
 
   // Redirect to Dodo checkout for credit pack purchase
@@ -471,8 +480,6 @@ export default function AnalyzePage() {
       });
       const leads: Lead[] = Array.from(allLeadsMap.values());
 
-      setAllReactors(leads);
-
       // Filter by ICP - convert leads back to Reactor format for the filter function
       const leadsAsReactors: Reactor[] = leads.map(l => ({
         name: l.name,
@@ -496,6 +503,17 @@ export default function AnalyzePage() {
         };
       });
 
+      // Billing hardening - 2026-05-17 14:06 IST, paras: do not reveal/save paid results unless wallet deduction succeeds.
+      const usageResult = await trackAnalysisUsage(url, reactors.length, commenters.length);
+      if (!usageResult.success) {
+        setError(usageResult.error || "We could not charge your wallet for this analysis. Please add credits and try again.");
+        setStatus('error');
+        await refreshBilling();
+        window.dispatchEvent(new CustomEvent('usage-updated'));
+        return;
+      }
+
+      setAllReactors(leads);
       setQualifiedLeads(qualifiedLeadsList);
 
       setLogs(prev => [
@@ -503,16 +521,8 @@ export default function AnalyzePage() {
         `✅ ${qualifiedLeadsList.length} leads match your ICP criteria`
       ]);
 
-      // Track usage (now includes both reactions and comments)
-      const updatedUsage = await trackAnalysisUsage(url, reactors.length, commenters.length);
-      if (updatedUsage) {
-        setUsage({
-          analysesUsed: updatedUsage.analysesUsed,
-          analysesLimit: updatedUsage.analysesLimit
-        });
-        // Notify sidebar to refresh usage
-        window.dispatchEvent(new CustomEvent('usage-updated'));
-      }
+      await refreshBilling();
+      window.dispatchEvent(new CustomEvent('usage-updated'));
 
       // Save the analysis
       try {
@@ -606,6 +616,9 @@ export default function AnalyzePage() {
     }
   };
 
+  const isFreeLimitReached = usage?.plan === 'free' && usage.analysesUsed >= usage.analysesLimit;
+  const isPaidUser = usage !== null && usage.plan !== 'free';
+
   return (
     <div className="space-y-4">
       {/* Header */}
@@ -616,7 +629,7 @@ export default function AnalyzePage() {
             Extract qualified leads from post engagement
           </p>
         </div>
-        {usage !== null && (
+        {usage !== null && usage.plan === 'free' && (
           <div className="flex items-center gap-1.5 text-xs">
             <BarChart3 className="h-3.5 w-3.5 text-primary" />
             <span className={cn(
@@ -631,15 +644,26 @@ export default function AnalyzePage() {
             )}
           </div>
         )}
+        {isPaidUser && (
+          <div className="flex items-center gap-2 rounded-lg border border-border/50 bg-card/50 px-3 py-2 text-xs">
+            <Wallet className="h-3.5 w-3.5 text-primary" />
+            <div>
+              <div className="font-semibold leading-none">{usage.walletFormatted}</div>
+              <div className="text-[10px] text-muted-foreground mt-0.5">
+                {usage.walletSpentFormatted} used from {usage.walletAllocationFormatted}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Low Balance Banner — shown when wallet credits are running low */}
-      {walletBalance !== null && walletBalance < 500 && walletBalance >= 0 && (
+      {isPaidUser && usage.walletBalance < 500 && usage.walletBalance >= 0 && (
         <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
           <div className="flex items-center gap-2 text-sm">
             <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
             <span className="text-amber-600 dark:text-amber-400">
-              Low credits (${(walletBalance / 100).toFixed(2)} remaining). You may not have enough for a full analysis.
+              Low credits ({usage.walletFormatted} remaining). You may not have enough for a full analysis.
             </span>
           </div>
           <Button
@@ -717,9 +741,9 @@ export default function AnalyzePage() {
                 size="sm"
                 className="w-full h-9 text-sm font-medium rounded-lg shadow-md shadow-primary/20 hover:shadow-primary/40 transition-all"
                 onClick={handleAnalyze}
-                disabled={!url || (usage !== null && usage.analysesUsed >= usage.analysesLimit)}
+                disabled={!url || isFreeLimitReached}
               >
-                {usage !== null && usage.analysesUsed >= usage.analysesLimit ? (
+                {isFreeLimitReached ? (
                   "Limit Reached - Upgrade Plan"
                 ) : url ? (
                   <>

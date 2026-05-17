@@ -57,6 +57,16 @@ interface BillingInfo {
   analysesLimit: number;
   enrichmentsUsed: number;
   enrichmentsLimit: number;
+  walletBalance: number;
+  walletFormatted: string;
+  walletAllocation: number;
+  walletAllocationFormatted: string;
+  walletSpent: number;
+  walletSpentFormatted: string;
+  walletPercentUsed: number;
+  purchasedCredits: number;
+  purchasedCreditsFormatted: string;
+  walletDaysRemaining: number;
   // Card info (masked)
   cardLastFour: string | null;
   cardBrand: string | null;
@@ -542,47 +552,85 @@ export default function SettingsPage() {
                       )}
                     </div>
 
-                    {/* Usage This Month */}
+                    {/* Wallet / Free Usage */}
                     <div className="space-y-3">
-                      <label className="text-sm font-medium">Usage This Month</label>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 rounded-lg border border-border/50 bg-card/30">
-                          <div className={cn("text-2xl font-bold", getUsageTextColor(billing.analysesUsed, billing.analysesLimit))}>
-                            {billing.analysesUsed} / {billing.analysesLimit}
-                          </div>
-                          <div className="text-sm text-muted-foreground">Post Analyses</div>
-                          <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
-                            <div 
-                              className={cn("h-full rounded-full transition-all", getUsageColor(billing.analysesUsed, billing.analysesLimit))}
-                              style={{ width: `${Math.min((billing.analysesUsed / billing.analysesLimit) * 100, 100)}%` }} 
-                            />
-                          </div>
-                          {billing.analysesUsed >= billing.analysesLimit && (
-                            <div className="flex items-center gap-1.5 mt-2 text-xs text-red-500">
-                              <AlertTriangle className="w-3 h-3" />
-                              Limit reached
+                      <label className="text-sm font-medium">
+                        {billing.plan === 'free' ? 'Free Usage' : 'Wallet Balance'}
+                      </label>
+                      {billing.plan !== 'free' ? (
+                        <div className="grid grid-cols-3 gap-4">
+                          <div className="p-4 rounded-lg border border-border/50 bg-card/30">
+                            <div className="text-2xl font-bold">{billing.walletFormatted}</div>
+                            <div className="text-sm text-muted-foreground">Available balance</div>
+                            <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
+                              <div
+                                className={cn(
+                                  "h-full rounded-full transition-all",
+                                  billing.walletPercentUsed >= 95 ? "bg-red-500" :
+                                    billing.walletPercentUsed >= 80 ? "bg-amber-500" : "bg-primary"
+                                )}
+                                style={{ width: `${billing.walletPercentUsed}%` }}
+                              />
                             </div>
-                          )}
-                        </div>
-                        <div className="p-4 rounded-lg border border-border/50 bg-card/30">
-                          <div className={cn("text-2xl font-bold", getUsageTextColor(billing.enrichmentsUsed, billing.enrichmentsLimit))}>
-                            {billing.enrichmentsUsed} / {billing.enrichmentsLimit}
-                          </div>
-                          <div className="text-sm text-muted-foreground">Profile Enrichments</div>
-                          <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
-                            <div 
-                              className={cn("h-full rounded-full transition-all", getUsageColor(billing.enrichmentsUsed, billing.enrichmentsLimit))}
-                              style={{ width: `${Math.min((billing.enrichmentsUsed / billing.enrichmentsLimit) * 100, 100)}%` }} 
-                            />
-                          </div>
-                          {billing.enrichmentsUsed >= billing.enrichmentsLimit && (
-                            <div className="flex items-center gap-1.5 mt-2 text-xs text-red-500">
-                              <AlertTriangle className="w-3 h-3" />
-                              Limit reached
+                            <div className="mt-2 text-xs text-muted-foreground">
+                              {billing.walletSpentFormatted} used from {billing.walletAllocationFormatted}
                             </div>
-                          )}
+                          </div>
+                          <div className="p-4 rounded-lg border border-border/50 bg-card/30">
+                            <div className="text-2xl font-bold">{billing.walletAllocationFormatted}</div>
+                            <div className="text-sm text-muted-foreground">Monthly plan credits</div>
+                            <div className="mt-2 text-xs text-muted-foreground">
+                              {billing.walletDaysRemaining > 0 ? `Resets in ${billing.walletDaysRemaining} days` : 'Reset date unavailable'}
+                            </div>
+                          </div>
+                          <div className="p-4 rounded-lg border border-border/50 bg-card/30">
+                            <div className="text-2xl font-bold">{billing.purchasedCreditsFormatted}</div>
+                            <div className="text-sm text-muted-foreground">Top-up credits</div>
+                            <div className="mt-2 text-xs text-muted-foreground">
+                              These do not expire with the billing cycle.
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 rounded-lg border border-border/50 bg-card/30">
+                            <div className={cn("text-2xl font-bold", getUsageTextColor(billing.analysesUsed, billing.analysesLimit))}>
+                              {billing.analysesUsed} / {billing.analysesLimit}
+                            </div>
+                            <div className="text-sm text-muted-foreground">Post Analyses</div>
+                            <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
+                              <div
+                                className={cn("h-full rounded-full transition-all", getUsageColor(billing.analysesUsed, billing.analysesLimit))}
+                                style={{ width: `${Math.min((billing.analysesUsed / billing.analysesLimit) * 100, 100)}%` }}
+                              />
+                            </div>
+                            {billing.analysesUsed >= billing.analysesLimit && (
+                              <div className="flex items-center gap-1.5 mt-2 text-xs text-red-500">
+                                <AlertTriangle className="w-3 h-3" />
+                                Limit reached
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-4 rounded-lg border border-border/50 bg-card/30">
+                            <div className={cn("text-2xl font-bold", getUsageTextColor(billing.enrichmentsUsed, billing.enrichmentsLimit))}>
+                              {billing.enrichmentsUsed} / {billing.enrichmentsLimit}
+                            </div>
+                            <div className="text-sm text-muted-foreground">Profile Enrichments</div>
+                            <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
+                              <div
+                                className={cn("h-full rounded-full transition-all", getUsageColor(billing.enrichmentsUsed, billing.enrichmentsLimit))}
+                                style={{ width: `${Math.min((billing.enrichmentsUsed / billing.enrichmentsLimit) * 100, 100)}%` }}
+                              />
+                            </div>
+                            {billing.enrichmentsUsed >= billing.enrichmentsLimit && (
+                              <div className="flex items-center gap-1.5 mt-2 text-xs text-red-500">
+                                <AlertTriangle className="w-3 h-3" />
+                                Limit reached
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Payment Method */}
