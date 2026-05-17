@@ -109,7 +109,7 @@ export async function fetchPostDetails(url: string): Promise<PostFetchResult> {
         if (!usageCheck.allowed) {
             return {
                 success: false,
-                error: usageCheck.reason || "You've reached your analysis limit for this month.",
+                error: usageCheck.reason || "Start a trial or add wallet credits to analyze posts.",
                 usage: usageCheck.usage,
                 limitReached: true
             };

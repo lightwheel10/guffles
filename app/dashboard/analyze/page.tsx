@@ -26,7 +26,6 @@ import {
   Globe,
   Send,
   Download,
-  BarChart3,
   AlertTriangle,
   Wallet
 } from "lucide-react";
@@ -285,12 +284,11 @@ export default function AnalyzePage() {
   
   // Usage tracking (new billing system)
   const [usage, setUsage] = useState<{
-    analysesUsed: number;
-    analysesLimit: number;
     plan: string;
     planName: string;
     walletBalance: number;
     walletFormatted: string;
+    walletAllocation: number;
     walletAllocationFormatted: string;
     walletSpentFormatted: string;
     walletPercentUsed: number;
@@ -307,12 +305,11 @@ export default function AnalyzePage() {
       const data = await res.json();
       if (data.billing) {
         setUsage({
-          analysesUsed: data.billing.analysesUsed,
-          analysesLimit: data.billing.analysesLimit,
           plan: data.billing.plan,
           planName: data.billing.planName,
           walletBalance: data.billing.walletBalance,
           walletFormatted: data.billing.walletFormatted,
+          walletAllocation: data.billing.walletAllocation,
           walletAllocationFormatted: data.billing.walletAllocationFormatted,
           walletSpentFormatted: data.billing.walletSpentFormatted,
           walletPercentUsed: data.billing.walletPercentUsed,
@@ -360,9 +357,9 @@ export default function AnalyzePage() {
 
       const postResult = await fetchPostDetails(url);
 
-      // Handle limit reached error
+      // Handle wallet access errors
       if (postResult.limitReached) {
-        setError(postResult.error || "You've reached your analysis limit for this month. Upgrade for more.");
+        setError(postResult.error || "Start a trial or add wallet credits to analyze posts.");
         setStatus('error');
         return;
       }
@@ -616,8 +613,16 @@ export default function AnalyzePage() {
     }
   };
 
-  const isFreeLimitReached = usage?.plan === 'free' && usage.analysesUsed >= usage.analysesLimit;
-  const isPaidUser = usage !== null && usage.plan !== 'free';
+  const hasPlanWallet = usage !== null && usage.walletAllocation > 0;
+  const hasWalletCredits = usage !== null && usage.walletBalance > 0;
+  const isWalletEmpty = usage !== null && usage.walletBalance <= 0;
+  const walletDetail = usage
+    ? hasPlanWallet
+      ? `${usage.walletSpentFormatted} used from ${usage.walletAllocationFormatted}`
+      : hasWalletCredits
+        ? 'Purchased credits available'
+        : 'Start a trial to unlock credits'
+    : '';
 
   return (
     <div className="space-y-4">
@@ -629,36 +634,40 @@ export default function AnalyzePage() {
             Extract qualified leads from post engagement
           </p>
         </div>
-        {usage !== null && usage.plan === 'free' && (
-          <div className="flex items-center gap-1.5 text-xs">
-            <BarChart3 className="h-3.5 w-3.5 text-primary" />
-            <span className={cn(
-              "font-medium",
-              usage.analysesUsed >= usage.analysesLimit && "text-red-500"
-            )}>
-              {usage.analysesUsed}/{usage.analysesLimit}
-            </span>
-            <span className="text-muted-foreground">analyses</span>
-            {usage.analysesUsed >= usage.analysesLimit && (
-              <AlertTriangle className="h-3 w-3 text-red-500" />
-            )}
-          </div>
-        )}
-        {isPaidUser && (
+        {usage !== null && (
           <div className="flex items-center gap-2 rounded-lg border border-border/50 bg-card/50 px-3 py-2 text-xs">
             <Wallet className="h-3.5 w-3.5 text-primary" />
             <div>
               <div className="font-semibold leading-none">{usage.walletFormatted}</div>
               <div className="text-[10px] text-muted-foreground mt-0.5">
-                {usage.walletSpentFormatted} used from {usage.walletAllocationFormatted}
+                {walletDetail}
               </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* Low Balance Banner — shown when wallet credits are running low */}
-      {isPaidUser && usage.walletBalance < 500 && usage.walletBalance >= 0 && (
+      {/* Wallet-only usage - 2026-05-17 14:06 IST, paras: trial credits are wallet balance, not free counters. */}
+      {isWalletEmpty && (
+        <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+          <div className="flex items-center gap-2 text-sm">
+            <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
+            <span className="text-amber-600 dark:text-amber-400">
+              No wallet credits available. Start a trial to analyze posts.
+            </span>
+          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => router.push('/dashboard/settings?tab=billing')}
+            className="shrink-0 ml-3"
+          >
+            Start Trial
+          </Button>
+        </div>
+      )}
+
+      {usage !== null && usage.walletBalance > 0 && usage.walletBalance < 500 && (
         <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
           <div className="flex items-center gap-2 text-sm">
             <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
@@ -669,10 +678,10 @@ export default function AnalyzePage() {
           <Button
             size="sm"
             variant="outline"
-            onClick={() => setShowTopUpDialog(true)}
+            onClick={() => usage.plan === 'free' ? router.push('/dashboard/settings?tab=billing') : setShowTopUpDialog(true)}
             className="shrink-0 ml-3"
           >
-            Buy Credits
+            {usage.plan === 'free' ? 'Start Trial' : 'Buy Credits'}
           </Button>
         </div>
       )}
@@ -741,10 +750,10 @@ export default function AnalyzePage() {
                 size="sm"
                 className="w-full h-9 text-sm font-medium rounded-lg shadow-md shadow-primary/20 hover:shadow-primary/40 transition-all"
                 onClick={handleAnalyze}
-                disabled={!url || isFreeLimitReached}
+                disabled={!url || isWalletEmpty}
               >
-                {isFreeLimitReached ? (
-                  "Limit Reached - Upgrade Plan"
+                {isWalletEmpty ? (
+                  "Start Trial to Continue"
                 ) : url ? (
                   <>
                     Analyze Post
@@ -755,7 +764,7 @@ export default function AnalyzePage() {
                 )}
               </Button>
               <p className="text-[10px] text-center text-muted-foreground">
-                Uses real LinkedIn data • Plan limits apply
+                Uses wallet credits • plan caps apply
               </p>
             </div>
           </div>

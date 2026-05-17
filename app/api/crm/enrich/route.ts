@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     if (!usageCheck.allowed) {
       return NextResponse.json(
         { 
-          error: usageCheck.reason || "You've reached your enrichment limit for this month.",
+          error: usageCheck.reason || 'Start a trial or add wallet credits to enrich profiles.',
           usage: usageCheck.usage,
           limitReached: true
         },
