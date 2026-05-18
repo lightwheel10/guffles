@@ -385,6 +385,17 @@ async function handlePaymentSucceeded(
     }
 
     // Payment events may not include product_id — look up from subscription or user
+    const totalAmount = typeof data.total_amount === 'number' ? data.total_amount : null;
+    const isOnboardingTrialSetupPayment =
+      data.metadata?.source === 'onboarding' &&
+      !!subscription_id &&
+      totalAmount === 0;
+
+    if (isOnboardingTrialSetupPayment) {
+      // Trial setup payment - 2026-05-18 13:37 IST, paras: Dodo sends $0 payment.succeeded before subscription.active; do not grant full plan credits.
+      return { success: true, message: 'Trial setup payment acknowledged; waiting for subscription activation' };
+    }
+
     let planId = product_id ? getPlanFromDodoProductId(product_id) : null;
 
     if (!planId && subscription_id) {
