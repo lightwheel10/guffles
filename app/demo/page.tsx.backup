@@ -157,7 +157,7 @@ export default function DemoPage() {
                         Live Demo
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-                        See <span className="text-gradient">LinkMind</span> in Action
+                        See <span className="text-gradient">Guffles</span> in Action
                     </h1>
                     <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                         Enter a LinkedIn post URL below to see how we extract, qualify, and enrich leads in real-time.
