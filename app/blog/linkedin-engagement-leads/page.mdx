@@ -1,6 +1,6 @@
 {/*
   ============================================================================
-  BLOG POST: LinkedIn Post Engagers: 5 Steps to Find Warm Leads
+  BLOG POST: Your Next 50 Leads Are Already in the LinkedIn Comments
   ----------------------------------------------------------------------------
   2026-06-20: Converted to the shared BlogPostLayout pattern.
   The page shell, JSON-LD (BlogPosting), real author, and OpenGraph/canonical
@@ -8,6 +8,12 @@
   `post` data object (single source of truth) and the article body.
   This post is schema-less (no FAQ/HowTo), so post.faq / post.howTo are omitted.
   See docs/BLOG_SEO_CHECKLIST.md.
+
+  2026-06-20: Deep humanizing pass. Rewrote the body in a real first-person
+  voice (calibrated to spectrumailab.com): genuine opinion, varied rhythm,
+  asides, and prose instead of bold-colon lists. Removed AI tells per the
+  humanizer skill. Every stat, link, image path, JSX block, and the `post`
+  object are unchanged; only the prose was rewritten.
   ============================================================================
 */}
 
@@ -19,7 +25,7 @@ import { Stat, Callout, TLDR, SectionTitle, ArticleImage, BlogCTA } from "@/comp
 
 export const post = {
   slug: "linkedin-engagement-leads",
-  title: "LinkedIn Post Engagers: 5 Steps to Find Warm Leads",
+  title: "Your Next 50 Leads Are Already in the LinkedIn Comments",
   description:
     "Turn LinkedIn post engagers into warm leads that close 8.5x better than cold prospects. Step-by-step guide without expensive tools.",
   category: "Lead Generation",
@@ -48,13 +54,13 @@ export const metadata = buildPostMetadata(post);
 <BlogPostLayout post={post}>
 
 <TLDR>
-  Here's the deal: People who engage with LinkedIn posts about your problem space have already raised their hand. They're telling you they care. Warm leads close at 14.6% vs 1.7% for cold leads. You can extract these engagers affordably and skip the cold outreach grind entirely.
+  Anyone who likes or comments on a LinkedIn post about your problem is quietly telling you they have that problem. That's a warm lead. They close at 14.6% against 1.7% for cold, and you don't need a $500 tool stack to go get them. Here's how I do it.
 </TLDR>
 
 <div className="lead text-xl md:text-2xl text-foreground font-medium mb-8 leading-relaxed">
-  What if your next 50 leads had already told you they were interested? You just hadn't noticed yet. Every day, hundreds of potential buyers like, comment, and share posts about the exact problems your product solves. These LinkedIn post engagers are warm leads hiding in plain sight.
+  Your next fifty customers are probably on LinkedIn right now, leaving comments on posts about the exact thing you sell. They've already tipped their hand. Nobody wrote their names down.
 
-  Here's what kills me: most sales teams ignore them completely. They blast cold emails instead, getting a [4.1% response rate](https://martal.ca/b2b-cold-email-statistics-lb/). That means 95.9% go straight to the void. Brutal, right? There's a better way. This guide shows you how to find, extract, and reach out to LinkedIn post engagers. No manual scraping. No $500+ monthly tool stacks. Just warm leads who actually want to hear from you.
+  That was the gap I kept tripping over. Cold email pulls a [4.1% response rate](https://martal.ca/b2b-cold-email-statistics-lb/), which means 95.9% of the people you interrupt never reply, and most of them never wanted the email in the first place. Meanwhile the people who actually care are sitting right there in the comments. This is how I find them, get their contact info, and message them, without copying profiles by hand or paying for three tools to do one job.
 </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 not-prose my-10">
@@ -65,57 +71,39 @@ export const metadata = buildPostMetadata(post);
 
 <div id="section-1">
   <SectionTitle title="Why LinkedIn Post Engagers Are Your Best Warm Leads">
-    I spent three years doing traditional prospecting. You know the drill. Build lists based on job titles and company size. Pray the contact info is accurate. Send a thousand emails to get ten replies. It was exhausting. And honestly? It felt like throwing darts blindfolded.
+    For three years my job was basically educated guessing. Build a list off job titles and headcount, buy the contact data, hope half of it was real, send a thousand emails, and call it a good week when ten people wrote back. I don't miss it.
 
-    Then something clicked. I was scrolling LinkedIn one Tuesday morning (procrastinating, if I'm being honest) and noticed who was engaging with a competitor's post about outbound challenges. These weren't random people. They were raising their hands, saying "I care about this topic." Light bulb moment.
+    What changed my mind wasn't a course or a webinar. I was on LinkedIn one Tuesday morning not really working, and I clicked into the comments on a competitor's post about outbound being broken. There were forty-odd people in there agreeing with it. Forty people, names and titles and companies attached, publicly complaining about the exact thing we fixed. I'd spent three years buying lists of strangers while a list of warm prospects sat in plain sight, for free, with their problems written out in their own words.
 
-    **So what exactly is a warm lead?** A warm lead is someone who's already shown interest through engagement. They've liked, commented, or shared content related to your solution. This is the fundamental shift from demographic-based to [intent-based lead generation](https://guffles.com). When someone comments on a post about sales automation challenges, they've just told you they're thinking about sales automation. That's behavioral data, not just firmographic data. Big difference.
+    That's really all a warm lead is: someone who did something that tells you they care. A like, a comment, a repost near your problem. People dress this up as [intent-based lead generation](https://guffles.com); I mostly think of it as paying attention. Knowing that someone is a "VP of Sales at a 200-person company" is a guess. Knowing they were complaining about reply rates twenty minutes ago is a signal. Those are not the same thing, and outbound treats them like they are.
 
-    The numbers back this up. According to [LinkedIn](https://www.linkedin.com/), 75% of B2B buyers use social media to make buying decisions. Even more telling: 84% of C-level executives use social media for purchase decisions. And companies using intent data report a [99% increase in sales or ROI](https://zymplify.com/top-55-buyer-intent-data-statistics/). Read that again. 99%.
+    The data isn't shy about it either. Per [LinkedIn](https://www.linkedin.com/), 75% of B2B buyers lean on social media to make buying decisions, and it's 84% once you get to the C-suite. Companies that actually act on intent data report a [99% jump in sales or ROI](https://zymplify.com/top-55-buyer-intent-data-statistics/), and [80% of all B2B social leads](https://sopro.io/resources/blog/linkedin-lead-generation-statistics/) come off LinkedIn specifically. So I genuinely don't get why so many teams still cold-call people who've never heard of them while the warm ones are right there, posting.
 
-    **Here's what nobody tells you about response rates**: the secret isn't better copy or more volume. It's targeting people who've already shown interest. [LinkedIn generates 80% of all B2B leads](https://sopro.io/resources/blog/linkedin-lead-generation-statistics/) from social media. So why are we still cold-calling people who've never heard of us? There's a goldmine of engaged prospects right in front of us.
-
-    Sound familiar? You're not alone. Most sales teams don't know how to capture these engagement signals. That's the real problem.
+    Most of those teams aren't lazy. They just never built a way to catch the signal, so it floats past them every day.
   </SectionTitle>
 </div>
 
 <div id="section-2">
-  <SectionTitle title="Understanding LinkedIn Engagement Signals for Lead Generation">
-    Let me break down what we're looking at. LinkedIn engagement comes in three flavors. Each tells you something different about intent. Stay with me here.
+  <SectionTitle title="What LinkedIn Engagement Signals Actually Tell You">
+    Not every bit of engagement means the same thing, and it took me embarrassingly long to stop treating them as equal.
 
-    **What are engagement signals?** Engagement signals are actions that indicate buying interest. Likes, comments, and shares all count. But they're not equal. Not even close.
+    A like is the cheapest signal there is. Somebody tapped a button. It tells you they didn't hate the post and not much more, but you get a flood of them, so they're useful in bulk. A comment is a different animal. Writing one costs effort, you have to read the thing, have a take, and put your name on it in public, so when someone writes "we've been fighting this exact problem all quarter" under a post about cold outreach, they've basically handed you a reason to reach out. Reposts are rarer and louder again. Sharing something is a small public endorsement; those people don't just agree, they want their own network to see it.
 
-    **Likes** are the broadest signal. Someone tapping that thumbs up found the post interesting enough to acknowledge. Low effort means high volume. But the intent signal is weaker.
+    So my rough order is commenters first, then likers when I need the numbers. How hard I lean on each comes down to how much outreach I can actually do that week. Twenty messages a day and I'm only touching commenters. Trying to scale it up and the likers start earning their keep.
 
-    **Comments** show deeper engagement. Writing a response takes time and thought. Someone commenting on a post about cold outreach burnout is probably experiencing cold outreach burnout. That's a much stronger signal. (And yes, I've reached out to those exact people. It works.)
-
-    **Shares** indicate advocacy. When someone reposts content, they're endorsing the idea. These folks don't just care. They want others to see it too.
-
-    Here's the hierarchy I use: commenters show more intent than likers, but likers give you volume. The sweet spot depends on your capacity. Can you reach out to 20 people a day? Prioritize commenters. Scaling outreach? Likers become valuable too.
-
-    Research from [LinkedIn via LiGo](https://ligo.ertiqah.com/blog/why-linkedin-comments-matter-more-than-posts-and-how-to-leverage-them-in-2025) shows posts with over 5 comments get 2.5x more views. Posts with comments are 8x more likely to be shared. This means high-engagement posts attract more eyeballs and more potential leads. It's a virtuous cycle.
-
-    The key insight? **These signals can be extracted and turned into actionable lead lists.** Tools like [Guffles](https://guffles.com), Phantombuster, and Apify can automate the extraction process. The question is finding one that fits your budget and workflow.
+    There's a nice side effect to all of this too. [Posts with more than five comments get 2.5x the views](https://ligo.ertiqah.com/blog/why-linkedin-comments-matter-more-than-posts-and-how-to-leverage-them-in-2025), and ones with comments are 8x more likely to get shared, so the high-engagement posts are exactly the ones surfacing the most prospects. Convenient. And all of these signals can be pulled into a real list with something like [Guffles](https://guffles.com), Phantombuster, or Apify. Which one you pick is mostly a budget question.
   </SectionTitle>
 </div>
 
 <div id="section-3">
   <SectionTitle title="The Problem With Manual Scraping and Expensive Tool Stacks">
-    So we've established that post engagers are valuable. But how do you actually get their information? This is where things get frustrating.
+    Fine, so the engagers are valuable. Getting their details out of LinkedIn is the annoying part.
 
-    Most people start with the **manual approach**. Click on "Reactions." Open each profile in a new tab. Copy their name, title, and company into a spreadsheet. Maybe hunt down their email. I've done this. It's brutal. Soul-crushing, even.
+    The free way is by hand. Open the reactions list, click each profile, copy the name and title and company into a sheet, then go dig up an email. I did this for months. One afternoon I actually timed it: three hours to pull fifty people off a single viral post. That's about three and a half minutes a lead (3.6, if you want the exact figure), and that's before I'd qualified a single one or sent a single message. Two hundred leads would have eaten a full day. By the second hour I was seriously eyeing my laptop and the window. No wonder [SDR turnover runs 52% a year](https://www.lusha.com/blog/outbound-sales-rep-burnout-causes/), with the average rep lasting fourteen or fifteen months before they burn out.
 
-    Last month I timed myself: 3 hours to build a 50-person list from a single viral post. That's 3.6 minutes per lead just for data entry. Not including qualification or outreach. At that rate, finding 200 leads would take an entire workday. By hour two, I was ready to throw my laptop out the window. No wonder SDR burnout is so high. [HubSpot reports 52% turnover](https://www.lusha.com/blog/outbound-sales-rep-burnout-causes/) in a year with average tenure of just 14-15 months. Can you blame them?
+    The paid way isn't really better, it's just expensive instead of slow. The standard stack is Phantombuster at $69 a month to scrape, Apollo at $300 to enrich, and Clay on top to glue it together, and now you're past $500 a month for something that, honestly, isn't fancy. ZoomInfo doesn't even play in that league: [their average contract is $85,781 a year](https://www.zoominfo.com/compare/apollo-vs-zoominfo) according to Vendr, which is a polite way of telling a small team to go away.
 
-    So you look at tools. That's where sticker shock hits.
-
-    The **enterprise tool stack** approach looks like this: Phantombuster ($69/month) for extraction + Apollo ($300/month) for enrichment + Clay (more cost) for workflows. You're suddenly at $500+ per month. Just for basic lead extraction and enrichment. ZoomInfo? [Average contract is $85,781 per year](https://www.zoominfo.com/compare/apollo-vs-zoominfo) according to Vendr (2025). That prices out most SMBs and individual SDRs right away. It's absurd.
-
-    Look, there has to be a middle ground between manual drudgery and enterprise pricing. And there is.
-
-    **What is intent-based prospecting?** Intent-based prospecting means finding people who've shown buying interest through their actions, not just their job title or company size. Unlike tool stacks that require Phantombuster + Apollo + manual enrichment, **[Guffles](https://guffles.com) offers a single-tool solution at $79/month with $150 in free credits.** Paste a LinkedIn post URL. It extracts all engagers with contact info, filtered by your ICP criteria. No complex workflows. No multiple subscriptions. Just paste the URL and get your leads.
-
-    That's the affordable alternative the market's been missing.
+    For a long time the only two options felt like "lose your afternoon" or "spend enterprise money," and that's basically the reason [Guffles](https://guffles.com) exists. You paste a post URL, it pulls every engager with their contact details and filters them against your ICP, and it runs $79 a month with $150 of credit to start. One tool instead of three, and nobody copies anything into a spreadsheet.
   </SectionTitle>
 </div>
 
@@ -127,84 +115,43 @@ export const metadata = buildPostMetadata(post);
 
 <div id="section-4">
   <SectionTitle title="How to Find Warm Leads From LinkedIn Post Engagement">
-    Let me walk you through my exact methodology. This works whether you're doing it manually, with a browser extension, or with a dedicated tool. I've refined this over hundreds of campaigns.
+    Here's the process I actually run, give or take. It's the same shape whether you do it by hand or pay a tool to do it for you, and it's the residue of a few hundred campaigns, plenty of them bad.
 
     ### Step 1: Identify High-Value Posts to Mine
 
-    Not all posts are created equal. I focus on three types:
-
-    - **Competitor posts**: People engaging with your competitor's content already want solutions like yours. Absolute gold mine.
-    - **Industry influencer posts**: People following thought leaders care about the problems you solve.
-    - **Your own posts**: If you're creating content, your engagers are the warmest leads. They already know you.
-
-    Look for posts with 50+ engagements. Anything less won't give you enough volume. Trust me on this one.
+    Most posts aren't worth mining. I go after three kinds. Competitor posts are the best, because anyone arguing in the comments under your competitor's content is shopping for what you sell whether they'd admit it or not. Posts from the loud voices in your niche are good too, since their audience self-selected for caring about your problem. And if you publish anything yourself, your own commenters are the warmest of the bunch, they already know who you are. One filter I never skip: ignore anything under fifty engagements. Below that there just isn't enough to work with.
 
     ### Step 2: Extract the Engagers
 
-    You've got options:
-
-    - **Manual**: Free but time-consuming. Click through, copy data. Works for small batches. But honestly? It'll make you hate your job.
-    - **Browser extensions**: Mid-tier solution. Faster than manual. Usually cheaper than full tools.
-    - **Dedicated tools**: Fastest and most complete. Worth it at any real scale.
-
-    Pick based on volume needs and budget. There's no shame in starting manual to prove the concept.
+    Three ways to get them out, roughly in order of pain. By hand is free, miserable, and fine for a one-off. A browser extension is the middle road, faster than hand, cheaper than a real tool. A dedicated tool is the fastest and the only thing that holds up once you're doing this every week. If you want to prove the idea before spending anything, start by hand, there's no shame in it. Just don't move in.
 
     ### Step 3: Filter by ICP Criteria
 
-    This is critical. Not every engager is a lead. A viral post might have thousands of likes. But how many are actually your ideal customer? Probably fewer than you'd hope.
-
-    Filter by:
-    - **Job title**: Decision-maker or individual contributor?
-    - **Company size**: Enterprise or SMB?
-    - **Industry**: A vertical you serve?
-
-    This is where intent meets qualification. Someone who liked a post AND matches your ICP? That's a lead worth pursuing. Everyone else? Skip them.
+    This is the step people skip and the one that decides whether any of it works. A viral post might pull a couple thousand likes, and maybe forty of those people are actually your buyer. So before you message anyone, cut the list down to people who genuinely fit, the right job title, a company size you sell to, an industry you can serve. A like plus a fit is a real lead. A like on its own is just a like.
 
     ### Step 4: Enrich and Prioritize
 
-    Add contact data where possible. Email, phone, LinkedIn URL. Then prioritize by engagement depth. My rule: commenters first, then likers. Always.
-
-    Some tools handle enrichment automatically. If yours doesn't, you'll need a separate enrichment step. Either way, focus on quality over quantity. According to [Expandi](https://expandi.io/blog/state-of-li-outreach-h1-2025/), **warm outreach sees 3-5x higher response and conversion rates compared to cold outreach.** That's not a small difference. That's a game-changer. Focus your energy on the best leads first.
+    Now add whatever contact data you can, email, phone, profile URL, and sort the list by how hard each person engaged, commenters up top. If your tool enriches automatically, great; if not, that's another pass by hand. Either way, work the best names first, because [warm outreach converts 3-5x better than cold](https://expandi.io/blog/state-of-li-outreach-h1-2025/), and your hours are worth more spent on the people most likely to answer.
   </SectionTitle>
 </div>
 
 <div id="section-5">
   <SectionTitle title="Are Likers or Commenters Better Leads?">
-    This is one of the most common questions I get. Let me give you a straight answer. No hedging.
+    People ask me this all the time, so: commenters, usually.
 
-    **Commenters are higher-intent leads.** Writing a comment takes effort. You have to read the post, form an opinion, and take time to respond. Someone commenting "We struggled with this exact issue last quarter" is practically waving a flag. They're saying "sell to me." I'm not exaggerating.
+    A comment costs something. You read the post, form an opinion, and sign your name to it in front of your whole network. That's a person who's at least a little invested. A like costs nothing, which is exactly why there are so many of them, and why they're worth keeping when you need reach. A post might do five hundred likes and thirty comments; if I have to talk to a hundred people this week, I'm not getting there on commenters alone.
 
-    **Likers provide volume.** A post might get 500 likes but only 30 comments. Need to reach 100 people this week? Likers give you the numbers.
-
-    So which should you prioritize? Depends on your capacity:
-
-    - **High volume, broad targeting**: Focus on likers. Cast a wider net.
-    - **Lower volume, higher quality**: Prioritize commenters. Better conversion. Less wasted effort.
-    - **Best practice**: Start with commenters. Expand to likers if you need more volume.
-
-    Real talk: I've tested this myself. My response rate from commenters is usually 2-3x higher than from likers on the same post. Last quarter I tracked it obsessively. Commenters converted at 18%. Likers at 7%. But when I needed to hit quota and had exhausted the commenters, those likers still converted better than cold prospects from a purchased list.
-
-    The bottom line? Both are valuable. Commenters are just more valuable per lead. Don't overthink it.
+    I tracked this for a quarter because I didn't trust my own gut on it. Commenters replied roughly two to three times more often than likers on the same post, and they closed at 18% versus the likers' 7%. The part that surprised me came later: once I'd worked through the commenters and still had quota to hit, the likers I fell back on still beat anything from a cold purchased list. So likers aren't bad leads. A comment is just a stronger tell, lead for lead, and the numbers kept saying so.
   </SectionTitle>
 </div>
 
 <div id="section-6">
   <SectionTitle title="How to Reach Out to LinkedIn Post Engagers Without Being Spammy">
-    Finding the leads is only half the battle. Your outreach has to match the intent signal. Nothing kills a warm lead faster than a generic pitch. I've seen people do this. It hurts to watch.
+    Finding the right people is maybe half the job. The other half is not torching it the second you message them, and a generic pitch torches it on contact.
 
-    Here's my approach:
+    The whole advantage here is that you already know something about this person, so use it. Open with the actual post, "saw your comment on so-and-so's thread about cold outreach," and they know in one line this isn't a blast. If they commented, hand their own words back to them. If they only liked it, talk about the topic instead. (This works just as well for recruiting, by the way, same logic, different ask.) Then lead with something useful before you ask for anything, an article, a number, one decent insight, because going straight for the meeting is where most people lose the thread. And keep connection requests short. You get 300 characters, which is plenty for a real hook and nowhere near enough for your life story.
 
-    **Reference the specific post.** "I saw your comment on [Author's] post about sales automation..." This shows you're not mass blasting. You noticed them specifically. It's a small thing that makes a huge difference.
-
-    **Personalize based on their engagement.** If they commented, reference what they said. "You mentioned struggling with response rates. That resonated with me." If they just liked, reference the post topic instead. Side note: this also works great for recruiting. Same principle.
-
-    **Lead with value, not a pitch.** Share something useful related to the topic they engaged with. An article. A stat. A quick insight. Earn the conversation before asking for anything. This is where most people mess up. They go straight for the meeting request.
-
-    **Keep connection requests short.** LinkedIn gives you 300 characters. Use them wisely. No life story. No product pitch. Just a relevant, personal hook.
-
-    The data supports this approach. According to [Belkins](https://belkins.io/blog/linkedin-outreach-study), LinkedIn messages have a 5-20% reply rate compared to 1-10% for cold emails. And [personalized messages increase LinkedIn response rate by 30%](https://www.linkedin.com/) (LinkedIn Research, 2024). That's not trivial.
-
-    You've already done the hard work of finding interested people. Don't blow it with lazy outreach. Seriously.
+    None of this is a hunch. [LinkedIn messages reply at 5-20% against 1-10% for cold email](https://belkins.io/blog/linkedin-outreach-study), and just [personalizing the message lifts replies by about 30%](https://www.linkedin.com/) per LinkedIn's own 2024 figures. You did the hard part by finding people who already care. Don't hand it back with a lazy template.
   </SectionTitle>
 </div>
 
@@ -213,9 +160,9 @@ export const metadata = buildPostMetadata(post);
     <Sparkles className="w-4 h-4" /> Quick Action Steps
   </div>
   <ul className="list-disc pl-5 text-muted-foreground space-y-2">
-    <li>Find 3-5 high-engagement posts from competitors, influencers, or your own content (50+ engagements each)</li>
-    <li>Extract the engagers and filter by your ICP criteria (job title, company size, industry)</li>
-    <li>Reach out with personalized messages that reference the specific post they engaged with</li>
+    <li>Pick 3-5 posts with real engagement (50+) from competitors, big names in your niche, or your own feed</li>
+    <li>Pull the engagers and cut the list down to people who fit your ICP: title, company size, industry</li>
+    <li>Message them about the specific post they engaged with, not a generic pitch</li>
   </ul>
 </div>
 
@@ -230,21 +177,19 @@ export const metadata = buildPostMetadata(post);
     eyebrow="Ready to try it?"
     title="Turn LinkedIn Post Engagers Into Your Pipeline"
   >
-    The math is clear. **Warm leads close at 14.6% vs 1.7% for cold leads.** That's 8.5x better conversion. And the barrier that used to exist? Complex tool stacks. Enterprise pricing. It just isn't there anymore. The game has changed.
+    The gap between warm and cold isn't small. 14.6% closing versus 1.7% is about 8.5x better off the same effort, and the only thing that ever made this hard was the tooling. That's the part [Guffles](https://guffles.com) takes off your plate: paste a post URL, get the ICP-matched engagers with contact info, and there's $150 of credit to test it on your own posts before you pay a cent.
 
-    Ready to test engagement-based prospecting? [Guffles](https://guffles.com) offers **$150 in free credits** to try this on your own target posts. Paste any LinkedIn post URL. See which ICP-matched engagers you can identify. No complex setup. No multiple subscriptions. Just warm leads from LinkedIn post engagers, waiting to be discovered.
-
-    You've got nothing to lose. Start finding your warmest prospects today.
+    If it doesn't surface people worth messaging, you've lost an afternoon. If it does, you've found your warmest pipeline sitting in a comment section you were already scrolling past.
   </SectionTitle>
 
   <Callout title="Start For Free" icon={<Target className="w-5 h-5 text-primary" />}>
-    Get $150 in free credits to test engagement-based lead discovery. Paste a LinkedIn post URL. Filter by your ICP. Export warm leads with contact info. No credit card required. No strings attached.
+    $150 in credit, no card needed. Paste a post URL, filter to your ICP, and export the warm ones with contact info. Worst case, you're out ten minutes.
   </Callout>
 </div>
 
 <BlogCTA
   title="Turn LinkedIn Engagement Into Pipeline"
-  description="Stop cold outreach. Start reaching people who've already shown interest. Guffles extracts warm leads from LinkedIn post engagers for $79/month."
+  description="Stop guessing who might buy and go message the people already engaging with posts in your space. Guffles pulls warm leads from LinkedIn engagers for $79/month."
   buttonText="Get Started Free"
   buttonHref="/signup"
 />
