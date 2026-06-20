@@ -64,8 +64,14 @@ export const SectionTitle = ({ eyebrow, title, children }: SectionTitleProps) =>
       </span>
     ) : null}
     <h2 className="text-3xl font-bold tracking-tight text-foreground">{title}</h2>
+    {/* 2026-06-20: render the description in a <div>, NOT a <p>. In MDX the children
+        arrive already wrapped in a <p> (see mdx-components.tsx), and a <p> nested in a
+        <p> is invalid HTML that triggers a hydration error. The [&_p] utilities keep
+        the original large, muted description styling on that inner paragraph. */}
     {children ? (
-      <p className="text-lg text-muted-foreground leading-relaxed">{children}</p>
+      <div className="text-lg text-muted-foreground leading-relaxed [&_p]:m-0 [&_p]:text-lg [&_p]:leading-relaxed [&_p]:text-muted-foreground">
+        {children}
+      </div>
     ) : null}
   </div>
 );
@@ -340,4 +346,23 @@ export const ArticleImage = ({ src, alt, caption }: ArticleImageProps) => (
       </figcaption>
     )}
   </figure>
+);
+
+// 2026-06-20: FAQ block — single source of truth for a post's FAQ. The same
+// `post.faq` array renders this visible section AND the FAQPage JSON-LD (in
+// BlogPostLayout), so the two can never drift. Mirrors the previous hand-written
+// FAQ markup so existing posts look identical.
+type FAQItem = { q: string; a: string };
+export const FAQ = ({ items }: { items: FAQItem[] }) => (
+  <div id="faq" className="not-prose my-12">
+    <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+    <div className="space-y-6">
+      {items.map((item, i) => (
+        <div key={i} className="border border-border rounded-lg p-6">
+          <h3 className="font-semibold text-lg mb-2">{item.q}</h3>
+          <p className="text-muted-foreground">{item.a}</p>
+        </div>
+      ))}
+    </div>
+  </div>
 );

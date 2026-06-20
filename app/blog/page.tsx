@@ -11,6 +11,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Search, ArrowRight, Clock, Calendar, TrendingUp, Sparkles, Filter } from "lucide-react";
 import { cn } from "@/lib/utils";
+// 2026-06-20: blog byline now comes from the central AUTHOR config (lib/blog/config) —
+// the same source the post pages use — so the index card author + avatar never drift
+// from the article. (Previously cards showed stale personas like "Sarah Chen" and a
+// missing /images/ceo.jpeg avatar.) The per-post `author` field in POSTS is now unused
+// for display; it gets removed when the index moves to getAllPosts (task #7).
+import { AUTHOR } from "@/lib/blog/config";
 
 // Blog Data
 const CATEGORIES = ["All", "Strategy", "Growth", "Lead Generation", "Sales Outreach", "LinkedIn Strategies", "LinkedIn Lead Generation", "Tool Comparisons", "Case Studies", "Intent Signals", "Warm Lead Strategies"];
@@ -385,11 +391,12 @@ export default function BlogPage() {
                             </p>
 
                             <div className="flex items-center gap-4 pt-4">
+                                {/* 2026-06-20: byline from central AUTHOR config (see import) */}
                                 <div className="flex items-center gap-2">
                                      <div className="w-8 h-8 rounded-full border-2 border-background bg-muted flex items-center justify-center overflow-hidden ring-1 ring-white/10">
-                                        <Image src="/images/ceo.jpeg" width={32} height={32} alt={FEATURED_POST.author} className="w-full h-full object-cover" />
+                                        <Image src={AUTHOR.avatar} width={32} height={32} alt={AUTHOR.name} className="w-full h-full object-cover" />
                                      </div>
-                                     <span className="text-sm font-medium">{FEATURED_POST.author}</span>
+                                     <span className="text-sm font-medium">{AUTHOR.name}</span>
                                 </div>
                                 <Button variant="link" className="ml-auto p-0 h-auto text-primary font-semibold group-hover:translate-x-1 transition-transform">
                                     Read Article <ArrowRight className="ml-1 w-4 h-4" />
@@ -462,11 +469,12 @@ export default function BlogPage() {
                                         </p>
                                     </CardContent>
                                     <CardFooter className="px-6 pb-6 pt-0 mt-auto flex items-center justify-between border-t border-border/50 pt-4">
+                                        {/* 2026-06-20: byline from central AUTHOR config (see import) */}
                                         <div className="flex items-center gap-2">
                                             <div className="w-6 h-6 rounded-full border-2 border-background bg-muted flex items-center justify-center overflow-hidden ring-1 ring-white/10">
-                                                <Image src="/images/ceo.jpeg" width={24} height={24} alt={post.author} className="w-full h-full object-cover" />
+                                                <Image src={AUTHOR.avatar} width={24} height={24} alt={AUTHOR.name} className="w-full h-full object-cover" />
                                             </div>
-                                            <span className="text-xs font-medium text-muted-foreground">{post.author}</span>
+                                            <span className="text-xs font-medium text-muted-foreground">{AUTHOR.name}</span>
                                         </div>
                                         <span className="text-xs font-semibold text-primary flex items-center opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0 duration-300">
                                             Read <ChevronRight className="w-3 h-3 ml-0.5" />
