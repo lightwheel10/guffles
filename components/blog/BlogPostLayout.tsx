@@ -130,6 +130,42 @@ export function BlogPostLayout({
               {children}
             </article>
 
+            {/* 2026-06-20: Author bio box (E-E-A-T). Surfaces the real author's
+                credentials on-page for readers AND Google — previously the bio lived
+                only inside the JSON-LD, so the page read anonymous. Content comes from
+                lib/blog/config AUTHOR (single source), so it stays consistent on every post. */}
+            <section className="mt-16 border-t border-border/50 pt-8" aria-label="About the author">
+              <div className="flex flex-col sm:flex-row gap-5 p-6 rounded-2xl bg-card border border-border">
+                <div className="shrink-0">
+                  <div className="w-16 h-16 rounded-full overflow-hidden ring-1 ring-white/10 bg-muted">
+                    <Image
+                      src={AUTHOR.avatar}
+                      alt={AUTHOR.name}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-primary mb-1">
+                    Written by
+                  </div>
+                  <div className="font-bold text-foreground">{AUTHOR.name}</div>
+                  <div className="text-sm text-muted-foreground mb-2">{AUTHOR.jobTitle}</div>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">{AUTHOR.bio}</p>
+                  <a
+                    href={AUTHOR.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-primary font-medium hover:underline"
+                  >
+                    Connect on LinkedIn →
+                  </a>
+                </div>
+              </div>
+            </section>
+
             {/* Related reading — internal linking for crawl discovery (2026-06-20) */}
             {post.relatedPosts && post.relatedPosts.length > 0 && (
               <nav className="mt-16 border-t border-border/50 pt-8" aria-label="Related articles">
