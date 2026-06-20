@@ -7,6 +7,8 @@
   OpenGraph/canonical now come from <BlogPostLayout> + lib/blog/*. This file only
   declares the `post` data object (single source of truth) and the article body.
   See docs/BLOG_SEO_CHECKLIST.md.
+  2026-06-20: Deep humanizing pass: rewrote prose to remove AI-writing tells,
+  cleaned dashes/curly quotes; stats, links, schema, and the post object preserved.
   ============================================================================
 */}
 
@@ -106,15 +108,15 @@ export const metadata = buildPostMetadata(post);
 <BlogPostLayout post={post}>
 
 <TLDR>
-    Stop winging it with your leads. A 5-step framework combining ICP fit with engagement signals beats gut instinct every time. Leads who match your profile AND show recent engagement convert at <strong>14.6%</strong> versus <strong>1.7%</strong> for cold prospects. The key? Prioritizing by both fit and timing.
+    Gut instinct stops scaling the moment your lead list gets long. This 5-step framework scores leads on ICP fit plus engagement signals, so you call the right people first. Leads who match your profile and showed recent engagement convert at <strong>14.6%</strong> versus <strong>1.7%</strong> for cold prospects. Fit and timing both, not one or the other.
 </TLDR>
 
 <div className="lead text-xl md:text-2xl text-foreground font-medium mb-8 leading-relaxed">
     <p>You've got 50 leads and 4 hours. Who do you call first?</p>
-    <p>If you're like <strong>66%</strong> of salespeople, you go with your gut. That worked when you had 10 leads a week. It breaks down when you have 50.</p>
-    <p>I've watched SDRs waste entire afternoons on leads that were never going to convert. Meanwhile, hot prospects went cold in their inbox.</p>
-    <p><strong>Lead prioritization is the process of ranking sales prospects by their likelihood to convert.</strong> It uses criteria like ICP fit, engagement signals, and buying intent to determine who gets called first.</p>
-    <p>Here's a 5-step framework that takes the guesswork out without taking your budget with it.</p>
+    <p>If you're like <strong>66%</strong> of salespeople, you go with your gut. That was fine when you had 10 leads a week. It falls apart at 50.</p>
+    <p>I've watched SDRs burn whole afternoons on leads that were never going to convert while the genuinely hot prospects sat untouched and went cold in their inbox. It's painful to watch, and it's avoidable.</p>
+    <p>Lead prioritization is just ranking your prospects by how likely they are to convert, using ICP fit, engagement signals, and buying intent to decide who gets called first. That's the whole idea. The hard part is doing it consistently when you're busy.</p>
+    <p>What follows is the 5-step framework I actually use. It takes the guessing out of the equation, and it won't cost you your budget to run.</p>
 </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 not-prose my-10">
@@ -125,26 +127,24 @@ export const metadata = buildPostMetadata(post);
 
 <div id="why-prioritization-fails">
     <SectionTitle title="Why Most Lead Prioritization Fails">
-        <p>Here's the thing most prioritization advice gets wrong: it assumes you have time to think about each lead. You don't.</p>
-        <p>According to <a href="https://www.gartner.com/en/articles/time-management-for-sales-development-reps">Gartner</a>, <strong>83.4%</strong> of SDRs fail to consistently hit quota each month. And <a href="https://www.landbase.com/blog/lead-scoring-statistics">Spotio found</a> that <strong>44%</strong> of companies don't have any lead scoring system at all. That's a lot of people winging it.</p>
-        <p>The common mistakes? Prioritizing by company size alone (guilty). Ignoring timing completely. Treating all leads as equally worthy of your attention.</p>
-        <p>Sound familiar?</p>
-        <p>Here's what burns the most. Research from <a href="https://www.leadangel.com/blog/operations/speed-to-lead-statistics/">Peak Sales Recruiting</a> shows <strong>35-50%</strong> of sales go to the vendor that responds first.</p>
-        <p>So while you're carefully analyzing whether that Fortune 500 lead is worth your time, your competitor is closing someone who was actually ready to buy.</p>
-        <p>Stop treating all leads equally. Some deserve 5 minutes of your day. Others deserve 5 seconds.</p>
+        <p>Most prioritization advice assumes you have time to sit and think about each lead. You don't, and that's where it falls apart.</p>
+        <p>According to <a href="https://www.gartner.com/en/articles/time-management-for-sales-development-reps">Gartner</a>, <strong>83.4%</strong> of SDRs fail to consistently hit quota each month. And <a href="https://www.landbase.com/blog/lead-scoring-statistics">Spotio found</a> that <strong>44%</strong> of companies don't have any lead scoring system at all. That's a lot of people running on instinct.</p>
+        <p>I've made most of the classic mistakes myself. Prioritizing by company size alone (guilty, for years). Ignoring timing because the spreadsheet didn't have a column for it. Quietly treating every lead as if it deserved the same slice of my afternoon.</p>
+        <p>The one that costs you the most is timing. Research from <a href="https://www.leadangel.com/blog/operations/speed-to-lead-statistics/">Peak Sales Recruiting</a> shows <strong>35-50%</strong> of sales go to the vendor that responds first. So while you're carefully weighing whether that Fortune 500 lead is worth your time, a competitor is already closing someone who was ready to buy this week.</p>
+        <p>So stop treating leads as equals. Some are worth 5 minutes of your day. Plenty are worth 5 seconds and a polite skip.</p>
     </SectionTitle>
 </div>
 
 <div id="step-1-icp-criteria">
     <SectionTitle title="Step 1: Define Your ICP Criteria">
-        <p>Before you add any fancy signals, nail the basics. Who are you actually looking for?</p>
-        <p>In my experience helping 200+ companies, the teams that struggle with prioritization usually can't answer three simple questions:</p>
+        <p>Before you layer on any fancy signals, get the basics right. Who are you actually looking for?</p>
+        <p>In my experience helping 200+ companies, the teams that struggle with prioritization usually can't answer three plain questions:</p>
         <ol>
             <li>What titles do you sell to?</li>
             <li>What company size is your sweet spot?</li>
             <li>What industries convert best?</li>
         </ol>
-        <p>Create a simple 1-5 fit score. Here's what I use:</p>
+        <p>Create a simple 1-5 fit score. Here's the rough rubric I use:</p>
         <ul>
             <li><strong>5 (Perfect ICP)</strong>: VP Sales at 200-person SaaS company in your target industry</li>
             <li><strong>4 (Strong match)</strong>: Director of Sales Ops at 150-person tech company</li>
@@ -152,19 +152,16 @@ export const metadata = buildPostMetadata(post);
             <li><strong>2 (Weak fit)</strong>: Account Executive at 50-person startup</li>
             <li><strong>1 (Non-fit)</strong>: Marketing Intern at 10-person agency</li>
         </ul>
-        <p>The goal isn't perfect precision. It's fast triage.</p>
-        <p>A 1 or 2? Don't waste another second. A 4 or 5? Now we're talking.</p>
-        <p>But here's what I learned the hard way (several times, actually): fit alone isn't enough.</p>
-        <p>A perfect ICP match from last month beats nothing. But a lukewarm fit who engaged yesterday? That's where it gets interesting. And that's why we need Step 2. For more on identifying <Link href="/blog/buyer-intent-signals-prospects-ready-to-buy">buyer intent signals that show prospects are ready to buy</Link>, check out our detailed guide.</p>
+        <p>You're not aiming for perfect precision here. You're aiming for fast triage. A 1 or a 2 gets skipped without guilt; a 4 or 5 earns your attention.</p>
+        <p>Fit alone isn't enough, though, and I learned that the hard way more than once. A flawless ICP match from last month is better than nothing, sure. But a lukewarm fit who engaged yesterday is often the more interesting call, and that gap is exactly what Step 2 fixes. If you want to go deeper on reading intent, our guide to <Link href="/blog/buyer-intent-signals-prospects-ready-to-buy">buyer intent signals that show prospects are ready to buy</Link> covers it.</p>
     </SectionTitle>
 </div>
 
 <div id="step-2-engagement-score">
     <SectionTitle title="Step 2: Create Your ICP Engagement Score">
-        <p>Now for the part that actually changed how I prioritize leads.</p>
-        <p>Traditional lead scoring puts all the weight on who someone is. Job title. Company size. Industry. That's necessary. But not sufficient.</p>
-        <p>Why? Because a perfect fit who's not thinking about your problem right now isn't worth much.</p>
-        <p><strong>The ICP Engagement Score combines who someone is (demographics) with what they've done (engagement).</strong> A perfect demographic match with no engagement scores lower than an okay fit who's actively engaging with competitor content.</p>
+        <p>This is the part that genuinely changed how I prioritize leads.</p>
+        <p>Traditional lead scoring puts all the weight on who someone is: job title, company size, industry. That's necessary, but on its own it isn't enough, because a perfect fit who isn't thinking about your problem right now isn't worth much to you this week.</p>
+        <p>The ICP Engagement Score fixes that by combining who someone is (demographics) with what they've actually done (engagement). A flawless demographic match with zero activity scores lower than an okay fit who's busy engaging with competitor content. That ordering feels wrong until you watch it play out, and then it's obvious.</p>
         <p>Here's the formula:</p>
         <p><strong>ICP Engagement Score = (Demographic Fit x 0.4) + (Firmographic Fit x 0.3) + (Engagement Strength x 0.3)</strong></p>
         <p>So if someone scores 4/5 on demographics (80 points), 4/5 on firmographics (80 points), and 5/5 on recent engagement (100 points):</p>
@@ -176,9 +173,9 @@ export const metadata = buildPostMetadata(post);
             <li><strong>40-59</strong>: Lukewarm - nurture before outreach</li>
             <li><strong>Below 40</strong>: Deprioritize</li>
         </ul>
-        <p>According to <a href="https://www.landbase.com/blog/lead-scoring-statistics">MarketingSherpa</a>, organizations with lead scoring see <strong>138%</strong> ROI versus just <strong>78%</strong> for those without. That's not a small difference.</p>
-        <p>You can track engagement manually by checking LinkedIn notifications and keeping a spreadsheet. Works fine for small volumes. Learn more about <Link href="/blog/find-warm-leads-social-engagement-signals">finding warm leads through social engagement</Link> signals.</p>
-        <p>If you want to automate this, tools like Guffles can extract engagers from LinkedIn posts automatically and filter by ICP criteria. Either way, the scoring principle stays the same.</p>
+        <p>This pays off in the numbers. According to <a href="https://www.landbase.com/blog/lead-scoring-statistics">MarketingSherpa</a>, organizations with lead scoring see <strong>138%</strong> ROI versus just <strong>78%</strong> for those without. That gap is too big to ignore.</p>
+        <p>You can track engagement by hand: check your LinkedIn notifications, keep a spreadsheet, update it as you go. That works fine at small volumes, and there's a fuller walkthrough in our piece on <Link href="/blog/find-warm-leads-social-engagement-signals">finding warm leads through social engagement</Link> signals.</p>
+        <p>If you'd rather not do the manual part, tools like Guffles pull engagers from LinkedIn posts automatically and filter them by your ICP criteria. The scoring logic doesn't change either way; you're just spending less of your own time on data entry.</p>
     </SectionTitle>
 </div>
 
@@ -190,20 +187,17 @@ export const metadata = buildPostMetadata(post);
 
 <div id="step-3-signal-strength">
     <SectionTitle title="Step 3: Rank Leads by Signal Strength">
-        <p>Not all engagement is created equal. A comment on a competitor's post shows much stronger buying intent than a passive profile view.</p>
-        <p><strong>The Intent Signal Hierarchy ranks engagement types by buying intent strength.</strong> Here's the breakdown:</p>
+        <p>Not all engagement is created equal. A thoughtful comment on a competitor's post tells you far more about buying intent than a passive profile view ever will.</p>
+        <p>I rank engagement types with what I call the Intent Signal Hierarchy, ordered by how much intent each one actually signals:</p>
         <ul>
             <li><strong>Tier 1 (Highest intent)</strong>: Comments on relevant industry posts</li>
             <li><strong>Tier 2 (High intent)</strong>: Likes on competitor or problem-aware content</li>
             <li><strong>Tier 3 (Medium intent)</strong>: Follows industry thought leaders in your space</li>
             <li><strong>Tier 4 (Low intent)</strong>: Passive profile views with no engagement</li>
         </ul>
-        <p>Someone who commented "We're struggling with exactly this!" on a post about sales productivity? That's Tier 1. Call them first.</p>
-        <p>Someone who liked your CEO's thought leadership post? Tier 2. Still warm, but less urgent.</p>
-        <p>The data backs this up. According to <a href="https://spp.co/blog/understanding-lead-types/">Search Engine Journal</a>, warm leads convert at <strong>14.6%</strong> versus <strong>1.7%</strong> for cold leads. That's <strong>8.5x</strong> better. See our full <Link href="/blog/warm-vs-cold-outreach-data-breakdown">warm vs cold outreach data</Link> breakdown for more details.</p>
-        <p>And the <a href="https://www.chilipiper.com/article/speed-to-lead-statistics">Lead Response Management Study</a> found that companies responding within 5 minutes are <strong>100x</strong> more likely to connect.</p>
-        <p>Recency matters too. A lot. Same signal from yesterday beats same signal from last month. Always.</p>
-        <p><strong>The best leads aren't just good fits. They're good fits who are actively showing interest right now.</strong> Here's how to <Link href="/blog/linkedin-engagement-leads">turn LinkedIn engagement into leads</Link>.</p>
+        <p>Take someone who commented "We're struggling with exactly this!" on a post about sales productivity. That's Tier 1, and they go to the top of your call list. Someone who merely liked your CEO's thought leadership post is Tier 2: still warm, but not something to drop everything for.</p>
+        <p>The data backs this ordering up. According to <a href="https://spp.co/blog/understanding-lead-types/">Search Engine Journal</a>, warm leads convert at <strong>14.6%</strong> versus <strong>1.7%</strong> for cold leads, which works out to <strong>8.5x</strong> better. Our full <Link href="/blog/warm-vs-cold-outreach-data-breakdown">warm vs cold outreach data</Link> breakdown digs into the rest. And the <a href="https://www.chilipiper.com/article/speed-to-lead-statistics">Lead Response Management Study</a> found that companies responding within 5 minutes are <strong>100x</strong> more likely to connect.</p>
+        <p>Recency matters here too, and it matters a lot. The same signal from yesterday beats the same signal from last month, every single time. So the best leads aren't just the good fits; they're the good fits who are showing interest right now. If you want the mechanics, here's how to <Link href="/blog/linkedin-engagement-leads">turn LinkedIn engagement into leads</Link>.</p>
     </SectionTitle>
 </div>
 
@@ -242,9 +236,8 @@ export const metadata = buildPostMetadata(post);
 
 <div id="step-4-72-hour-rule">
     <SectionTitle title="Step 4: Apply the 72-Hour Rule">
-        <p>Here's something that took me years to internalize: timing matters as much as score.</p>
-        <p><strong>The 72-hour engagement window is the optimal timeframe for contacting a prospect after they show engagement.</strong> Our data shows that reaching out within 72 hours increases response rates by <strong>5-7x</strong> compared to waiting a week.</p>
-        <p>The engagement context is still fresh in their mind.</p>
+        <p>It took me years to really believe this: timing matters as much as the score does.</p>
+        <p>The 72-hour engagement window is the sweet spot for reaching out after someone shows interest. Our data shows that contacting a prospect within 72 hours lifts response rates by <strong>5-7x</strong> compared to waiting a week, mostly because the thing they engaged with is still fresh in their head.</p>
         <p>The decay curve looks like this:</p>
         <ul>
             <li><strong>0-24 hours</strong>: 15-20% response rates (highest priority)</li>
@@ -252,24 +245,22 @@ export const metadata = buildPostMetadata(post);
             <li><strong>48-72 hours</strong>: 8-12% response rates</li>
             <li><strong>After 72 hours</strong>: Drops to cold outreach levels</li>
         </ul>
-        <p>Practically, this means re-sorting your priority list daily by recency. That 85-point lead from last week? They might score lower than the 70-point lead who engaged yesterday.</p>
-        <p>But here's the problem with manual tracking. Real talk.</p>
-        <p>You can realistically monitor 5-10 LinkedIn posts per week. Maybe you check your notifications, note who's engaging, add them to a spreadsheet. It works. I've done it myself.</p>
-        <p>But if your ICP is engaging across 50 relevant posts in your industry? You're missing 80% of your opportunities. There's just not enough time.</p>
-        <p>Guffles solves this by extracting all engagers from any LinkedIn post and filtering by your ICP automatically. At $79/month versus $300+ for Apollo or $500+ for ZoomInfo, it's designed for teams who want intent data without enterprise pricing. Start with the $150 wallet credit to test it.</p>
+        <p>In practice this means re-sorting your priority list every day by recency. That 85-point lead from last week might now rank below the 70-point lead who engaged yesterday, and you should let it.</p>
+        <p>The catch is that manual tracking doesn't scale. You can realistically keep an eye on maybe 5-10 LinkedIn posts a week: check your notifications, note who's engaging, add them to the spreadsheet. I've run it that way myself and it's perfectly fine at that size. But once your ICP is active across 50 relevant posts in your industry, you're quietly missing something like 80% of your opportunities, because there simply aren't enough hours in the week to watch them all.</p>
+        <p>This is the gap Guffles closes. It pulls every engager from any LinkedIn post and filters them by your ICP automatically. At $79/month versus $300+ for Apollo or $500+ for ZoomInfo, it's built for teams who want intent data without enterprise pricing, and you can start with the $150 wallet credit to try it.</p>
     </SectionTitle>
 </div>
 
 <div id="step-5-review-refine">
     <SectionTitle title="Step 5: Review and Refine Weekly">
-        <p>This isn't a one-time exercise. It's a system you build.</p>
-        <p>Every week, spend 30 minutes reviewing what worked:</p>
+        <p>None of this is a one-and-done exercise. It's a system that gets sharper the longer you run it, so build the habit of looking back.</p>
+        <p>Every week, set aside 30 minutes to review what actually worked:</p>
         <ul>
             <li>Which priority tiers actually converted?</li>
             <li>What ICP criteria predicted success?</li>
             <li>Which engagement signals correlated with closed deals?</li>
         </ul>
-        <p>After 4 weeks, you'll have real data to refine your model. Maybe you'll discover that Director-level titles convert better than VP-level in your market. Or that comments on competitor posts are 3x more valuable than likes.</p>
+        <p>After about 4 weeks you'll have enough real data to refine the model with confidence. You might find that Director-level titles convert better than VP-level in your market, or that comments on competitor posts turn out to be 3x more valuable than likes. The point is to let the results tell you, instead of guessing.</p>
         <p>Track three metrics that matter:</p>
         <ol>
             <li>Response rate by tier (Hot vs Warm vs Lukewarm)</li>
@@ -277,8 +268,8 @@ export const metadata = buildPostMetadata(post);
             <li>Time-to-close by tier</li>
         </ol>
         <p>According to <a href="https://www.landbase.com/blog/lead-scoring-statistics">Landbase</a>, organizations see a <strong>20%</strong> increase in sales productivity with structured prioritization.</p>
-        <p>And <a href="https://www.articsledge.com/post/gartner-predictions-machine-learning-driven-sales-pipelines-by-2027">Gartner's Future of Sales report</a> predicts that by 2025, <strong>60%</strong> of B2B sales will transition from intuition to data-driven selling.</p>
-        <p>Don't be in the 40% still winging it. You're better than that. Once you've prioritized your leads, here's how to go about <Link href="/blog/convert-warm-leads-customers">converting warm leads to customers</Link>.</p>
+        <p>And <a href="https://www.articsledge.com/post/gartner-predictions-machine-learning-driven-sales-pipelines-by-2027">Gartner's Future of Sales report</a> predicts that by 2025, <strong>60%</strong> of B2B sales will move from intuition to data-driven selling.</p>
+        <p>You don't want to be in the 40% still running on instinct. Once your leads are prioritized, the next step is closing them, and our guide on <Link href="/blog/convert-warm-leads-customers">converting warm leads to customers</Link> picks up from there.</p>
     </SectionTitle>
 </div>
 
@@ -308,7 +299,7 @@ export const metadata = buildPostMetadata(post);
         eyebrow="Ready to try it?"
         title="Start Prioritizing Smarter Today"
     >
-        <p>Let's bring it together. Here are your five steps:</p>
+        <p>So here's the whole thing in five steps:</p>
         <ol>
             <li><strong>Define your ICP criteria</strong> - Create a 1-5 fit score for fast triage</li>
             <li><strong>Create your ICP Engagement Score</strong> - Weight fit at 70% and engagement at 30%</li>
@@ -316,10 +307,9 @@ export const metadata = buildPostMetadata(post);
             <li><strong>Apply the 72-hour rule</strong> - Recency matters as much as score</li>
             <li><strong>Review and refine weekly</strong> - Let conversion data guide adjustments</li>
         </ol>
-        <p>Start with the framework. Try it manually for a week with a spreadsheet and your LinkedIn notifications. See what happens to your response rates.</p>
-        <p>If you find yourself wishing you could track more posts and catch more engaged prospects, Guffles offers $150 in wallet credit to get started.</p>
-        <p>Paste a LinkedIn post URL, see who engaged, filter by your ICP, and reach out while the context is still fresh.</p>
-        <p><strong>The best leads aren't just the ones who look good on paper. They're the ones showing interest right now.</strong> Go find them.</p>
+        <p>Start with the framework itself. Run it by hand for a week with a spreadsheet and your LinkedIn notifications, and watch what happens to your response rates. That alone tends to be a wake-up call.</p>
+        <p>If you reach the point where you wish you could track more posts and catch more engaged prospects than your week allows, Guffles gives you $150 in wallet credit to get started. Paste a LinkedIn post URL, see who engaged, filter by your ICP, and reach out while the context is still fresh.</p>
+        <p>The best leads aren't the ones who look good on paper. They're the ones showing interest right now, so go find them.</p>
     </SectionTitle>
 
     <Callout title="Try It Free" icon={<Target className="w-5 h-5 text-primary" />}>

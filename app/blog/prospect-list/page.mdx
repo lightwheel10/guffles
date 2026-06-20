@@ -7,6 +7,8 @@
   OpenGraph/canonical now come from <BlogPostLayout> + lib/blog/*. This file only
   declares the `post` data object (single source of truth) and the article body.
   See docs/BLOG_SEO_CHECKLIST.md.
+  2026-06-20: Deep humanizing pass: rewrote prose to remove AI-writing tells,
+  cleaned dashes/curly quotes; stats, links, schema, and the post object preserved.
   ============================================================================
 */}
 
@@ -98,7 +100,7 @@ export const metadata = buildPostMetadata(post);
 </TLDR>
 
 <div className="lead text-xl md:text-2xl text-foreground font-medium mb-8 leading-relaxed">
-    Here's a stat that should make you angry: sales reps spend up to <a href="https://spotio.com/blog/sales-statistics/" target="_blank" rel="noopener noreferrer"><strong>40% of their time</strong></a> just searching for someone to call (SPOTIO, 2025). That's nearly half your day gone before you've had a single conversation.
+    Sales reps spend up to <a href="https://spotio.com/blog/sales-statistics/" target="_blank" rel="noopener noreferrer">40% of their time</a> just searching for someone to call (SPOTIO, 2025). That is nearly half the working day gone before anyone has had a single conversation, and it drives me a little crazy every time I see a team operating that way.
 </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 not-prose my-10">
@@ -107,44 +109,40 @@ export const metadata = buildPostMetadata(post);
    <Stat label="Time to Build List" value="30 min" sub="With right process" />
 </div>
 
-<p>I've been there. In my 8 years of B2B sales, I've watched teams blow thousands on ZoomInfo subscriptions and still end up with lists of people who never respond. The problem isn't finding contacts. It's finding the <em>right</em> contacts.</p>
+<p>I have been there. Across eight years of B2B sales I have watched teams blow thousands on ZoomInfo subscriptions and still end up with lists of people who never respond. Finding contacts was never the hard part. Finding the <em>right</em> contacts is.</p>
 
-<p>The good news? You don't need a $15,000 annual contract to build a B2B prospect list that actually converts. In this guide, I'll show you how to build a B2B prospect list in 30 minutes, for under $100 a month, or even free. The secret isn't working harder. It's starting with signals instead of guesses.</p>
+<p>You do not need a $15,000 annual contract to build a B2B prospect list that actually converts. I will walk you through building one in 30 minutes, for under $100 a month, or for nothing at all if you have the patience. The trick is not working harder. It is starting with signals instead of guesses about who might pick up the phone.</p>
 
 <div id="section-1">
     <SectionTitle title="1) What Makes a Prospect List Actually Valuable">
-        Before we get into the how, let's talk about what you're actually building.
+        It helps to be clear about what you are actually building before you start collecting names.
     </SectionTitle>
 
-    <p><strong>A B2B prospect list is a curated database of potential business customers containing contact information, company data, and qualifying criteria that help sales teams prioritize outreach to the most likely buyers.</strong></p>
+    <p>A B2B prospect list is a curated database of potential business customers. It holds contact information, company data, and qualifying criteria that help a sales team prioritize outreach toward the people most likely to buy. That is the textbook definition, and most lists stop right there. They become databases of people who <em>might</em> fit your ICP, which is not the same as people who will respond to you.</p>
 
-    <p>Sound familiar? Most lists stop there. They're just databases of people who <em>might</em> fit your ICP.</p>
+    <p>After generating more than $12M in pipeline, the lesson I keep relearning is that the type of list matters far more than the size of it. Fifty warm leads will outperform 500 cold contacts every single time. Teams that get lead qualification right see <a href="https://salesso.com/blog/sales-qualified-lead-statistics-2025-key-data-insights/" target="_blank" rel="noopener noreferrer">7x higher conversion rates</a> (Sales So, 2025), and that gap is not subtle once you feel it in your own numbers.</p>
 
-    <p>Here's what I've learned after generating $12M+ in pipeline: the type of list matters more than the size. Fifty warm leads will outperform 500 cold contacts every single time. Teams that nail lead qualification see <a href="https://salesso.com/blog/sales-qualified-lead-statistics-2025-key-data-insights/" target="_blank" rel="noopener noreferrer"><strong>7x higher conversion rates</strong></a> (Sales So, 2025).</p>
-
-    <p>So what should your prospect list actually include?</p>
+    <p>So what belongs on the list itself?</p>
 
     <ul>
         <li>Contact name and job title</li>
         <li>Email address and phone number</li>
         <li>Company name, industry, and size</li>
         <li>LinkedIn profile URL</li>
-        <li><strong>Engagement history</strong> (this is the part most people skip)</li>
+        <li>Engagement history, which is the part most people skip</li>
     </ul>
 
-    <p>That last bullet is the difference between a good list and a great one. But we'll get to that.</p>
+    <p>That last item is the whole difference between a good list and a great one. I will come back to it.</p>
 </div>
 
 <div id="section-2">
     <SectionTitle title="2) Cold Leads vs Warm Leads: The 8.5x Conversion Difference">
-        This is where most prospect list guides get it wrong. They focus on <em>finding</em> contacts but ignore <em>which</em> contacts to find.
+        This is where most prospect list guides go wrong. They obsess over <em>finding</em> contacts and never ask <em>which</em> contacts are worth finding.
     </SectionTitle>
 
-    <p><strong>A warm lead is a prospect who has shown interest in your product category through observable actions before any direct sales contact.</strong> These actions include engaging with relevant content, attending webinars, or interacting with competitor posts.</p>
+    <p>A warm lead is a prospect who has shown interest in your product category through some observable action before you ever reach out: engaging with relevant content, attending a webinar, or commenting on a competitor's post. A cold lead is just someone who matches a demographic profile. There is no prior interaction and no sign they are even thinking about the problem you solve. They look identical on a spreadsheet, which is exactly why so many teams treat them the same.</p>
 
-    <p>Cold leads? They're just people who match a demographic profile. No prior interaction. No indication they're thinking about the problem you solve.</p>
-
-    <p>Look at the numbers:</p>
+    <p>The numbers tell a different story:</p>
 
     <div className="not-prose my-8 overflow-x-auto">
         <table className="min-w-full border border-border rounded-lg">
@@ -181,54 +179,54 @@ export const metadata = buildPostMetadata(post);
         <p className="text-sm text-muted-foreground mt-2">Sources: <a href="https://www.b2bdrum.com/blog/cold-email-vs-warm-outreach-which-works-better-in-2025" target="_blank" rel="noopener noreferrer">B2B Drum</a> (2025), Industry benchmarks</p>
     </div>
 
-    <p>Warm leads close at <strong>14.6%</strong> compared to just <strong>1.7%</strong> for cold leads. That's an <strong>8.5x improvement</strong> in close rates. And you need half the touches to get there.</p>
+    <p>Warm leads close at 14.6% versus 1.7% for cold leads, an 8.5x improvement, and you get there with roughly half the touches. That second part matters as much as the first, because fewer touches means your reps actually have time to talk to humans.</p>
 
-    <p>I'd rather have an okay fit who's actively engaging with competitor content than a perfect ICP match who's never heard of the problem we solve. Engagement is intent. Intent is everything.</p>
+    <p>Given the choice, I will take an okay fit who is actively engaging with competitor content over a perfect ICP match who has never heard of the problem we solve. Engagement is the closest thing to intent you can observe from the outside, and intent is what actually moves a deal.</p>
 
-    <p>So how do you find these warm leads? This is where engagement-based prospecting changes the game. When someone likes or comments on a LinkedIn post about a specific pain point, they're publicly signaling interest in that topic. Learning to identify these <Link href="/blog/warm-leads-social">social engagement signals that reveal buyer intent</Link> is the first step. Tools like Guffles let you extract these engagers and filter them by your ICP criteria, turning public engagement into a warm prospect list. Instead of guessing who might be interested based on job title alone, you're finding people who've already raised their hand.</p>
+    <p>So how do you find these warm leads? This is the part that changes the way you prospect. When someone likes or comments on a LinkedIn post about a specific pain point, they are publicly signaling interest in that topic. Learning to read these <Link href="/blog/warm-leads-social">social engagement signals that reveal buyer intent</Link> is the first step. Tools like Guffles let you extract those engagers and filter them by your ICP, turning public engagement into a warm prospect list. Instead of guessing who might care based on a job title, you are finding people who have already raised their hand.</p>
 
-    <p>Now let's talk about how to actually build this list in 30 minutes.</p>
+    <p>With that out of the way, here is how to actually build the list in 30 minutes.</p>
 </div>
 
 <div id="section-3">
     <SectionTitle title="3) The 4-Step Process to Build Your Prospect List in 30 Minutes">
-        Alright, let's get practical. Here's the exact process I use:
+        This is the exact process I run when I sit down to build a list from nothing.
     </SectionTitle>
 
     <h3>Step 1: Define Your ICP (5 minutes)</h3>
 
-    <p>Get specific. "Salespeople" isn't an ICP. "VP of Sales at B2B SaaS companies with 50-200 employees" is.</p>
+    <p>Get specific. "Salespeople" is not an ICP. "VP of Sales at B2B SaaS companies with 50-200 employees" is.</p>
 
-    <p>If you have existing customers, profile your best ones. What industry? What company size? What job titles sign the checks? Write it down. You can't find the right people if you don't know who you're looking for.</p>
+    <p>If you already have customers, profile your best ones. What industry are they in, what size are the companies, and which job titles actually sign the checks? Write it down. You cannot find the right people if you have never bothered to describe them.</p>
 
     <h3>Step 2: Choose Your Data Source (2 minutes)</h3>
 
-    <p>You have three options:</p>
+    <p>You have three real options:</p>
     <ul>
         <li><strong>Manual</strong>: LinkedIn free search, Google (free, slower)</li>
         <li><strong>Engagement-based</strong>: Find people already interacting with relevant content (faster, warmer)</li>
         <li><strong>Database tools</strong>: Apollo, ZoomInfo (complete, expensive)</li>
     </ul>
 
-    <p>The source you choose determines lead quality. Demographic match gets you cold leads. Demonstrated interest gets you warm ones.</p>
+    <p>The source you pick is what determines lead quality. A demographic match gets you cold leads, while demonstrated interest gets you warm ones. Same effort, very different outcomes.</p>
 
     <h3>Step 3: Collect and Verify Contact Information (15 minutes)</h3>
 
-    <p>This is where most people waste time. Here's the reality: <a href="https://reply.io/blog/b2b-list-building/" target="_blank" rel="noopener noreferrer"><strong>B2B data decays by 2.1% per month</strong></a> (Reply.io). That's <strong>22.5%</strong> of your list outdated within a year.</p>
+    <p>This is where most people quietly waste the bulk of their time. <a href="https://reply.io/blog/b2b-list-building/" target="_blank" rel="noopener noreferrer">B2B data decays by 2.1% per month</a> (Reply.io), which works out to 22.5% of your list going stale within a year if you never touch it.</p>
 
-    <p>Verify emails before you add them. Use LinkedIn profiles as your anchor. Organize everything in a spreadsheet or CRM with consistent fields: name, title, company, email, phone, LinkedIn URL, and any engagement notes.</p>
+    <p>So verify emails before you add them, and use LinkedIn profiles as your anchor when something does not line up. Keep everything in a spreadsheet or CRM with consistent fields: name, title, company, email, phone, LinkedIn URL, and any engagement notes you picked up along the way.</p>
 
     <h3>Step 4: Score and Segment Leads by Priority (8 minutes)</h3>
 
-    <p>Not all leads deserve equal attention. Segment them:</p>
+    <p>Not every lead deserves the same attention, so split them into three buckets:</p>
 
     <ul>
-        <li><strong>Hot</strong>: Engaged + ICP match (contact immediately)</li>
-        <li><strong>Warm</strong>: Engaged OR strong ICP match (add to sequence)</li>
-        <li><strong>Cool</strong>: Demographic match only (nurture first)</li>
+        <li>Hot leads are engaged and an ICP match, so contact them immediately.</li>
+        <li>Warm leads are engaged or a strong ICP match, so drop them into a sequence.</li>
+        <li>Cool leads are a demographic match only, so nurture them before you pitch.</li>
     </ul>
 
-    <p>Start with the hot leads. Always.</p>
+    <p>Then start with the hot leads, every time. The whole point of scoring is to stop treating a stranger and a hand-raiser as if they are the same opportunity.</p>
 </div>
 
 <ArticleImage
@@ -239,22 +237,22 @@ export const metadata = buildPostMetadata(post);
 
 <div id="section-4">
     <SectionTitle title="4) Free and Affordable Prospect List Building Methods ($0-79/month)">
-        Let me be honest: manual methods work. They're just slow.
+        Manual methods genuinely work. They are just slow, and slow has a cost most people forget to count.
     </SectionTitle>
 
     <h3>Manual Methods (Free but Time-Intensive)</h3>
 
-    <p><strong>LinkedIn free search</strong> lets you filter by title, company, and industry. It's limited, but it works for small volumes.</p>
+    <p>LinkedIn free search lets you filter by title, company, and industry. It is limited, but for small volumes it does the job.</p>
 
-    <p><strong>Google advanced searches</strong> like <code>"VP Sales" + "company name" + email</code> can uncover contact info. Tedious? Yes. Free? Also yes.</p>
+    <p>Google advanced searches like <code>"VP Sales" + "company name" + email</code> can surface contact info if you are willing to dig. It is tedious work, but it does not cost anything beyond your afternoon.</p>
 
-    <p><strong>Referrals and networking</strong> produce the highest-quality leads, but the lowest volume. You can't scale word-of-mouth.</p>
+    <p>Referrals and networking produce the highest-quality leads of all, just at the lowest volume. Word-of-mouth simply does not scale, no matter how much you wish it would.</p>
 
-    <p>Reality check: manual prospecting caps at about <strong>10-20 verified leads per hour</strong>. And you're still guessing who's actually interested.</p>
+    <p>In practice, manual prospecting tops out around 10-20 verified leads per hour, and you are still guessing who among them actually cares.</p>
 
     <h3>Affordable Tools That Actually Work</h3>
 
-    <p>Here's where the math gets interesting:</p>
+    <p>Once you compare the options side by side, the math starts to favor the paid tools:</p>
 
     <div className="not-prose my-8 overflow-x-auto">
         <table className="min-w-full border border-border rounded-lg">
@@ -295,50 +293,50 @@ export const metadata = buildPostMetadata(post);
         </table>
     </div>
 
-    <p>Manual methods work for small volumes, but they don't scale and you're still guessing who's actually interested. This is where purpose-built tools make sense.</p>
+    <p>Manual methods are fine at small volumes, but they do not scale and they leave you guessing about intent. That is the gap purpose-built tools are meant to fill.</p>
 
-    <p>Guffles costs <strong>$79/month</strong> with <strong>$150 in free credits</strong> to start. That's a fraction of Apollo ($300+) or ZoomInfo ($15,000+/year). The difference? Guffles focuses specifically on engagement-based leads: paste a LinkedIn post URL, extract everyone who engaged, filter by your ICP. You're building a list of people who've already shown interest, not just a demographic match.</p>
+    <p>Guffles costs $79/month and starts you with $150 in free credits, which is a fraction of Apollo ($300+) or ZoomInfo ($15,000+/year). What you get for it is engagement-based leads specifically: paste a LinkedIn post URL, extract everyone who engaged, and filter by your ICP. You end up with a list of people who have already shown interest rather than a pile of demographic matches.</p>
 
-    <p>I'm not saying expensive tools don't have their place. They do. But for most teams, $79/month beats $15,000/year when you're trying to find warm leads.</p>
+    <p>None of this means expensive tools are pointless. They earn their keep for enterprise data teams. But for most teams chasing warm leads, $79/month wins against $15,000/year, and it is not close.</p>
 </div>
 
 <div id="section-5">
     <SectionTitle title="5) Common Mistakes That Kill Your Response Rates">
-        I've made all of these mistakes. Multiple times. Learn from my pain.
+        I have made every one of these mistakes, some of them more than once, so consider this the shortcut around my own pain.
     </SectionTitle>
 
     <p><strong>1. Prioritizing quantity over quality</strong></p>
-    <p>500 cold contacts feel productive. But 50 engaged prospects will generate more pipeline. Every time. I've tested this across hundreds of campaigns.</p>
+    <p>500 cold contacts feel productive when you are staring at a fresh spreadsheet, but 50 engaged prospects will generate more pipeline. I have tested this across hundreds of campaigns and the smaller, warmer list wins consistently.</p>
 
     <p><strong>2. Skipping verification</strong></p>
-    <p>Inaccurate contact data wastes <a href="https://taskdrive.com/sales/sales-statistics/" target="_blank" rel="noopener noreferrer"><strong>27.3% of sales reps' time</strong></a>. That's <strong>546 hours per year</strong> per rep (TaskDrive, 2025). An hour spent verifying saves ten hours chasing bounced emails.</p>
+    <p>Inaccurate contact data wastes <a href="https://taskdrive.com/sales/sales-statistics/" target="_blank" rel="noopener noreferrer">27.3% of sales reps' time</a>, which adds up to 546 hours per year per rep (TaskDrive, 2025). One hour spent verifying tends to save ten hours later chasing bounced emails.</p>
 
     <p><strong>3. Ignoring engagement signals</strong></p>
-    <p>A demographic match without intent is just a guess. Someone who commented on a competitor's post about your exact problem? That's a signal. Don't ignore it.</p>
+    <p>A demographic match without intent is just a guess wearing a nicer outfit. When someone comments on a competitor's post about the exact problem you solve, that is a signal, and ignoring it is leaving money on the table.</p>
 
     <p><strong>4. Letting your list go stale</strong></p>
-    <p>Remember that 2.1% monthly decay? A list you built six months ago is missing a quarter of its accuracy. Clean it or trash it.</p>
+    <p>That 2.1% monthly decay catches up with you fast. A list you built six months ago is already missing a meaningful chunk of its accuracy, so you either clean it or you stop trusting it.</p>
 
     <p><strong>5. Generic outreach to a targeted list</strong></p>
-    <p>You spent time building a great list. Don't waste it with "Hi &#123;First_Name&#125;, I'd love to connect." Reference something specific. Their engagement. Their company news. Something.</p>
+    <p>You put real effort into building a good list, so do not torch it with "Hi &#123;First_Name&#125;, I'd love to connect." Reference something concrete instead: the post they engaged with, recent company news, anything that proves you actually noticed them.</p>
 </div>
 
 <div id="section-6">
     <SectionTitle title="6) Keeping Your Prospect List Fresh">
-        Your prospect list isn't a one-time project. It's a living document.
+        A prospect list is not a one-time project. It is a living document that quietly rots if you ignore it.
     </SectionTitle>
 
-    <p><strong>The 22.5% problem</strong>: B2B contact data decays by <strong>2.1% every month</strong>. People change jobs. Companies get acquired. Emails bounce. Within a year, nearly a quarter of your list is garbage.</p>
+    <p>Call it the 22.5% problem. B2B contact data decays by 2.1% every month because people change jobs, companies get acquired, and emails bounce, so within a year nearly a quarter of your list is effectively garbage.</p>
 
-    <p>Here's what I do:</p>
+    <p>Here is the routine I stick to:</p>
 
     <ul>
-        <li><strong>Monthly cleaning</strong>: Remove bounces, update job changes, flag inactive contacts</li>
-        <li><strong>Continuous prospecting</strong>: Add 5-10 new warm leads weekly instead of batch-building quarterly</li>
-        <li><strong>Re-engage through new signals</strong>: Someone who went cold might be showing interest again on LinkedIn. Watch for it.</li>
+        <li>Clean the list monthly: remove bounces, update job changes, and flag contacts who have gone quiet.</li>
+        <li>Prospect continuously by adding 5-10 new warm leads a week instead of batch-building once a quarter.</li>
+        <li>Re-engage on new signals, because someone who went cold months ago might be showing interest again on LinkedIn if you are paying attention.</li>
     </ul>
 
-    <p>The teams that win aren't the ones with the biggest lists. They're the ones who keep their lists accurate and fresh.</p>
+    <p>The teams that win are not the ones sitting on the biggest lists. They are the ones who keep a smaller list accurate and current, week after week.</p>
 </div>
 
 <ArticleImage
@@ -365,17 +363,17 @@ export const metadata = buildPostMetadata(post);
         eyebrow="Ready to Start?"
         title="Get Your First Warm Prospect List"
     >
-        Let's cut to it: building a B2B prospect list doesn't have to eat your whole week or your whole budget. The three things that matter: quality beats quantity, speed is possible with the right process, and expensive isn't necessary.
+        Building a B2B prospect list does not have to eat your whole week or your whole budget. Quality beats quantity, the right process makes speed realistic, and you do not need an expensive contract to get there.
     </SectionTitle>
 
-    <p>After building hundreds of prospect lists, I'd take 50 engaged prospects over 500 cold contacts every time. The math just works.</p>
+    <p>After building hundreds of these lists, I would take 50 engaged prospects over 500 cold contacts every time. The math simply works in your favor.</p>
 
-    <p>If you want to test engagement-based prospecting without the manual work, Guffles offers <strong>$150 in free credits</strong> to get started. Paste a LinkedIn post URL, filter by your ICP, and have a warm prospect list in minutes. No annual contract, no $15,000 commitment. Just $79/month if you decide to continue.</p>
+    <p>If you want to test engagement-based prospecting without doing it all by hand, Guffles gives you $150 in free credits to start. Paste a LinkedIn post URL, filter by your ICP, and you have a warm prospect list in minutes, with no annual contract and no $15,000 commitment. It is $79/month only if you decide to keep going.</p>
 
-    <p>Or take the manual route. Either way, start with warm signals and watch your response rates climb.</p>
+    <p>If you would rather do it manually, that works too. Either way, start with warm signals and watch your response rates climb.</p>
 
     <Callout title="Key Takeaway" icon={<Target className="w-5 h-5 text-primary" />}>
-        Warm leads convert at 14.6% vs 1.7% for cold leads. That's an 8.5x improvement. The fastest path to warm leads? Find people who've already engaged with content about the problem you solve.
+        Warm leads convert at 14.6% versus 1.7% for cold leads, an 8.5x improvement. The fastest way to find them is to look for people who have already engaged with content about the problem you solve.
     </Callout>
 </div>
 

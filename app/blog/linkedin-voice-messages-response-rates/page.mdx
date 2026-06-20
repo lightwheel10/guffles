@@ -7,6 +7,8 @@
   OpenGraph/canonical now come from <BlogPostLayout> + lib/blog/*. This file only
   declares the `post` data object (single source of truth) and the article body.
   See docs/BLOG_SEO_CHECKLIST.md.
+  2026-06-20: Deep humanizing pass: rewrote prose to remove AI-writing tells,
+  cleaned dashes/curly quotes; stats, links, schema, and the post object preserved.
   ============================================================================
 */}
 
@@ -98,11 +100,11 @@ export const metadata = buildPostMetadata(post);
 <BlogPostLayout post={post}>
 
 <TLDR>
-  Here's the deal: LinkedIn voice messages can hit 40% response rates. But only if you send them to the right people. Most articles obsess over HOW to send voice messages. The real secret? WHO you send them to. Target prospects who've engaged with relevant content in the last 72 hours, and watch your response rates multiply. It's that simple. (And that hard.)
+  LinkedIn voice messages can hit 40% response rates, but only when you send them to the right people. Most articles obsess over how to record and send a voice message. That part takes 30 seconds and barely matters. What actually moves the number is who hears it. Send to prospects who engaged with relevant content in the last 72 hours and your response rates climb. The format is easy. The targeting is the work.
 </TLDR>
 
 <div className="lead text-xl md:text-2xl text-foreground font-medium mb-8 leading-relaxed">
-  You've probably heard that LinkedIn voice messages get <strong>40% response rates</strong>. Sales trainer Morgan Ingram popularized that stat, and it's been echoed across the internet ever since. But here's the thing: most salespeople who try voice messages don't get anywhere close to 40%. They get <strong>10-15%</strong> at best. Sound familiar? I've seen this pattern play out dozens of times. An SDR reads an article promising sky-high response rates, sends a bunch of voice messages to random connections, and gets... crickets. The format isn't the problem. The targeting is.
+  You've probably heard that LinkedIn voice messages get 40% response rates. Sales trainer Morgan Ingram popularized that stat and it's been echoed across the internet ever since. The trouble is that most salespeople who actually try voice messages land nowhere near 40%. They get 10-15% if they're lucky, and I've watched this exact pattern play out dozens of times. An SDR reads an article promising sky-high reply rates, fires off a batch of voice messages to random connections, and hears nothing back. The format was never the problem. The targeting was.
 </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 not-prose my-10">
@@ -115,13 +117,13 @@ export const metadata = buildPostMetadata(post);
   <SectionTitle title="1) What Are LinkedIn Voice Messages (and Why Most People Get Them Wrong)">
     <p>A LinkedIn voice message is a 60-second audio recording you can send to first-degree connections through the LinkedIn mobile app. Think of it as a voicemail that lives in their inbox.</p>
 
-    <p>The mechanics are straightforward. Open the LinkedIn app on your phone (sorry, desktop users - this is mobile-only). Go to your messages, tap on a connection, and you'll see a microphone icon. Hold it down, record your message, and release to send. Done.</p>
+    <p>The mechanics are about as simple as it gets. Open the LinkedIn app on your phone (and yes, desktop users, this one is mobile-only), go to your messages, tap a connection, and you'll see a microphone icon. Hold it down, record your message, and release to send.</p>
 
-    <p>But here's the catch that most articles gloss over: <strong>you can only send voice messages to first-degree connections</strong>. People you're already connected with. Not prospects you found on Sales Navigator. Not people you're trying to cold InMail.</p>
+    <p>The catch that most articles skip right past is that <strong>you can only send voice messages to first-degree connections</strong>: people you're already connected with. That rules out prospects you dug up on Sales Navigator, and it rules out anyone you're trying to reach with a cold InMail.</p>
 
-    <p>Honestly? I think this limitation is a feature, not a bug. It forces you to connect first. That <Link href="/blog/connection-requests">connection request</Link>? It's your first touchpoint. The voice message becomes your second. By the time they hear your voice, you're not a total stranger.</p>
+    <p>I'd argue that limitation is a feature, not a bug. It forces you to connect first, which means that <Link href="/blog/connection-requests">connection request</Link> becomes your first touchpoint and the voice message becomes your second. By the time they hear your voice, you're not a total stranger anymore.</p>
 
-    <p>The question isn't how to send voice messages. The question is: which of your connections should get them?</p>
+    <p>So the interesting part was never how to send a voice message. It's which of your connections actually deserve one.</p>
   </SectionTitle>
 </div>
 
@@ -129,37 +131,35 @@ export const metadata = buildPostMetadata(post);
   <SectionTitle title="2) Why Voice Messages Get 40% Response Rates (When Done Right)">
     <p>According to sales trainer <a href="https://reply.io/blog/linkedin-voice-messages/" target="_blank" rel="noopener noreferrer">Morgan Ingram's data</a>, LinkedIn voice messages achieve a <strong>40% response rate</strong> - nearly 4x higher than the <strong>10.3% average</strong> for text-based LinkedIn DMs. Research from <a href="https://lagrowthmachine.com/linkedin-voice-messages/" target="_blank" rel="noopener noreferrer">La Growth Machine</a> backs this up, showing voice messages boost reply rates by <strong>up to 35%</strong> compared to plain text.</p>
 
-    <p>So why do voice messages work so well? Four reasons.</p>
+    <p>There are a few reasons the format works as well as it does. The first is novelty. Most salespeople still default to text, so an actual voice is different enough to make someone stop scrolling. In an inbox full of "Hey [First Name], I noticed..." templates, a human voice gets attention simply by not being one more block of copy.</p>
 
-    <p><strong>Novelty factor.</strong> Most salespeople still send text. Your voice literally stands out because it sounds different. In a sea of "Hey [First Name], I noticed..." templates, an actual human voice gets attention.</p>
+    <p>The second is human connection. Tone, warmth, the little bits of personality, all of it survives in audio in a way it never does in text. It's much harder to ignore a real person talking than to delete another wall of words. I've had prospects tell me they replied only because I "seemed like a real person," which is a low bar, but that's honestly where outreach is right now.</p>
 
-    <p><strong>Human connection.</strong> Tone, warmth, personality - they all come through in audio. It's way harder to ignore a real human voice than another wall of text. I've had prospects tell me they responded just because I "seemed like a real person." (Low bar, I know. But that's where we are.)</p>
+    <p>Third is the effort it signals. You can't copy-paste a voice message, and recording one takes a little work. Prospects can tell, and people tend to reciprocate effort when they notice it.</p>
 
-    <p><strong>Effort signal.</strong> Recording a voice message takes work. You can't copy-paste it. Prospects notice when you've made actual effort, and they're more likely to reciprocate.</p>
+    <p>The last one is that voice resists templating. Everyone has received the text DM that's obviously a mail-merge with a name dropped in. You can't fake your way through audio the same way, so even when you're saying roughly the same thing to several people, each one still sounds personal.</p>
 
-    <p><strong>No template detection.</strong> Every salesperson has gotten that text DM that's clearly a mail-merge template with their name swapped in. Voice messages can't be templated the same way. Even if you're saying similar things, it always sounds personal.</p>
-
-    <p>But here's what those stats don't tell you: that 40% rate isn't automatic. It depends entirely on who you're messaging. The difference between <Link href="/blog/warm-vs-cold-outreach-data-breakdown">warm vs cold outreach results</Link> is massive.</p>
+    <p>What the stats leave out is that the 40% rate isn't a guarantee. It hinges almost entirely on who you're messaging, which is exactly why the gap between <Link href="/blog/warm-vs-cold-outreach-data-breakdown">warm vs cold outreach results</Link> is so wide.</p>
   </SectionTitle>
 </div>
 
 <div id="the-missing-piece">
   <SectionTitle title="3) The Missing Piece: Who You Message Matters More Than How">
-    <p>When I was running demand gen at my last startup, I made the classic mistake. I read an article about voice messages, got excited, and sent 50 voice messages to random connections that same week.</p>
+    <p>When I was running demand gen at my last startup, I made the classic mistake. I read an article about voice messages, got excited, and sent 50 of them to random connections in the same week.</p>
 
-    <p>Result? 6 responses. 12% response rate. Not terrible, but nowhere near 40%.</p>
+    <p>I got 6 responses. That's a 12% response rate. Not terrible, but a long way from 40%.</p>
 
-    <p>Here's what I was missing: <strong>voice messages to random connections still feel cold</strong>. Sure, we were "connected" on LinkedIn. But that connection was a generic request from months ago. They didn't remember me. They had no context for why I was suddenly in their ear.</p>
+    <p>What I'd missed was that <strong>voice messages to random connections still feel cold</strong>. Yes, we were technically "connected" on LinkedIn, but that connection was a generic request from months earlier. They didn't remember me and had no context for why I was suddenly in their ear.</p>
 
-    <p>The magic happens when you combine two things: the voice format AND warm targeting based on engagement signals.</p>
+    <p>The thing that actually moves the needle is combining the voice format with warm targeting based on engagement signals. One without the other doesn't do much.</p>
 
-    <p><a href="https://growleads.io/blog/warm-outreach-vs-cold-email/" target="_blank" rel="noopener noreferrer">B2B research</a> shows warm outreach achieves <strong>10-34% response rates</strong> compared to just <strong>1-5%</strong> for cold outreach - a <strong>5-10x improvement</strong>. And <a href="https://blog.hubspot.com/sales/sales-statistics" target="_blank" rel="noopener noreferrer">HubSpot data</a> shows leads contacted within 5 minutes of engagement are <strong>100 times more likely to qualify</strong> than those reached after 30 minutes. The engagement context matters. A lot.</p>
+    <p><a href="https://growleads.io/blog/warm-outreach-vs-cold-email/" target="_blank" rel="noopener noreferrer">B2B research</a> puts warm outreach at 10-34% response rates against just 1-5% for cold outreach, a 5-10x improvement. <a href="https://blog.hubspot.com/sales/sales-statistics" target="_blank" rel="noopener noreferrer">HubSpot data</a> goes further: leads contacted within 5 minutes of engagement are 100 times more likely to qualify than those reached after 30 minutes. Timing and context carry an enormous amount of weight here.</p>
 
-    <p>This is what I call finding people who've already raised their hand. Likes, comments, shares on relevant content - these are signals that someone is thinking about the problems you solve. Right now. Today. Not last month. Today. Learn more about <Link href="/blog/find-warm-leads-social-engagement-signals">finding warm leads from social engagement signals</Link>.</p>
+    <p>What you're really doing is finding people who have already raised their hand. A like, a comment, or a share on relevant content tells you someone is thinking about the problems you solve this week, not back in some quarter you've forgotten. You can read more about <Link href="/blog/find-warm-leads-social-engagement-signals">finding warm leads from social engagement signals</Link> if you want to go deeper.</p>
 
-    <p>Whether you track engagement manually (scrolling through post notifications and keeping a spreadsheet - yes, people still do this) or use tools like Guffles to extract and filter LinkedIn post engagers automatically, the principle is the same: prioritize prospects who have shown recent activity around relevant topics.</p>
+    <p>It doesn't much matter how you track that engagement. You can scroll through post notifications and keep a spreadsheet (plenty of people still do exactly this) or you can use a tool like Guffles to extract and filter LinkedIn post engagers automatically. Either way the principle holds: prioritize prospects who have shown recent activity around topics you care about.</p>
 
-    <p>A voice message to someone who commented on an industry post yesterday hits different than a voice message to someone you connected with 6 months ago and never spoke to. Trust me on this one.</p>
+    <p>A voice message to someone who commented on an industry post yesterday lands completely differently than the same message to someone you connected with 6 months ago and never spoke to again. That gap is the whole game.</p>
   </SectionTitle>
 </div>
 
@@ -171,51 +171,51 @@ export const metadata = buildPostMetadata(post);
 
 <div id="warm-voice-message-framework">
   <SectionTitle title="4) The Warm Voice Message Framework: 5 Steps to 40% Response Rates">
-    <p>After testing this approach across dozens of campaigns (and making plenty of mistakes along the way), here's the framework that consistently delivers results. I call it the 72-Hour Engagement Window because timing is everything.</p>
+    <p>After testing this across dozens of campaigns, and making plenty of mistakes along the way, here's the framework that consistently works for me. I call it the 72-Hour Engagement Window, because the timing is what holds the whole thing together.</p>
 
-    <p><strong>Step 1: Find Prospects Who Engaged With Relevant Content</strong></p>
+    <p><strong>Step 1: Find prospects who engaged with relevant content</strong></p>
 
-    <p>Look for comments and likes on industry posts, competitor content, or your own posts. Prioritize comments over likes - someone who took the time to write something shows stronger intent than a passive double-tap. Focus on posts less than 72 hours old. That's your window.</p>
+    <p>Look for comments and likes on industry posts, competitor content, or your own posts. Lean toward comments over likes, since someone who took the time to write something is showing more intent than a passive double-tap. Keep your attention on posts less than 72 hours old. That window is the whole point.</p>
 
-    <p><strong>Step 2: Send a Personalized Connection Request</strong></p>
+    <p><strong>Step 2: Send a personalized connection request</strong></p>
 
-    <p>Reference their engagement specifically. "Hey Sarah, loved your comment on Mike's post about outbound sales dying. Would love to connect." Keep it under 300 characters. <a href="https://www.alsona.com/blog/linkedin-connection-request-benchmarks-healthy-acceptance-rate-in-2025" target="_blank" rel="noopener noreferrer">LinkedIn data</a> shows personalized connection requests see <strong>45% acceptance rates</strong> versus <strong>15%</strong> for generic ones. That's <strong>3x better</strong>. And yes, 3x matters.</p>
+    <p>Reference their engagement directly. Something like "Hey Sarah, loved your comment on Mike's post about outbound sales dying, would love to connect." Keep it under 300 characters. <a href="https://www.alsona.com/blog/linkedin-connection-request-benchmarks-healthy-acceptance-rate-in-2025" target="_blank" rel="noopener noreferrer">LinkedIn data</a> shows personalized connection requests get accepted around 45% of the time versus about 15% for generic ones, which is roughly 3x better. That gap is worth the extra thirty seconds.</p>
 
-    <p><strong>Step 3: Within 72 Hours of Acceptance, Send the Voice Message</strong></p>
+    <p><strong>Step 3: Send the voice message within 72 hours of acceptance</strong></p>
 
-    <p>Don't wait. Seriously. Strike while the engagement is fresh. Our data shows that reaching out within 72 hours of engagement increases response rates by <strong>5-7x</strong> compared to waiting a week. The connection context is still in their mind.</p>
+    <p>Don't sit on it. Record while the engagement is still fresh. Our data shows that reaching out within 72 hours of engagement lifts response rates by 5-7x compared to waiting a week, because the connection context is still sitting near the top of their mind.</p>
 
-    <p><strong>Step 4: Reference Their Specific Engagement in the Message</strong></p>
+    <p><strong>Step 4: Reference their specific engagement in the message</strong></p>
 
-    <p>"I saw your comment on [post topic]..." This proves you're not blasting everyone. You actually paid attention. It transforms a cold outreach into a warm conversation.</p>
+    <p>Open with something like "I saw your comment on [post topic]..." That single line proves you're not blasting everyone, that you actually paid attention, and it quietly turns cold outreach into a warm conversation.</p>
 
-    <p><strong>Step 5: End With a Clear, Low-Friction CTA</strong></p>
+    <p><strong>Step 5: End with a clear, low-friction CTA</strong></p>
 
-    <p>Not "Let's schedule a call" - that's too big an ask for a first voice message. Try "Would you be open to a quick conversation about this?" Give them an easy yes or no. For guidance on <Link href="/blog/how-many-follow-up-emails">how many follow-ups to send</Link> if they don't respond, check our follow-up guide.</p>
+    <p>"Let's schedule a call" is too big an ask for a first voice message. Try "Would you be open to a quick conversation about this?" instead and give them an easy yes or no. If they don't respond, our guide on <Link href="/blog/how-many-follow-up-emails">how many follow-ups to send</Link> covers what to do next.</p>
 
-    <p>Here's the thing: the bottleneck isn't sending voice messages - that takes 30 seconds each. The bottleneck is finding who to send them to. Manually tracking engagement across dozens of industry posts is exhausting. I tried it. For three weeks. Nearly lost my mind.</p>
+    <p>The part people underestimate is that sending the voice message is the easy bit. Each one takes about 30 seconds. The real bottleneck is figuring out who to send them to, and manually tracking engagement across dozens of industry posts is genuinely draining. I did it by hand for three weeks and it was miserable.</p>
 
-    <p>This is where a tool like Guffles helps. For $79/month, you can paste any LinkedIn post URL, extract everyone who engaged with it, filter by ICP criteria like job title or company size, and export warm leads with contact info. Compare that to Apollo at $300+ or ZoomInfo at $500+ for cold data. You're not just saving money - you're getting warmer leads.</p>
+    <p>That's the gap a tool like Guffles fills. For $79/month you can paste any LinkedIn post URL, extract everyone who engaged with it, filter by ICP criteria like job title or company size, and export warm leads with contact info. Apollo runs $300+ and ZoomInfo $500+ for cold data, so the savings are real, but the bigger win is that the leads come in warm.</p>
   </SectionTitle>
 </div>
 
 <div id="scripts-that-work">
   <SectionTitle title="5) Voice Message Scripts That Actually Reference Engagement">
-    <p>Sales experts recommend keeping LinkedIn voice messages to 20-30 seconds - long enough to introduce yourself and provide value, short enough to respect your prospect's time. Here are three scripts I've tested that consistently get responses. Steal them. Tweak them. Make them yours.</p>
+    <p>Sales experts recommend keeping LinkedIn voice messages to 20-30 seconds: long enough to introduce yourself and offer something useful, short enough to respect your prospect's time. Here are three scripts I've tested that consistently get responses. Treat them as starting points and rewrite them in your own voice.</p>
 
-    <p><strong>Script 1: After They Commented on an Industry Post</strong></p>
+    <p><strong>Script 1: After they commented on an industry post</strong></p>
 
-    <p>"Hey [Name], this is Sarah - we just connected and I wanted to send a quick voice note instead of another text. I saw your comment on [Author]'s post about [topic] - really liked your point about [specific thing they said]. I actually work in [related area] and would love to swap notes sometime. No pressure, but if you're ever open to a quick chat, just let me know. Either way, appreciate the connection."</p>
+    <p>"Hey [Name], this is [Your name], we just connected and I wanted to send a quick voice note instead of another text. I saw your comment on [Author]'s post about [topic] and really liked your point about [specific thing they said]. I actually work in [related area] and would love to swap notes sometime. No pressure, but if you're ever open to a quick chat, just let me know. Either way, appreciate the connection."</p>
 
-    <p><strong>Script 2: After They Liked Your Content</strong></p>
+    <p><strong>Script 2: After they liked your content</strong></p>
 
-    <p>"Hey [Name], Sarah here. Thanks for connecting - and for the like on my post about [topic]. Always good to meet someone else who's thinking about this stuff. I help [description of what you do] - if that's ever relevant to what you're working on, I'd love to hear what you're seeing on your end. Feel free to reply here or just ignore this if the timing's not right. Talk soon."</p>
+    <p>"Hey [Name], [Your name] here. Thanks for connecting, and for the like on my post about [topic]. Always good to meet someone else who's thinking about this stuff. I help [description of what you do], so if that's ever relevant to what you're working on, I'd love to hear what you're seeing on your end. Feel free to reply here, or just ignore this if the timing's not right. Talk soon."</p>
 
-    <p><strong>Script 3: After They Engaged With a Competitor's Post</strong></p>
+    <p><strong>Script 3: After they engaged with a competitor's post</strong></p>
 
-    <p>"Hi [Name], Sarah - thanks for accepting. I noticed you commented on [Competitor]'s post about [topic]. I actually have a slightly different take on that - we've been seeing [brief insight]. Would love to share what's working for us if you're curious. No pitch, just perspective. Let me know if you'd be up for a quick chat."</p>
+    <p>"Hi [Name], [Your name] here, thanks for accepting. I noticed you commented on [Competitor]'s post about [topic]. I actually have a slightly different take on that, we've been seeing [brief insight]. Would love to share what's working for us if you're curious. No pitch, just perspective. Let me know if you'd be up for a quick chat."</p>
 
-    <p>Notice what these scripts have in common? They all reference specific engagement. They all have a casual, non-salesy tone. And they all end with a soft ask - "if you're open to it" rather than "let's book a call Tuesday at 3pm." That last part matters more than you'd think. For your initial outreach, see our guide on <Link href="/blog/linkedin-first-message">crafting the perfect LinkedIn first message</Link>.</p>
+    <p>What ties these together is that each one references the specific engagement, keeps a casual and non-salesy tone, and ends with a soft ask. "If you're open to it" pulls far better than "let's book a call Tuesday at 3pm," and that closing line matters more than most people expect. When you're working on the very first message, our guide on <Link href="/blog/linkedin-first-message">crafting the perfect LinkedIn first message</Link> goes deeper.</p>
   </SectionTitle>
 </div>
 
@@ -223,27 +223,27 @@ export const metadata = buildPostMetadata(post);
   <SectionTitle title="6) Best Practices and Common Mistakes">
     <p><strong>Best Practices</strong></p>
 
-    <p><strong>Keep it 20-30 seconds.</strong> Long enough to add value, short enough to respect their time. LinkedIn allows up to 60 seconds, but honestly? That's way too long. If you can't make your point in 30 seconds, you're probably overcomplicating it.</p>
+    <p>Keep the message to 20-30 seconds. That's long enough to add value and short enough to respect their time. LinkedIn lets you run up to 60 seconds, but a full minute is far too long. If you can't make your point in 30, you're probably overcomplicating it.</p>
 
-    <p><strong>Smile when you record.</strong> Yes, people can hear it in your voice. This sounds cheesy, but I've A/B tested it. Messages recorded with a smile get better responses. Not sure why. But they do.</p>
+    <p>Smile while you record, because people really can hear it. It sounds cheesy, I know, but I've A/B tested it and the messages recorded with a smile pull better responses. I have no idea why, and I've stopped trying to explain it.</p>
 
-    <p><strong>Use their name twice.</strong> Once at the start to grab attention, once when asking for something to make the ask feel personal.</p>
+    <p>Use their name twice: once at the start to grab attention, and once when you make your ask so the request feels personal rather than tacked on.</p>
 
-    <p><strong>Find a quiet background.</strong> Coffee shop noise sounds unprofessional. Record from somewhere without background chatter. (I learned this one the embarrassing way.)</p>
+    <p>Find a quiet spot to record. Coffee shop clatter reads as unprofessional, so look for somewhere without background chatter. I learned that one the embarrassing way.</p>
 
-    <p><strong>One take is fine.</strong> Small stumbles make it sound more human. Don't obsess over perfection - that actually makes you sound robotic. Weird, right?</p>
+    <p>One take is plenty. Small stumbles make you sound human, and obsessing over a flawless take tends to push you in the opposite direction, where you come across stiff and robotic.</p>
 
     <p><strong>Common Mistakes</strong></p>
 
-    <p><strong>Leading with your pitch.</strong> Big mistake. Earn the right to sell first. Your first voice message should build connection, not close deals.</p>
+    <p>Leading with your pitch is the fastest way to get ignored. Earn the right to sell first. A first voice message should build a little connection, not try to close a deal.</p>
 
-    <p><strong>Not referencing why you connected.</strong> Generic = deleted. If you don't mention their engagement or something specific about them, you sound like everyone else.</p>
+    <p>Failing to reference why you connected makes you generic, and generic gets deleted. If you never mention their engagement or anything specific about them, you sound like everyone else in their inbox.</p>
 
-    <p><strong>Asking for too much.</strong> "Let's do a 30-minute call" scares people off. Start smaller. Way smaller.</p>
+    <p>Asking for too much scares people off. "Let's do a 30-minute call" is a heavy first request, so start much smaller than feels natural.</p>
 
-    <p><strong>Sending to everyone.</strong> Quality over quantity. Every time. 10 voice messages to warm leads beats 100 to random connections. This is why <Link href="/blog/linkedin-engagement-leads">turning LinkedIn engagement into leads</Link> matters so much.</p>
+    <p>Sending to everyone defeats the purpose. Ten voice messages to genuinely warm leads will beat a hundred to random connections, which is exactly why <Link href="/blog/linkedin-engagement-leads">turning LinkedIn engagement into leads</Link> matters so much.</p>
 
-    <p><strong>Waiting too long.</strong> The 72-hour window is real. After that, the engagement context fades and you're basically cold again. Back to square one.</p>
+    <p>Waiting too long quietly kills it. The 72-hour window is real, and once it closes the engagement context fades and you're effectively cold again.</p>
   </SectionTitle>
 </div>
 
@@ -257,7 +257,7 @@ export const metadata = buildPostMetadata(post);
     <li>Find 10 prospects who engaged with a relevant industry post in the last 72 hours</li>
     <li>Send personalized connection requests mentioning their specific engagement</li>
     <li>Within 72 hours of acceptance, send a 20-30 second voice message referencing their engagement</li>
-    <li>End with a soft ask - "Would you be open to a quick conversation?"</li>
+    <li>End with a soft ask like "Would you be open to a quick conversation?"</li>
     <li>Track responses and iterate on your script</li>
   </ul>
 </div>
@@ -270,15 +270,15 @@ export const metadata = buildPostMetadata(post);
 
 <div id="cta">
   <SectionTitle eyebrow="Ready to try it?" title="Stop Sending Voice Messages Into the Void">
-    <p>Look, the combination of intent-based targeting plus personalized LinkedIn voice messages is the highest-response-rate outreach strategy available on LinkedIn. Period. You can start manually by tracking post engagers in a spreadsheet. It works. It's just slow. Really slow.</p>
+    <p>In my experience, intent-based targeting paired with personalized LinkedIn voice messages is the highest-response-rate outreach strategy you can run on the platform. You can absolutely start by hand, tracking post engagers in a spreadsheet. It works fine, it's just slow enough that most people give up before it pays off.</p>
 
-    <p>Or you can try Guffles with $150 in wallet credits and see how many warm leads are waiting in your industry's top posts. Paste a LinkedIn post URL, filter by your ICP, and export a list of people who've already shown interest in what you sell.</p>
+    <p>Or you can try Guffles with $150 in wallet credits and see how many warm leads are already sitting in your industry's top posts. Paste a LinkedIn post URL, filter by your ICP, and export a list of people who've shown interest in what you sell.</p>
 
-    <p>Either way, stop treating all connections the same. Your voice deserves to be heard by people who are actually listening.</p>
+    <p>Either way, stop treating every connection the same. Your voice deserves to reach the people who are actually listening.</p>
   </SectionTitle>
 
   <Callout title="Start Finding Warm Leads" icon={<Target className="w-5 h-5 text-primary" />}>
-    Get $150 in wallet credits when you sign up. Paste any LinkedIn post URL and extract everyone who engaged with it - filtered by job title, company size, and more. It takes about 30 seconds. Seriously.
+    Get $150 in wallet credits when you sign up. Paste any LinkedIn post URL and extract everyone who engaged with it, filtered by job title, company size, and more. The whole thing takes about 30 seconds.
   </Callout>
 </div>
 

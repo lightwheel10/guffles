@@ -7,6 +7,8 @@
   OpenGraph/canonical now come from <BlogPostLayout> + lib/blog/*. This file only
   declares the `post` data object (single source of truth) and the article body.
   See docs/BLOG_SEO_CHECKLIST.md.
+  2026-06-20: Deep humanizing pass: rewrote prose to remove AI-writing tells,
+  cleaned dashes/curly quotes; stats, links, schema, and the post object preserved.
   ============================================================================
 */}
 
@@ -93,16 +95,16 @@ export const metadata = buildPostMetadata(post);
 <BlogPostLayout post={post}>
 
 <TLDR>
-    Personalization doubles cold email response rates (18% vs 9%), but only 5% of senders do it consistently. This guide covers 4 tactics to scale personalization - trigger-based templates, first-line customization, AI research, and segmentation. But here's the twist: warm leads from engagement signals often outperform even perfect cold personalization, hitting 10-34% response rates.
+    Personalization roughly doubles cold email response rates (18% vs 9%), yet only 5% of senders actually do it on every email. This guide walks through four tactics for scaling it: trigger-based templates, first-line customization, AI research, and segmentation. The part most guides skip is that warm leads from engagement signals tend to beat even your most carefully personalized cold email, landing somewhere around 10-34% response rates.
 </TLDR>
 
 <div className="lead text-xl md:text-2xl text-foreground font-medium mb-8 leading-relaxed">
-    I spent the first three years of my sales career convinced that better personalization was the answer to everything. If response rates were low, I just needed to research more, write smarter first lines, find more clever angles. Sound familiar?
+    For the first three years of my sales career I was convinced that better personalization fixed everything. Low response rates? Research harder, write smarter openers, find a cleverer angle. I believed that for a long time, and I was mostly wrong.
 </div>
 
-<p>Here's the thing nobody wants to admit: SDRs are spending more time than ever on personalization, yet response rates keep dropping. Something doesn't add up. You've been told personalization is the answer to low response rates. So you research every prospect, craft custom first lines, and still see single-digit replies. The problem isn't your effort. It's the math. (And I had to learn this the hard way.)</p>
+<p>Here is the part nobody really wants to say out loud. Reps are pouring more time than ever into personalization, and reply rates keep sliding. You were told personalization is the cure for low response rates, so you research every prospect, write a custom first line for each one, and still watch single-digit replies come back. The effort is not the issue. The math is. I learned that the slow, expensive way.</p>
 
-<p>This guide teaches you practical tactics for scaling personalization - triggers, segmentation, the right way to use AI. But I'm also going to show you something most guides won't: even perfect personalization has a ceiling. And sometimes the smarter play isn't better emails. It's better leads.</p>
+<p>So this guide does two things. It gives you practical tactics for scaling personalization (triggers, segmentation, the sane way to use AI), and then it shows you the thing most guides quietly avoid: even flawless personalization runs into a ceiling. Past a certain point the better move is not a better email. It is a better lead.</p>
 
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 not-prose my-10">
    <Stat label="Personalization Boost" value="142%" sub="Multi-point personalization (Smartlead)" />
@@ -112,36 +114,36 @@ export const metadata = buildPostMetadata(post);
 
 <div id="section-1">
     <SectionTitle title="1) Why Personalization Actually Works (The Data)">
-        Before I get contrarian on you, let me be clear: personalization works. I've seen it. I've measured it. The data backs it up.
+        Before I start poking holes in personalization, I want to be fair to it. It works. I have run it, measured it, and watched the numbers move.
     </SectionTitle>
 
     <h3>The Numbers That Prove It</h3>
 
-    <p>According to <a href="https://belkins.io/blog/cold-email-response-rates" target="_blank" rel="noopener noreferrer">Belkins' analysis</a> of 16.5 million cold emails, average reply rates have dropped to just <strong>5.8%</strong> in 2025 - down from 8.5% in 2019. But here's where it gets interesting. <a href="https://backlinko.com/email-outreach-study" target="_blank" rel="noopener noreferrer">Backlinko's email outreach study</a> found that emails with custom content see a <strong>32.7%</strong> boost in response rates.</p>
+    <p>According to <a href="https://belkins.io/blog/cold-email-response-rates" target="_blank" rel="noopener noreferrer">Belkins' analysis</a> of 16.5 million cold emails, average reply rates have slid to just 5.8% in 2025, down from 8.5% in 2019. That alone is worth sitting with. Then <a href="https://backlinko.com/email-outreach-study" target="_blank" rel="noopener noreferrer">Backlinko's email outreach study</a> found that emails with custom content earn a 32.7% lift in response rates, which tells you the lever still works even as the baseline drops.</p>
 
-    <p>And if you really commit? Highly personalized campaigns using multiple custom fields boost reply rates by <strong>142%</strong>, according to <a href="https://www.smartlead.ai/blog/cold-email-stats" target="_blank" rel="noopener noreferrer">Smartlead's 2025 research</a>. That's not a typo.</p>
+    <p>And if you really go all in, highly personalized campaigns using multiple custom fields push reply rates up by 142%, per <a href="https://www.smartlead.ai/blog/cold-email-stats" target="_blank" rel="noopener noreferrer">Smartlead's 2025 research</a>. I double-checked that figure the first time I saw it, because it sounds inflated. It is not.</p>
 
-    <p>Here's the kicker though: according to <a href="https://mailshake.com/blog/the-state-of-cold-email-2025/" target="_blank" rel="noopener noreferrer">Mailshake's State of Cold Email report</a>, only <strong>5%</strong> of senders personalize every email. Most people don't do it. But those who do? They get 2-3x better results.</p>
+    <p>The catch is in the participation rate. <a href="https://mailshake.com/blog/the-state-of-cold-email-2025/" target="_blank" rel="noopener noreferrer">Mailshake's State of Cold Email report</a> found that only 5% of senders personalize every email. Almost nobody actually does this. The few who do tend to see 2-3x the results of everyone else, which is exactly what you would expect when most of the field is sending the same templated note.</p>
 
     <blockquote>
         <strong>Cold email personalization at scale</strong> is customizing outreach emails with recipient-specific details while sending to hundreds or thousands of prospects, using segmentation, templates, and automation.
     </blockquote>
 
-    <p>So yes, personalization matters. The real question is: how do you actually do it at scale without burning out?</p>
+    <p>So personalization matters, no argument there. The harder problem is doing it across a real pipeline without setting your week on fire.</p>
 </div>
 
 <div id="section-2">
     <SectionTitle title="2) How to Personalize Cold Emails at Scale (4 Tactics)">
-        Here are four tactics that let you personalize without spending 10 hours a day on research.
+        These are the four tactics I lean on to personalize without losing ten hours a day to research.
     </SectionTitle>
 
     <h3>Tactic 1: Segment by Shared Triggers</h3>
 
-    <p>This is the tactic that changed everything for me. Stop grouping prospects by demographics alone. Group them by signals - things that actually happened to them recently.</p>
+    <p>This is the one that reshaped how I work. Stop grouping prospects by demographics on their own. Group them by signals, meaning things that actually happened to them in the last few weeks.</p>
 
-    <p>Common triggers include: funding rounds, job changes, hiring sprees, product launches. When you segment by trigger, you write one template that feels personal to everyone in that group.</p>
+    <p>The triggers I look for most are funding rounds, job changes, hiring sprees, and product launches. Segment by one of those and you can write a single template that still reads as personal to everyone in the group.</p>
 
-    <p>For example, everyone who just raised a Series A has the same context: they're flush with cash, probably hiring, and looking to scale fast. One template, same relevance, fraction of the time. Game changer.</p>
+    <p>Take a Series A. Everyone who just raised one shares roughly the same situation: cash in the bank, a hiring plan, and pressure to scale fast. So one template covers the whole list, the relevance holds, and you spend a fraction of the time you would writing each note from scratch.</p>
 
     <blockquote>
         <strong>Trigger-based personalization</strong> is customizing emails based on specific prospect signals like funding announcements, job changes, or content engagement rather than generic demographic data.
@@ -149,45 +151,45 @@ export const metadata = buildPostMetadata(post);
 
     <h3>Tactic 2: Personalize the First Line Only</h3>
 
-    <p>I used to personalize everything. Every paragraph. Every sentence. I was thorough. I was also wasting my time.</p>
+    <p>For years I personalized everything. Every paragraph, every sentence, the whole thing rebuilt per prospect. I felt diligent. I was mostly just burning hours I did not have.</p>
 
-    <p>Here's what I learned: the first line gets the attention. The body delivers the value prop. Research shows personalized subject lines alone boost opens by <strong>37%</strong>, according to <a href="https://mailmeteor.com/cold-email/personalization" target="_blank" rel="noopener noreferrer">Experian</a>. For more ideas on crafting that perfect opener, check out our guide to <Link href="/blog/cold-email-opening-lines-examples">cold email opening lines</Link>.</p>
+    <p>What finally clicked: the first line earns the attention, and the body carries the value prop. Personalized subject lines alone lift opens by 37%, according to <a href="https://mailmeteor.com/cold-email/personalization" target="_blank" rel="noopener noreferrer">Experian</a>, which tells you how much weight the opening does. If you want more ideas for that opener, our guide to <Link href="/blog/cold-email-opening-lines-examples">cold email opening lines</Link> goes deeper.</p>
 
-    <p>So now? I template the body. I customize the opener. The first line references something specific - a podcast appearance, a LinkedIn post, a company announcement. The rest is a proven template that converts. Same impact, a third of the effort. Trust me on this one.</p>
+    <p>So now I template the body and only customize the opener. That first line points at something concrete, a podcast appearance, a LinkedIn post, a company announcement, and the rest is a template I already know converts. The impact holds up and the effort drops to about a third. This is the change I would make first if you only have time for one.</p>
 
     <h3>Tactic 3: Use AI for Research, Not Writing</h3>
 
-    <p>Look, <strong>74%</strong> of marketers are already using AI for content personalization, according to <a href="https://www.salesforce.com/resources/research-reports/state-of-marketing/" target="_blank" rel="noopener noreferrer">Salesforce</a>. But there's a right way and a wrong way.</p>
+    <p>About 74% of marketers already use AI for content personalization, according to <a href="https://www.salesforce.com/resources/research-reports/state-of-marketing/" target="_blank" rel="noopener noreferrer">Salesforce</a>. The split that matters is where you point it.</p>
 
-    <p>AI is great at finding triggers fast. It can scan a prospect's LinkedIn, identify recent news, pull out talking points in seconds. That's valuable.</p>
+    <p>AI is genuinely good at surfacing triggers fast. It will scan a prospect's LinkedIn, flag recent news, and pull out talking points in seconds, and that part saves real time.</p>
 
-    <p>But AI-written emails? They often feel... off. Generic in that specifically AI-generated way. (You can spot them a mile away.) For high-value prospects, human touch still matters. So I use AI to speed up research, then write the actual email myself. Best of both worlds.</p>
+    <p>AI-written emails are a different story. They tend to land slightly off, generic in that particular machine way you can pick out from across the room. For prospects who actually matter, the human touch still earns the reply. So I let AI handle the research and I write the email myself. You get the speed without the tell.</p>
 
     <h3>Tactic 4: Build Trigger-Based Templates</h3>
 
-    <p>This is where it all comes together. Build an if-this-then-that system. Funding announcement? Template A. New promotion? Template B. Hired for a role you serve? Template C.</p>
+    <p>This is where the first three tactics stack into a system. Set up a simple if-this-then-that rule: funding announcement maps to Template A, a new promotion to Template B, a hire for a role you serve to Template C.</p>
 
-    <p>Top SDRs use this approach to cut per-email time from <strong>10+ minutes</strong> to <strong>under 3 minutes</strong>, according to <a href="https://www.breakcold.com/blog/cold-email-reply-rate" target="_blank" rel="noopener noreferrer">Breakcold</a>. You're not starting from scratch. You're choosing the right template and customizing one or two lines.</p>
+    <p>Top reps use exactly this to cut per-email time from 10+ minutes to under 3 minutes, according to <a href="https://www.breakcold.com/blog/cold-email-reply-rate" target="_blank" rel="noopener noreferrer">Breakcold</a>. You are never starting from a blank page. You pick the matching template and adjust a line or two.</p>
 
-    <p>Whether you're manually tracking LinkedIn engagement or using tools like Guffles to extract engagers from relevant posts, the principle remains: context beats customization. A prospect who just commented on a competitor's product announcement gives you more to work with than a cold lead with a fancy first line.</p>
+    <p>Whether you track LinkedIn engagement by hand or use a tool like Guffles to pull engagers off relevant posts, the principle holds: context beats customization. A prospect who commented on a competitor's product announcement yesterday hands you far more to work with than a cold lead wrapped in a clever first line.</p>
 </div>
 
 <div id="section-3">
     <SectionTitle title="3) The Time Investment Problem">
-        Let's do some honest math about what personalization really costs.
+        Now the honest accounting of what personalization actually costs you.
     </SectionTitle>
 
     <h3>The Math That Doesn't Scale</h3>
 
-    <p>Manual personalization takes <strong>10+ minutes</strong> per email if you're doing it right - researching the prospect, finding a relevant angle, crafting a custom opener.</p>
+    <p>Done properly, manual personalization runs 10+ minutes per email: research the prospect, find a relevant angle, write a custom opener that does not sound forced.</p>
 
-    <p>With trigger-based templates, you can cut that to under 3 minutes. Big improvement. But here's where reality hits.</p>
+    <p>Trigger-based templates pull that down to under 3 minutes, which is a real improvement. Then reality shows up.</p>
 
-    <p>An SDR sends 50-100 emails per day. At 10 minutes each, that's 8-16 hours of just personalization. Nobody has that time. Not even close. Even at 3 minutes each, we're talking 2.5-5 hours daily.</p>
+    <p>A rep sends 50-100 emails a day. At 10 minutes each that is 8 to 16 hours of personalization alone, which is obviously impossible. Even at the optimized 3 minutes you are looking at 2.5 to 5 hours every day just on this one task.</p>
 
-    <p>And here's the uncomfortable part: after you cover the basics - their name, company, a relevant trigger - each extra minute of personalization yields smaller gains. You hit diminishing returns fast.</p>
+    <p>There is a quieter problem underneath the time one. Once you cover the basics, the name, the company, a relevant trigger, every additional minute of personalization buys you less. The returns flatten out faster than most people expect.</p>
 
-    <p>This is why only <strong>5%</strong> of senders personalize every email. It's not because they don't care. It's because the math doesn't work.</p>
+    <p>That is the real reason only 5% of senders personalize every email. It is not that they do not care. The math simply does not close.</p>
 </div>
 
 <ArticleImage
@@ -198,28 +200,28 @@ export const metadata = buildPostMetadata(post);
 
 <div id="section-4">
     <SectionTitle title="4) The Ceiling Nobody Talks About">
-        Here's what nobody tells you about personalization limits.
+        This is the part of personalization that the playbooks tend to skip.
     </SectionTitle>
 
     <h3>Even Perfect Personalization Has Limits</h3>
 
-    <p>I've run the numbers. I've talked to hundreds of sales teams. And I keep seeing the same pattern.</p>
+    <p>I have run the numbers on this and talked it through with a lot of sales teams, and the same pattern keeps showing up.</p>
 
-    <p>According to <a href="https://mailmeteor.com/cold-email/statistics" target="_blank" rel="noopener noreferrer">Mailmeteor's research</a>, cold emails with advanced personalization achieve an <strong>18%</strong> response rate, compared to just 9% without. That's a 2x improvement. Impressive, right?</p>
+    <p>According to <a href="https://mailmeteor.com/cold-email/statistics" target="_blank" rel="noopener noreferrer">Mailmeteor's research</a>, cold emails with advanced personalization hit an 18% response rate against just 9% without it. That is a clean 2x, and on its own it looks like a win.</p>
 
-    <p>But flip it around. Even with perfect personalization, <strong>82%</strong> of people still don't respond. You've done everything right, and four out of five prospects ignore you. Frustrating? Absolutely.</p>
+    <p>Now turn it around. Even with personalization done perfectly, 82% of people still do not reply. You did everything right and four out of five prospects scrolled past you anyway. That gap is the thing worth staring at.</p>
 
-    <p>Why? <a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-sales-survey-finds-61-percent-of-b2b-buyers-prefer-a-rep-free-buying-experience" target="_blank" rel="noopener noreferrer">Gartner's 2024 survey</a> of 632 B2B buyers found that <strong>61%</strong> prefer an overall rep-free buying experience. They don't want to be sold to - period. No amount of personalization changes that.</p>
+    <p>Part of the reason is that buyers increasingly do not want the conversation at all. <a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-sales-survey-finds-61-percent-of-b2b-buyers-prefer-a-rep-free-buying-experience" target="_blank" rel="noopener noreferrer">Gartner's 2024 survey</a> of 632 B2B buyers found that 61% prefer a rep-free buying experience overall. They would rather not be sold to, full stop, and no amount of personalization rewrites that preference.</p>
 
     <h3>The Question Nobody Asks</h3>
 
-    <p>So here's the question I started asking myself: what if the problem isn't the email? What if it's the lead?</p>
+    <p>Which is what eventually got me asking a different question. What if the email was never the bottleneck? What if it was the lead?</p>
 
-    <p>Think about it. Cold prospects are, by definition, people who haven't shown any interest in what you're selling. You're interrupting their day, hoping your personalization is clever enough to earn attention.</p>
+    <p>Cold prospects are, by definition, people who have shown zero interest in what you sell. You are interrupting their day and betting that your personalization is sharp enough to buy a few seconds of attention. Sometimes it is. Often it is not.</p>
 
-    <p>But what if you reached out to people who already cared about your topic? People who publicly engaged with content in your space? Different game entirely.</p>
+    <p>Picture the opposite. You reach out to people who already cared about your topic, who publicly engaged with content in your space. That is a completely different conversation, and it starts on much better footing.</p>
 
-    <p>According to <a href="https://growleads.io/blog/warm-outreach-vs-cold-email/" target="_blank" rel="noopener noreferrer">Growleads' research</a>, warm outreach hits <strong>10-34%</strong> response rates, compared to <strong>2-10%</strong> for cold. Even a basic email to a warm lead can outperform a perfectly personalized cold email. For a deep dive into the numbers, see our <Link href="/blog/warm-vs-cold-outreach-data-breakdown">warm vs cold outreach data breakdown</Link>.</p>
+    <p>According to <a href="https://growleads.io/blog/warm-outreach-vs-cold-email/" target="_blank" rel="noopener noreferrer">Growleads' research</a>, warm outreach lands 10-34% response rates against 2-10% for cold. A plain, barely-personalized email to a warm lead can beat a meticulously personalized cold one. If you want the full numbers, our <Link href="/blog/warm-vs-cold-outreach-data-breakdown">warm vs cold outreach data breakdown</Link> digs into it.</p>
 
     <blockquote>
         <strong>Warm outreach</strong> is contacting prospects who have already shown interest through engagement signals such as commenting on relevant content, engaging with competitors, or demonstrating buying intent.
@@ -263,36 +265,36 @@ export const metadata = buildPostMetadata(post);
 
 <div id="section-5">
     <SectionTitle title="5) The Alternative: Warm Signal Method">
-        What if you focused less on perfecting cold emails and more on finding warmer leads?
+        What happens if you spend less energy perfecting the cold email and more on finding warmer leads in the first place?
     </SectionTitle>
 
     <h3>How the Warm Signal Method Works</h3>
 
-    <p>The Warm Signal Method is finding leads who've already raised their hand through engagement - likes, comments, shares - rather than cold-targeting people who fit a demographic profile.</p>
+    <p>The Warm Signal Method means going after leads who have already raised their hand through engagement, the likes, comments, and shares, instead of cold-targeting whoever happens to match a demographic profile.</p>
 
-    <p>Here's how it works in practice:</p>
+    <p>In practice it runs in four steps.</p>
 
-    <p><strong>Step 1: Signal Identification</strong> - Find relevant content in your space. Competitor announcements. Industry thought leader posts. Conference discussions.</p>
+    <p>First, you identify the signal. Find content that is actually relevant in your space: a competitor announcement, a post from an industry thought leader, a discussion coming out of a conference.</p>
 
-    <p><strong>Step 2: Extract Engagers</strong> - Pull everyone who liked, commented, or shared. These are people who publicly showed they care about the topic.</p>
+    <p>Then you extract the engagers. Pull everyone who liked, commented, or shared, because those are the people who publicly admitted they care about the topic.</p>
 
-    <p><strong>Step 3: Filter by ICP</strong> - Not everyone who engaged is a fit. Filter by title, company size, industry.</p>
+    <p>Next you filter by ICP. Not everyone who engaged is a real fit, so you narrow by title, company size, and industry until you are left with people worth a message.</p>
 
-    <p><strong>Step 4: Reach Out Within 72 Hours</strong> - The engagement is fresh. They remember the content. Your outreach has context built in.</p>
+    <p>Finally, you reach out inside 72 hours. The engagement is still fresh, they remember the content, and your outreach already carries context instead of asking for attention cold.</p>
 
-    <p>To identify which signals matter most, read our guide on <Link href="/blog/buyer-intent-signals-prospects-ready-to-buy">buyer intent signals</Link>.</p>
+    <p>To figure out which signals are worth chasing in the first place, our guide on <Link href="/blog/buyer-intent-signals-prospects-ready-to-buy">buyer intent signals</Link> breaks them down.</p>
 
-    <p>Here's where the math changes completely. Tools like Guffles take a different approach: instead of personalizing cold emails, they help you find people who've already shown interest. You paste a LinkedIn post URL - maybe a competitor's product launch or an industry thought leader's take on your problem space - and extract everyone who engaged. Filter by title, company size, and industry. Now you're reaching out to someone who publicly cared about your topic last week. At $79/month (compared to $300+ for Apollo or $500+ for ZoomInfo), it's accessible for individual reps, not just enterprise teams.</p>
+    <p>This is where the math really shifts. A tool like Guffles works from the other end: rather than helping you personalize a cold email, it helps you find people who have already shown interest. You paste a LinkedIn post URL, maybe a competitor's product launch or a thought leader's take on the problem you solve, and it extracts everyone who engaged. Filter by title, company size, and industry, and now you are messaging someone who publicly cared about your topic last week. At $79/month, against $300+ for Apollo or $500+ for ZoomInfo, it is within reach for individual reps and not just enterprise teams.</p>
 
     <h3>The 72-Hour Engagement Window</h3>
 
-    <p>Timing matters more than personalization when the prospect is already engaged. Based on data from 200+ B2B companies, reaching out within 72 hours of engagement increases response rates by <strong>5-7x</strong> compared to waiting a week.</p>
+    <p>When the prospect is already engaged, timing outweighs personalization. Across data from 200+ B2B companies, reaching out within 72 hours of the engagement lifts response rates by 5-7x compared to waiting a week.</p>
 
-    <p>Why? The engagement context is still fresh in their mind. They remember commenting on that post about sales automation. Your email lands differently because there's already a mental hook.</p>
+    <p>The reason is simple: the context is still loaded in their head. They remember commenting on that post about sales automation, so your email has a hook to land on instead of arriving out of nowhere.</p>
 
-    <p>And here's what really shifts the math: warm leads from engagement signals close at <strong>14.6%</strong> compared to <strong>1.7%</strong> for cold outreach. That's an 8.5x improvement in close rates. Read that again.</p>
+    <p>The close rate is where it gets hard to ignore. Warm leads from engagement signals close at 14.6% versus 1.7% for cold outreach, an 8.5x difference. That number is the whole argument for this section.</p>
 
-    <p>The engagement itself becomes your context. You don't need elaborate personalization because the relevance is already established.</p>
+    <p>The engagement is doing the work your personalization used to do. The relevance is already established, so you do not need to manufacture it line by line.</p>
 </div>
 
 <FAQ items={post.faq} />
@@ -319,12 +321,12 @@ export const metadata = buildPostMetadata(post);
         eyebrow="Ready to Test It?"
         title="Choose Your Path Forward"
     >
-        So here's where we land. Personalization works - the data is clear. But it has limits. And sometimes the smarter play isn't optimizing the email. It's choosing better leads. I've been doing this for 8+ years now, and that's the lesson that took me the longest to learn.
+        Here is where I have landed after doing this for 8+ years. Personalization works, the data is not in question. It also has a ceiling, and once you hit it the smarter move is usually not a better email but a better lead. That was the lesson that took me longest to actually believe, mostly because I had so much invested in writing the perfect note.
     </SectionTitle>
 
-    <p>Both playbooks work. If you want to test whether warm signals beat cold personalization, Guffles offers $150 in wallet credit to start - enough to run a real experiment. You can use it however you want.</p>
+    <p>Both playbooks work, so pick the one that fits how you sell. If you want to test whether warm signals beat cold personalization, Guffles gives you $150 in wallet credit to start, which is enough to run a real experiment rather than a token trial. Spend it however makes sense for your pipeline.</p>
 
-    <p>Sometimes the best email is the one you don't have to personalize.</p>
+    <p>Honestly, the best email is often the one you barely had to personalize.</p>
 
     <Callout title="Key Takeaway" icon={<Target className="w-5 h-5 text-primary" />}>
         Even perfect cold email personalization caps at 18% response rates. Warm outreach regularly exceeds it. The question isn't "how do I personalize better?" but "am I reaching the right people?"

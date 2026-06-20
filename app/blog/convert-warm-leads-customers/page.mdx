@@ -7,6 +7,8 @@
   OpenGraph/canonical now come from <BlogPostLayout> + lib/blog/*. This file only
   declares the `post` data object (single source of truth) and the article body.
   See docs/BLOG_SEO_CHECKLIST.md.
+  2026-06-20: Deep humanizing pass: rewrote prose to remove AI-writing tells,
+  cleaned dashes/curly quotes; stats, links, schema, and the post object preserved.
   ============================================================================
 */}
 
@@ -98,11 +100,11 @@ export const metadata = buildPostMetadata(post);
 <BlogPostLayout post={post}>
 
 <TLDR>
-  Warm leads convert at 10-25% compared to just 1-5% for cold leads. The difference comes down to three factors: speed (respond in 5 minutes, not 42 hours), persistence (8-12 touchpoints, not 1-2), and personalization (reference their specific engagement). Master these three pillars and you'll hit the top of that conversion range.
+  Warm leads convert at 10-25% versus 1-5% for cold leads, but most teams never get close to the high end. What separates the teams that do? They respond in 5 minutes instead of 42 hours, they follow up 8-12 times instead of once or twice, and they actually reference what the prospect engaged with. Do all three consistently and you'll push toward the top of that range.
 </TLDR>
 
 <div className="lead text-xl md:text-2xl text-foreground font-medium mb-8 leading-relaxed">
-  You finally have warm leads. Not cold lists from some sketchy database. Real people who've shown actual interest in what you sell. So why isn't your conversion rate higher?
+  You finally have warm leads, real people who've shown interest in what you sell, not some cold list scraped out of a sketchy database. So why is your conversion rate still stuck where it is?
 </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 not-prose my-10">
@@ -111,26 +113,20 @@ export const metadata = buildPostMetadata(post);
    <Stat label="Follow-Up Required" value="80%" sub="need 5+ touchpoints" />
 </div>
 
-<p>I've been there. In my 8 years of B2B sales, I've watched teams celebrate getting warm leads only to fumble the handoff from "interested" to "closed." The expectation is that warm leads practically close themselves. The reality? Most teams still underperform.</p>
+<p>I've watched this play out for 8 years in B2B sales. A team finally lands a batch of warm leads, everyone's thrilled, and then they fumble the handoff from "interested" to "closed." Somewhere along the way we all picked up the idea that warm leads basically close themselves. They don't, and most teams underperform anyway.</p>
 
-<p><strong>A warm lead is a prospect who has shown interest through engagement.</strong> They've liked your content, commented on a post, downloaded something useful. They know you exist. But they haven't bought yet.</p>
+<p>A warm lead is just a prospect who's shown interest through engagement. They liked your content, commented on a post, downloaded something useful. They know you exist. They haven't bought yet, and that gap is exactly where deals die.</p>
 
-<p>And that's where everything falls apart.</p>
+<p>According to <a href="https://spp.co/blog/warm-leads/" target="_blank" rel="noopener noreferrer">industry benchmarks</a>, warm leads convert at 10-25% compared to just 1-5% for cold leads, which is a huge edge. (If you want the full numbers, see our <Link href="/blog/warm-vs-cold-outreach-data-breakdown">warm vs cold outreach data breakdown</Link>.) The problem is that hardly anyone actually hits that range, and it usually comes down to three things they get wrong: how fast they respond, how many times they follow up, and how little they personalize.</p>
 
-<p>According to <a href="https://spp.co/blog/warm-leads/" target="_blank" rel="noopener noreferrer">industry benchmarks</a>, warm leads convert at 10-25% compared to just 1-5% for cold leads. That's a massive advantage. (For a deep dive on the numbers, see our <Link href="/blog/warm-vs-cold-outreach-data-breakdown">warm vs cold outreach data breakdown</Link>.) But here's the thing: most teams don't hit anywhere near those numbers.</p>
-
-<p>Why? Three reasons. Speed. Persistence. Personalization. Get these wrong, and your warm leads go cold fast.</p>
-
-<p>I'm going to break down 10 tips across these three pillars. No fluff. Just what actually works.</p>
+<p>So that's how I've organized the 10 tips below, grouped under speed, persistence, and personalization. Everything here is stuff I've actually seen move the needle.</p>
 
 <div id="section-1">
     <h2>What Is a Good Warm Lead Conversion Rate?</h2>
 
-    <p>Before we get into tactics, let's set a benchmark.</p>
+    <p>It helps to know what you're aiming at before you start fixing things. A good warm lead conversion rate sits at 10-25%. For context, cold leads land at 1-5% and hot leads at 60-80%, so warm is the sweet spot where speed and effort actually pay off.</p>
 
-    <p>A good warm lead conversion rate is 10-25%. That's the range you should aim for. Compare that to cold leads at 1-5%, and hot leads at 60-80%.</p>
-
-    <p>Here's how the three lead types stack up:</p>
+    <p>Here's how the three lead types compare:</p>
 
     <div className="not-prose my-8 overflow-x-auto">
         <table className="min-w-full border border-border rounded-lg">
@@ -166,7 +162,7 @@ export const metadata = buildPostMetadata(post);
         <p className="text-sm text-muted-foreground mt-2 italic">Source: SPP.co / Martal Group, 2025</p>
     </div>
 
-    <p>If you're hitting below 10%, something in your process is broken. The good news? It's fixable. The tips below will help you get there.</p>
+    <p>If you're sitting below 10%, something in your process is broken, and the tips below are how you fix it.</p>
 </div>
 
 <div id="section-2">
@@ -174,35 +170,25 @@ export const metadata = buildPostMetadata(post);
 
     <h3>Tip 1: Respond Within 5 Minutes</h3>
 
-    <p>This one stat changed how I think about sales forever: <a href="https://www.chilipiper.com/article/speed-to-lead-statistics" target="_blank" rel="noopener noreferrer">responding within 5 minutes makes you 21x more likely</a> to qualify a lead than waiting 30 minutes. Twenty-one times.</p>
+    <p>One stat reshaped how I think about sales: <a href="https://www.chilipiper.com/article/speed-to-lead-statistics" target="_blank" rel="noopener noreferrer">responding within 5 minutes makes you 21x more likely</a> to qualify a lead than waiting 30 minutes. Twenty-one times, for the sake of a slightly faster reply.</p>
 
-    <p>And yet? The average B2B response time is 42 hours. Not 42 minutes. Hours.</p>
+    <p>And yet the average B2B response time is 42 hours. That's not a typo, it really is hours, not minutes.</p>
 
-    <p>I've seen deals won and lost in the first 5 minutes. One startup I worked with doubled their close rate by moving from 2-hour response time to 15 minutes. No other changes. Just speed.</p>
+    <p>I've watched deals get won and lost inside that first window. One startup I worked with doubled their close rate just by moving from a 2-hour response time to 15 minutes. Same team, same pitch, same product. The only thing that changed was how fast they got back to people.</p>
 
-    <p><strong>Speed to lead is the time between a prospect expressing interest and you making contact.</strong> When someone engages with your content, the context is fresh. They're thinking about the problem you solve right now. Wait too long, and that moment passes.</p>
-
-    <p>Five minutes feels aggressive. It is. But <a href="https://rep.ai/blog/lead-response" target="_blank" rel="noopener noreferrer">78% of customers buy from the business that responds first</a>. Not the best. The first.</p>
+    <p>Speed to lead is simply the gap between a prospect raising their hand and you making contact. When someone engages with your content, the context is fresh and they're actively thinking about the problem you solve. Let that gap stretch out and the moment is gone. Five minutes feels aggressive, and it is, but <a href="https://rep.ai/blog/lead-response" target="_blank" rel="noopener noreferrer">78% of customers buy from the business that responds first</a>, not necessarily the best one.</p>
 
     <h3>Tip 2: Set Up Instant Lead Alerts</h3>
 
-    <p>You can't respond in 5 minutes if you don't know a lead came in.</p>
+    <p>You can't respond in 5 minutes if you don't even know a lead came in. So wire up notifications that ping you the second someone engages, whether that's CRM alerts, a Slack channel, or mobile push. (If you're still figuring out how to spot the signals in the first place, our guide on <Link href="/blog/find-warm-leads-social-engagement-signals">warm leads through social engagement signals</Link> is the place to start.)</p>
 
-    <p>Set up notifications that ping you the moment someone engages. CRM alerts, Slack notifications, mobile push notifications. Whatever it takes. If you need help identifying <Link href="/blog/find-warm-leads-social-engagement-signals">warm leads through social engagement signals</Link>, start there first.</p>
-
-    <p>The goal is simple: never let a warm lead sit unnoticed. I've seen reps check their leads once a day. By the time they reach out, the prospect has already talked to three competitors.</p>
-
-    <p>Make it impossible to miss a new lead.</p>
+    <p>The goal is to never let a warm lead sit unnoticed. I've watched reps check their leads once a day, and by the time they reach out the prospect has already spoken to three competitors. Make it genuinely hard to miss a new one.</p>
 
     <h3>Tip 3: Prioritize by Intent Signal Strength</h3>
 
-    <p>Not all warm leads are equally warm. Sound obvious? You'd think so. But most teams ignore this completely.</p>
+    <p>Not all warm leads are equally warm, which seems obvious and yet most teams treat them as if they are. A comment carries more intent than a like. A webinar attendee who actually asked a question is warmer than someone who registered and never showed. Someone who has engaged five times is in a different category than a one-time viewer.</p>
 
-    <p>A comment shows more intent than a like. A webinar attendee who asked a question is warmer than someone who registered but didn't show. Someone who engaged multiple times is warmer than a one-time viewer.</p>
-
-    <p>Prioritize your hottest signals first. If you can only respond to 10 leads in the next hour, pick the ones showing the strongest <Link href="/blog/buyer-intent-signals-prospects-ready-to-buy">buyer intent signals</Link>.</p>
-
-    <p>Whether you track engagement manually or use tools like Guffles to surface who's actively engaging with industry content, the principle is the same: prioritize the warmest signals first.</p>
+    <p>So rank them and work the hottest signals first. If you can only get to 10 leads this hour, pick the ones showing the strongest <Link href="/blog/buyer-intent-signals-prospects-ready-to-buy">buyer intent signals</Link>. It doesn't matter whether you're tracking that by hand or leaning on a tool like Guffles to surface who's actively engaging with content in your space, the rule holds either way.</p>
 </div>
 
 <div id="section-3">
@@ -210,31 +196,21 @@ export const metadata = buildPostMetadata(post);
 
     <h3>Tip 4: Plan for 8-12 Touchpoints</h3>
 
-    <p>Here's a stat that should make you uncomfortable: <a href="https://belkins.io/blog/sales-follow-up-statistics" target="_blank" rel="noopener noreferrer">80% of sales require at least 5 follow-ups</a>, yet 44% of sales reps give up after just one attempt.</p>
+    <p>This stat should make you a little uncomfortable: <a href="https://belkins.io/blog/sales-follow-up-statistics" target="_blank" rel="noopener noreferrer">80% of sales require at least 5 follow-ups</a>, yet 44% of sales reps give up after a single attempt. They send one email, hear nothing, and move on to the next name.</p>
 
-    <p>One attempt. Then they move on.</p>
+    <p>Back when I was an SDR, I nearly wrote off a lead after three silent attempts. My manager talked me into trying twice more, and that lead turned into our biggest deal of the quarter. I still think about how close I came to dropping it.</p>
 
-    <p>Back when I was an SDR, I almost gave up on a lead after three no-responses. My manager pushed me to try two more times. That lead became our biggest deal that quarter.</p>
-
-    <p>I get it. Following up feels pushy. It feels annoying. (And yes, I've felt weird about it too.) But here's what I've learned: persistence is expected, not annoying. Buyers are busy. They miss emails. They forget. Your follow-up isn't a nuisance. It's a reminder.</p>
-
-    <p>Plan for 8-12 touchpoints with warm leads. Yes, really. That's the benchmark that works. (For more on this, see our guide on <Link href="/blog/how-many-follow-up-emails">how many follow-up emails to send</Link>.)</p>
+    <p>I understand the hesitation, because following up can feel pushy, and I've felt weird about it plenty of times myself. But persistence is expected, not annoying. Buyers are busy, they miss emails, they genuinely forget. Your follow-up is usually a helpful reminder rather than a nuisance. Plan for 8-12 touchpoints with a warm lead. That sounds like a lot, but it's the benchmark that actually works. (Our guide on <Link href="/blog/how-many-follow-up-emails">how many follow-up emails to send</Link> digs into this further.)</p>
 
     <h3>Tip 5: Use Multi-Channel Follow-Up</h3>
 
-    <p>Email alone won't cut it.</p>
+    <p>Email on its own rarely gets the job done. According to <a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/five-fundamental-truths-how-b2b-winners-keep-growing" target="_blank" rel="noopener noreferrer">McKinsey's 2024 B2B Pulse Survey</a>, B2B customers use an average of 10 interaction channels during their buying journey. If you're only sending emails, that's nine other places where they might have answered you.</p>
 
-    <p>According to <a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/five-fundamental-truths-how-b2b-winners-keep-growing" target="_blank" rel="noopener noreferrer">McKinsey's 2024 B2B Pulse Survey</a>, B2B customers use an average of 10 interaction channels during their buying journey. Ten. If you're only emailing, you're missing 9 other places they might respond.</p>
-
-    <p>Mix it up. Email, phone, LinkedIn, even video. Each channel serves a different purpose. Email for details. Phone for urgency. <Link href="/blog/linkedin-engagement-leads">LinkedIn for engagement and relationship building</Link>.</p>
-
-    <p><a href="https://belkins.io/blog/sales-follow-up-statistics" target="_blank" rel="noopener noreferrer">Belkins found</a> that combining email, phone, and LinkedIn leads to 28% higher conversion rates. That's not a small bump. That's the difference between hitting quota and missing it.</p>
+    <p>So mix it up across email, phone, LinkedIn, and even a quick video. Each one does a slightly different job: email is good for detail, the phone is good for urgency, and <Link href="/blog/linkedin-engagement-leads">LinkedIn is where you build the relationship</Link>. <a href="https://belkins.io/blog/sales-follow-up-statistics" target="_blank" rel="noopener noreferrer">Belkins found</a> that combining email, phone, and LinkedIn drives 28% higher conversion rates, which is often the gap between hitting quota and missing it.</p>
 
     <h3>Tip 6: Create a Structured Cadence</h3>
 
-    <p>Random follow-ups don't work. You need a system.</p>
-
-    <p>Here's a simple cadence that works for warm leads:</p>
+    <p>Scattered, whenever-you-remember follow-ups don't work. You need a system you can run on autopilot. Here's a simple cadence that holds up well for warm leads:</p>
 
     <ul>
         <li><strong>Day 1:</strong> Email + LinkedIn connection</li>
@@ -245,11 +221,9 @@ export const metadata = buildPostMetadata(post);
         <li><strong>Day 21:</strong> Final value email</li>
     </ul>
 
-    <p>Space it out. Don't spam. But don't disappear either.</p>
+    <p>Space it out enough that you're not spamming, but not so much that you vanish for two weeks at a time.</p>
 
-    <p>Here's the reality: managing 8-12 touchpoints across email, phone, and LinkedIn for dozens of warm leads is exhausting. I've seen reps spend more time updating spreadsheets than actually selling.</p>
-
-    <p>The good news? You don't need Apollo at $300/month or ZoomInfo at $500/month to solve this. Guffles does intent-based lead discovery for $79/month, pulling contact info for LinkedIn engagers so you can focus on the outreach, not the research.</p>
+    <p>I'll be honest about the catch here: running 8-12 touchpoints across email, phone, and LinkedIn for dozens of warm leads is genuinely exhausting. I've watched reps spend more of their day updating spreadsheets than actually selling, which is backwards. You don't need Apollo at $300/month or ZoomInfo at $500/month to dig yourself out of that, though. Guffles does intent-based lead discovery for $79/month and pulls contact info for LinkedIn engagers, so your time goes into the outreach instead of the research.</p>
 </div>
 
 <ArticleImage
@@ -263,33 +237,23 @@ export const metadata = buildPostMetadata(post);
 
     <h3>Tip 7: Reference Their Specific Engagement</h3>
 
-    <p>I learned the hard way that "Hey, saw you liked my post" is not personalization. Real personalization is "Noticed you commented about struggling with X. We helped Y company solve exactly that."</p>
+    <p>I learned the hard way that "Hey, saw you liked my post" is not personalization. Real personalization sounds like "Noticed you commented about struggling with X, and we helped Y company solve exactly that." Your warm leads got warm for a reason, so name the thing they actually engaged with.</p>
 
-    <p>Your warm leads became warm for a reason. They engaged with something specific. Reference it.</p>
-
-    <p>According to <a href="https://instapage.com/blog/personalization-statistics/" target="_blank" rel="noopener noreferrer">HubSpot</a>, personalized CTAs increase conversion rates by 202%. Not 20%. Two hundred and two percent. That's the power of making someone feel seen.</p>
-
-    <p>Don't just acknowledge the engagement. Connect it to their pain point and your solution. That's what makes personalization work.</p>
+    <p>According to <a href="https://instapage.com/blog/personalization-statistics/" target="_blank" rel="noopener noreferrer">HubSpot</a>, personalized CTAs increase conversion rates by 202%, and that's not a rounding error, it's the difference between a message that feels mass-produced and one that feels written for that person. So don't stop at acknowledging the engagement. Tie it to their pain point and to what you actually do about it.</p>
 
     <h3>Tip 8: Use Relevant Case Studies</h3>
 
-    <p>Generic social proof gets ignored. Specific social proof? That converts.</p>
+    <p>Generic social proof gets skimmed past, but specific social proof lands. When you reach out, match the case study to their industry or role. A VP of Sales doesn't care about your marketing case study, they want to see what you pulled off for another VP of Sales.</p>
 
-    <p>When you reach out, match your case study to their industry or role. A VP of Sales doesn't care about your marketing case study. They want to see what you did for another VP of Sales.</p>
-
-    <p>According to the <a href="https://corporatevisions.com/blog/b2b-buying-behavior-statistics-trends/" target="_blank" rel="noopener noreferrer">2025 B2B Buyer Behavior Report</a>, 84% of B2B decision-makers begin their buying process with a referral. Social proof isn't optional. It's expected.</p>
-
-    <p>Build a library of case studies you can pull from. Match them to your lead's context.</p>
+    <p>According to the <a href="https://corporatevisions.com/blog/b2b-buying-behavior-statistics-trends/" target="_blank" rel="noopener noreferrer">2025 B2B Buyer Behavior Report</a>, 84% of B2B decision-makers kick off their buying process with a referral, so this kind of proof is something buyers expect to see rather than a nice-to-have. Build a small library of case studies you can reach for and match them to whoever you're talking to.</p>
 
     <h3>Tip 9: Customize Your Value Proposition</h3>
 
-    <p>Don't pitch the same thing to everyone.</p>
+    <p>The same pitch can't possibly land the same way with everyone. An SDR cares about booking more meetings, a VP of Sales cares about pipeline velocity, and a founder mostly cares about revenue. It's the same product, but you're aiming it at a different worry each time.</p>
 
-    <p>An SDR cares about booking more meetings. A VP of Sales cares about pipeline velocity. A founder cares about revenue. Same product, different angle.</p>
+    <p>Connecting your solution to someone's specific pain takes more work than firing off a template, and it's worth it. <a href="https://www.salesgenie.com/blog/lead-nurturing-statistics/" target="_blank" rel="noopener noreferrer">Forrester found</a> that nurtured leads make 47% larger purchases, so personalization isn't only about whether they convert, it shapes how big the deal gets.</p>
 
-    <p>Connect your solution to their specific pain. This takes more work than blasting a template. But <a href="https://www.salesgenie.com/blog/lead-nurturing-statistics/" target="_blank" rel="noopener noreferrer">Forrester found</a> that nurtured leads make 47% larger purchases. Personalization doesn't just improve conversion. It improves deal size.</p>
-
-    <p><strong>Lead nurturing is building relationships with prospects through personalized communication and consistent follow-up until they are ready to buy.</strong> Our data shows that reaching out within 72 hours of engagement increases response rates by 5-7x compared to waiting a week. The engagement context is still fresh in their mind. That's what I call the 72-Hour Engagement Window. Miss it, and your personalization loses its punch.</p>
+    <p>Lead nurturing is really just building a relationship through personalized communication and steady follow-up until someone's ready to buy. Our own data shows that reaching out within 72 hours of engagement lifts response rates by 5-7x compared to waiting a week, because the context is still fresh in their head. I call it the 72-Hour Engagement Window, and once you miss it, even good personalization starts to lose its punch.</p>
 </div>
 
 <div id="section-5">
@@ -297,29 +261,25 @@ export const metadata = buildPostMetadata(post);
 
     <h3>Tip 10: Track Your Conversion Rate by Source</h3>
 
-    <p>You can't improve what you don't measure. Classic advice, but it's true.</p>
+    <p>The old line about not being able to improve what you don't measure is a cliche for a reason: it's true. Your warm lead sources won't all convert the same. Webinar attendees might run around 20%, LinkedIn engagers around 15%, and content downloaders closer to 10%. Without tracking that, you're guessing about where your good leads actually come from.</p>
 
-    <p>Not all warm lead sources convert the same. Webinar attendees might convert at 20%. LinkedIn engagers at 15%. Content downloaders at 10%. Without tracking, you're flying blind.</p>
-
-    <p>Companies that excel at lead nurturing generate <a href="https://www.parkerwhite.com/insights/55-lead-nurturing-statistics-that-should-be-in-every-marketers-arsenal" target="_blank" rel="noopener noreferrer">50% more sales-ready leads at 33% lower cost</a>, according to Forrester. Measurement is how you figure out what's working.</p>
-
-    <p>Start simple. A spreadsheet works. Track which sources produce the best conversion rates, then double down on what works.</p>
+    <p>Forrester reports that companies that get lead nurturing right generate <a href="https://www.parkerwhite.com/insights/55-lead-nurturing-statistics-that-should-be-in-every-marketers-arsenal" target="_blank" rel="noopener noreferrer">50% more sales-ready leads at 33% lower cost</a>, and measurement is how you find that kind of edge. You don't need anything fancy to start. A spreadsheet is fine. Watch which sources convert best, then put more of your effort behind them.</p>
 </div>
 
 <div id="section-6">
     <h2>Common Mistakes That Kill Warm Lead Conversions</h2>
 
-    <p>Quick hits on what NOT to do:</p>
+    <p>A few patterns sink more deals than anything else I see:</p>
 
     <ul>
-        <li><strong>Waiting too long:</strong> Average B2B response time is 42 hours. By then, they've talked to your competitors.</li>
-        <li><strong>Giving up after one or two attempts:</strong> 44% of reps quit after one try. Don't be that rep.</li>
-        <li><strong>Generic messaging:</strong> "Just checking in" emails get deleted. Reference their specific engagement.</li>
-        <li><strong>No clear next step:</strong> Every touch should have a purpose. What do you want them to do?</li>
-        <li><strong>Treating all warm leads the same:</strong> Some are warmer than others. Prioritize accordingly.</li>
+        <li><strong>Waiting too long:</strong> the average B2B response time is 42 hours, and by then they've already talked to your competitors.</li>
+        <li><strong>Giving up after one or two attempts:</strong> 44% of reps quit after one try, so just outlasting them is its own advantage.</li>
+        <li><strong>Generic messaging:</strong> "Just checking in" emails get deleted on sight. Reference the specific thing they engaged with.</li>
+        <li><strong>No clear next step:</strong> every touch should have a point. Be obvious about what you want them to do next.</li>
+        <li><strong>Treating all warm leads the same:</strong> some are much warmer than others, so prioritize accordingly.</li>
     </ul>
 
-    <p>Avoid these, and honestly? You're already ahead of most sales teams.</p>
+    <p>Steer clear of these five and you're already ahead of most sales teams, which says more about the average bar than it does about you.</p>
 </div>
 
 <FAQ items={post.faq} />
@@ -344,16 +304,12 @@ export const metadata = buildPostMetadata(post);
 <div id="cta">
     <h2>Start Converting More Warm Leads Today</h2>
 
-    <p>Converting warm leads comes down to three things. Speed. Persistence. Personalization.</p>
+    <p>When I strip all of this back, converting warm leads really comes down to speed, persistence, and personalization. Respond in 5 minutes instead of 42 hours, follow up 8-12 times instead of once, and personalize off what they actually engaged with rather than a template. Do that consistently and the 10-25% conversion rate is well within reach, sometimes higher.</p>
 
-    <p>Respond in 5 minutes, not 42 hours. Follow up 8-12 times, not once. Personalize based on their actual engagement, not a template.</p>
-
-    <p>Do these three things consistently, and you'll hit that 10-25% conversion rate. Maybe higher.</p>
-
-    <p>But here's the catch: you need warm leads to apply these skills to. If you're still relying on cold lists, you're fighting with one hand tied behind your back.</p>
+    <p>There's one obvious catch, though. You need warm leads in the first place to apply any of this to. If you're still working off cold lists, you're doing all this with one hand tied behind your back.</p>
 
     <Callout title="Find Warm Leads at Scale" icon={<Target className="w-5 h-5 text-primary" />}>
-        Guffles helps you find people who are already engaging with content in your space. The warmest leads available. Start with $150 in wallet credit at guffles.com and see how many warm leads you've been missing.
+        Guffles helps you find people who are already engaging with content in your space, which is about as warm as a lead gets. Start with $150 in wallet credit at guffles.com and see how many warm leads you've been leaving on the table.
     </Callout>
 </div>
 
