@@ -32,6 +32,11 @@ export function buildArticleSchema(post: PostMeta) {
     datePublished: post.publishedAt,
     dateModified: post.updatedAt || post.publishedAt,
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${post.slug}` },
+    // 2026-06-20: mark the headline + intro paragraph as voice/AI-assistant readable.
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".lead"],
+    },
     articleSection: post.category,
     ...(post.keywords && post.keywords.length ? { keywords: post.keywords } : {}),
   };
@@ -62,5 +67,62 @@ export function buildHowToSchema(howTo: HowTo) {
       name: s.name,
       text: s.text,
     })),
+  };
+}
+
+// 2026-06-20: Breadcrumb trail (Home > Blog > Post). Drives breadcrumb rich results
+// and gives crawlers/AI the page's place in the site hierarchy.
+export function buildBreadcrumbSchema(post: PostMeta) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `${SITE_URL}/blog/${post.slug}`,
+      },
+    ],
+  };
+}
+
+// 2026-06-20: Sitewide brand entity. Lets Google/AI identify "Guffles" as an
+// organization (knowledge panel, brand signals) and links it to the real founder.
+export function buildOrganizationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${SITE_URL}/#organization`,
+    name: ORG.name,
+    url: ORG.url,
+    logo: { "@type": "ImageObject", url: ORG.logo },
+    description:
+      "Intent-based lead discovery. Guffles finds people engaging with content about what you sell and turns those signals into warm leads.",
+    founder: { "@type": "Person", name: AUTHOR.name, url: AUTHOR.url },
+  };
+}
+
+// 2026-06-20: WebSite node (site name in results) + SearchAction (sitelinks search
+// box). The urlTemplate points at /blog?q=..., which the blog index honors (see
+// BlogIndexClient), so the action is real, not decorative.
+export function buildWebsiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    name: ORG.name,
+    url: SITE_URL,
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/blog?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 }

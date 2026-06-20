@@ -17,7 +17,7 @@ import {
   SidebarMore,
 } from "@/components/blog/blocks";
 import { AUTHOR } from "@/lib/blog/config";
-import { buildArticleSchema, buildFaqSchema, buildHowToSchema } from "@/lib/blog/schema";
+import { buildArticleSchema, buildFaqSchema, buildHowToSchema, buildBreadcrumbSchema } from "@/lib/blog/schema";
 import type { PostMeta } from "@/lib/blog/types";
 
 // Server-rendered with a fixed input date, so this is deterministic (no hydration mismatch).
@@ -50,6 +50,8 @@ export function BlogPostLayout({
 
       {/* JSON-LD — generated from the single `post` object (2026-06-20) */}
       <JsonLd data={buildArticleSchema(post)} />
+      {/* 2026-06-20: Breadcrumb trail (Home > Blog > Post) for breadcrumb rich results. */}
+      <JsonLd data={buildBreadcrumbSchema(post)} />
       {post.faq && post.faq.length > 0 && <JsonLd data={buildFaqSchema(post.faq)} />}
       {post.howTo && <JsonLd data={buildHowToSchema(post.howTo)} />}
       {/* 2026-06-20: extra raw JSON-LD a post carries (ItemList / Product list / 2nd HowTo) */}

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { buildOrganizationSchema, buildWebsiteSchema } from "@/lib/blog/schema";
 import "./globals.css";
 
 const GA_MEASUREMENT_ID = "G-KFXCL8CNYP";
@@ -71,6 +72,16 @@ export default function RootLayout({
               gtag('config', '${GA_MEASUREMENT_ID}');
             `,
           }}
+        />
+        {/* 2026-06-20: Sitewide brand schema (Organization + WebSite/SearchAction),
+            server-rendered so it's in the initial HTML for crawlers and AI search. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildWebsiteSchema()) }}
         />
         {children}
       </body>

@@ -5,7 +5,7 @@
 // post array here anymore — the index can't drift from the actual posts. Byline uses the
 // central AUTHOR config (same source as the article pages).
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/landing/Navbar";
@@ -28,6 +28,13 @@ export function BlogIndexClient({
 }) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+
+  // 2026-06-20: seed the search box from a ?q= URL param so the sitewide SearchAction
+  // schema (urlTemplate /blog?q=...) lands on a working, pre-filtered search.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("q");
+    if (q) setSearchQuery(q);
+  }, []);
 
   // Featured = newest post (posts are sorted newest-first by getAllPosts).
   const featured = posts[0];
