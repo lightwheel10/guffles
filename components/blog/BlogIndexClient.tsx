@@ -1,0 +1,303 @@
+"use client";
+
+// 2026-06-20: Client-side filter UI for the blog index. Receives the post list +
+// categories from the server (app/blog/page.tsx -> getAllPosts), so there is NO hardcoded
+// post array here anymore — the index can't drift from the actual posts. Byline uses the
+// central AUTHOR config (same source as the article pages).
+
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Navbar } from "@/components/landing/Navbar";
+import { Footer } from "@/components/landing/Footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Search, ArrowRight, Clock, Calendar, Sparkles, Filter } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { AUTHOR } from "@/lib/blog/config";
+import type { BlogListItem } from "@/lib/blog/posts";
+
+export function BlogIndexClient({
+  posts,
+  categories,
+}: {
+  posts: BlogListItem[];
+  categories: string[];
+}) {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Featured = newest post (posts are sorted newest-first by getAllPosts).
+  const featured = posts[0];
+
+  const filteredPosts = posts.filter((post) => {
+    const matchesCategory = activeCategory === "All" || post.category === activeCategory;
+    const q = searchQuery.toLowerCase();
+    const matchesSearch =
+      post.title.toLowerCase().includes(q) || post.excerpt.toLowerCase().includes(q);
+    return matchesCategory && matchesSearch;
+  });
+
+  return (
+    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary flex flex-col">
+      <Navbar />
+
+      <main className="flex-1 pt-24 pb-20">
+
+        {/* Header / Hero */}
+        <section className="relative px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto mb-16 md:mb-24">
+           {/* Background Decoration */}
+           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
+
+           <div className="text-center space-y-6 max-w-3xl mx-auto pt-8 md:pt-16">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-xs font-bold text-primary animate-fade-in-up">
+                  <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                  The Growth Hub
+              </div>
+              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+                  Insights for the modern <br className="hidden sm:block" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-400 to-green-400">Revenue Team</span>
+              </h1>
+              <p className="text-xl text-muted-foreground leading-relaxed animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                  Actionable playbooks, data-driven strategies, and engineering deep dives to help you scale your outbound engine.
+              </p>
+
+              {/* Search */}
+              <div className="max-w-md mx-auto mt-8 flex gap-2 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Search articles..."
+                        className="pl-9 bg-background/50 border-white/10"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+              </div>
+           </div>
+        </section>
+
+        <div className="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-16">
+
+            {/* Featured Post (Only show if no search/filter active) */}
+            {activeCategory === "All" && !searchQuery && featured && (
+                <section className="animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+                    <div className="group relative grid lg:grid-cols-2 gap-8 items-center bg-card rounded-3xl p-6 md:p-10 border border-border shadow-2xl overflow-hidden hover:border-primary/20 transition-all duration-300">
+                        {/* Glow */}
+                        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 pointer-events-none" />
+
+                        <div className="relative aspect-[16/9] lg:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                             <Image
+                                src={featured.image}
+                                alt={featured.title}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                             />
+                             <div className="absolute top-4 left-4">
+                                <Badge className="bg-primary text-primary-foreground hover:bg-primary/90 border-none px-3 py-1 text-xs uppercase tracking-wider font-bold">
+                                    Featured
+                                </Badge>
+                             </div>
+                        </div>
+
+                        <div className="space-y-6 relative">
+                            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                                <span className="text-primary font-semibold">{featured.category}</span>
+                                <span className="w-1 h-1 rounded-full bg-border" />
+                                <span>{featured.date}</span>
+                                <span className="w-1 h-1 rounded-full bg-border" />
+                                <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {featured.readTime}</span>
+                            </div>
+
+                            <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
+                                <Link href={`/blog/${featured.slug}`}>
+                                    {featured.title}
+                                </Link>
+                            </h2>
+
+                            <p className="text-lg text-muted-foreground leading-relaxed line-clamp-3">
+                                {featured.excerpt}
+                            </p>
+
+                            <div className="flex items-center gap-4 pt-4">
+                                {/* Byline from central AUTHOR config */}
+                                <div className="flex items-center gap-2">
+                                     <div className="w-8 h-8 rounded-full border-2 border-background bg-muted flex items-center justify-center overflow-hidden ring-1 ring-white/10">
+                                        <Image src={AUTHOR.avatar} width={32} height={32} alt={AUTHOR.name} className="w-full h-full object-cover" />
+                                     </div>
+                                     <span className="text-sm font-medium">{AUTHOR.name}</span>
+                                </div>
+                                <Button variant="link" className="ml-auto p-0 h-auto text-primary font-semibold group-hover:translate-x-1 transition-transform">
+                                    Read Article <ArrowRight className="ml-1 w-4 h-4" />
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Content Feed */}
+            <section className="space-y-8">
+                {/* Filters */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border pb-6">
+                    <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto no-scrollbar">
+                         {categories.map(cat => (
+                             <button
+                                key={cat}
+                                onClick={() => setActiveCategory(cat)}
+                                className={cn(
+                                    "px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap",
+                                    activeCategory === cat
+                                        ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                                        : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                                )}
+                             >
+                                {cat}
+                             </button>
+                         ))}
+                    </div>
+                    <div className="text-sm text-muted-foreground hidden sm:block">
+                        Showing {filteredPosts.length} posts
+                    </div>
+                </div>
+
+                {/* Grid */}
+                {filteredPosts.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredPosts.map((post) => (
+                            <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex flex-col h-full">
+                                <Card className="flex-1 bg-card border-border hover:border-primary/50 transition-all duration-300 overflow-hidden hover:shadow-xl hover:shadow-primary/5 group-hover:-translate-y-1">
+                                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                                        <Image
+                                            src={post.image}
+                                            alt={post.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                        <div className="absolute top-3 left-3">
+                                            <span className="px-2.5 py-1 rounded-md bg-background/80 backdrop-blur-md text-xs font-bold text-foreground border border-white/10 shadow-sm">
+                                                {post.category}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <CardHeader className="space-y-2 p-6">
+                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                            <Calendar className="w-3 h-3" />
+                                            <span>{post.date}</span>
+                                            <span className="text-border">•</span>
+                                            <Clock className="w-3 h-3" />
+                                            <span>{post.readTime}</span>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                            {post.title}
+                                        </h3>
+                                    </CardHeader>
+                                    <CardContent className="px-6 pb-6 pt-0">
+                                        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                                            {post.excerpt}
+                                        </p>
+                                    </CardContent>
+                                    <CardFooter className="px-6 pb-6 pt-0 mt-auto flex items-center justify-between border-t border-border/50 pt-4">
+                                        {/* Byline from central AUTHOR config */}
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-6 h-6 rounded-full border-2 border-background bg-muted flex items-center justify-center overflow-hidden ring-1 ring-white/10">
+                                                <Image src={AUTHOR.avatar} width={24} height={24} alt={AUTHOR.name} className="w-full h-full object-cover" />
+                                            </div>
+                                            <span className="text-xs font-medium text-muted-foreground">{AUTHOR.name}</span>
+                                        </div>
+                                        <span className="text-xs font-semibold text-primary flex items-center opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0 duration-300">
+                                            Read <ChevronRight className="w-3 h-3 ml-0.5" />
+                                        </span>
+                                    </CardFooter>
+                                </Card>
+                            </Link>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-20">
+                        <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Filter className="w-8 h-8 text-muted-foreground" />
+                        </div>
+                        <h3 className="text-lg font-semibold">No posts found</h3>
+                        <p className="text-muted-foreground">Try adjusting your search or category filter.</p>
+                        <Button
+                            variant="outline"
+                            className="mt-4"
+                            onClick={() => {setActiveCategory("All"); setSearchQuery("");}}
+                        >
+                            Clear filters
+                        </Button>
+                    </div>
+                )}
+            </section>
+        </div>
+
+        {/* Newsletter Section */}
+        <section className="mt-24 border-t border-border bg-card/50">
+            <div className="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto py-16 md:py-24">
+                <div className="relative rounded-3xl bg-gradient-to-br from-primary/20 via-emerald-500/10 to-card/50 border border-primary/30 overflow-hidden px-6 py-12 md:px-16 md:py-16 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-12 shiny-border">
+                     {/* Noise Texture */}
+                     <div
+                        className="absolute inset-0 opacity-20 pointer-events-none"
+                        style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+                        }}
+                     />
+                     {/* Decorative Blurs */}
+                     <div className="absolute top-0 right-0 w-64 h-64 bg-primary/30 rounded-full blur-[100px] pointer-events-none" />
+                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/30 rounded-full blur-[100px] pointer-events-none" />
+
+                     <div className="relative z-10 max-w-xl space-y-4">
+                        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+                            Join 10,000+ Growth Leaders
+                        </h2>
+                        <p className="text-muted-foreground text-lg">
+                            Get the latest playbooks, Intent Mining strategies, and engineering deep dives delivered to your inbox weekly.
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
+                            <Sparkles className="w-4 h-4 text-primary" /> No spam. Unsubscribe anytime.
+                        </div>
+                     </div>
+
+                     <div className="relative z-10 w-full max-w-md bg-background/50 backdrop-blur-sm p-2 rounded-2xl border border-primary/20">
+                        <div className="flex gap-2">
+                            <Input
+                                placeholder="Enter your work email"
+                                className="bg-background border-none h-12 rounded-xl"
+                            />
+                            <Button size="lg" className="h-12 px-6 rounded-xl font-bold shadow-lg shadow-primary/30 bg-primary hover:bg-primary/90">
+                                Subscribe
+                            </Button>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
+
+function ChevronRight({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+  );
+}
