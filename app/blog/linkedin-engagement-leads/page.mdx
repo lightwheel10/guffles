@@ -21,7 +21,7 @@ import Link from "next/link";
 import { Target, Sparkles } from "lucide-react";
 import { BlogPostLayout } from "@/components/blog/BlogPostLayout";
 import { buildPostMetadata } from "@/lib/blog/metadata";
-import { Stat, Callout, TLDR, SectionTitle, ArticleImage, BlogCTA } from "@/components/blog/blocks";
+import { Stat, Callout, TLDR, SectionTitle, ArticleImage, BlogCTA, FAQ } from "@/components/blog/blocks";
 
 export const post = {
   slug: "linkedin-engagement-leads",
@@ -40,7 +40,22 @@ export const post = {
     { id: "section-4", label: "4) Step-by-Step Process" },
     { id: "section-5", label: "5) Likers vs Commenters" },
     { id: "section-6", label: "6) Outreach Tips" },
+    { id: "faq", label: "FAQ" },
     { id: "cta", label: "Get Started" },
+  ],
+  faq: [
+    {
+      q: "Are LinkedIn likers or commenters better leads?",
+      a: "Commenters, usually. Writing a comment takes more effort than tapping like, so it is a stronger intent signal. In my own tracking, commenters converted at 18% versus 7% for likers on the same post. Likers still beat cold lists and give you volume when you need reach.",
+    },
+    {
+      q: "Do warm leads really convert better than cold ones?",
+      a: "Yes. Warm leads close around 14.6% versus 1.7% for cold, roughly 8.5x better, while cold email gets only about a 4.1% response rate, so close to 95% goes unanswered.",
+    },
+    {
+      q: "Is it expensive to extract LinkedIn post engagers?",
+      a: "It does not have to be. Doing it by hand is free but slow (about 3 hours per 50 leads), and an enterprise stack like Phantombuster plus Apollo plus Clay runs over $500 a month. Guffles does it in one tool at $79 a month with $150 in free credit to start.",
+    },
   ],
   relatedPosts: [
     { slug: "warm-vs-cold-outreach-data-breakdown", title: "Warm vs Cold Outreach Results: 2025 Data Breakdown" },
@@ -171,6 +186,8 @@ export const metadata = buildPostMetadata(post);
   alt="Bar chart comparing warm lead close rate of 14.6% versus cold lead close rate of 1.7%"
   caption="Warm leads convert 8.5x better than cold leads (Source: Search Engine Journal, 2024)"
 />
+
+<FAQ items={post.faq} />
 
 <div id="cta">
   <SectionTitle

@@ -20,7 +20,7 @@ import Link from "next/link";
 import { Target, Sparkles } from "lucide-react";
 import { BlogPostLayout } from "@/components/blog/BlogPostLayout";
 import { buildPostMetadata } from "@/lib/blog/metadata";
-import { Stat, Callout, TLDR, SectionTitle, ArticleImage, BlogCTA } from "@/components/blog/blocks";
+import { Stat, Callout, TLDR, SectionTitle, ArticleImage, BlogCTA, FAQ } from "@/components/blog/blocks";
 
 export const post = {
   slug: "find-warm-leads-social-engagement-signals",
@@ -38,7 +38,26 @@ export const post = {
     { id: "section-3", label: "3) 5 LinkedIn Signals" },
     { id: "section-4", label: "4) How to Track Signals" },
     { id: "section-5", label: "5) Outreach Best Practices" },
+    { id: "faq", label: "FAQ" },
     { id: "cta", label: "Start Finding Warm Leads" },
+  ],
+  faq: [
+    {
+      q: "What are social engagement signals?",
+      a: "They are the public actions people take on social platforms, like likes, comments, shares, and questions. Each one hints at what a person cares about and what problem they are dealing with, which makes them free intent data on LinkedIn.",
+    },
+    {
+      q: "Which LinkedIn engagement signals show buyer intent?",
+      a: "The five strongest are comments on pain-point posts, likes on competitor content, shares of industry insights, questions asked in groups or discussions, and engagement with hiring or growth posts.",
+    },
+    {
+      q: "How many posts can I track for engagement manually?",
+      a: "Realistically 5 to 10 a week before it turns into a full-time job. To monitor hundreds of posts you need automation.",
+    },
+    {
+      q: "What is a good response rate for warm LinkedIn outreach?",
+      a: "Warm outreach can reach response rates as high as 45%, compared with 1% to 5% for cold outreach, because the person already engaged with the topic and you reach out with that context.",
+    },
   ],
   relatedPosts: [
     { slug: "warm-vs-cold-outreach-data-breakdown", title: "Warm vs Cold Outreach Results: 2025 Data Breakdown" },
@@ -184,6 +203,8 @@ export const metadata = buildPostMetadata(post);
     alt="Comparison chart showing warm lead vs cold lead conversion rates"
     caption="Warm leads convert at 14.6% vs 1.7% for cold leads - nearly 10x better"
 />
+
+<FAQ items={post.faq} />
 
 <div id="cta">
     <SectionTitle

@@ -7,6 +7,11 @@
   now come from <BlogPostLayout> + lib/blog/*. This file only declares the
   `post` data object (single source of truth) and the article body.
   See docs/BLOG_SEO_CHECKLIST.md.
+
+  2026-06-20: Humanizing pass + added FAQ. Replaced curly quotes and en/em dashes
+  with straight quotes and plain punctuation (the clearest AI tells), tightened the
+  voice, and added a `faq` array -> visible FAQ section + FAQPage schema. Stats,
+  links, the 15-tip structure, and the title are unchanged.
   ============================================================================
 */}
 
@@ -14,13 +19,13 @@ import Link from "next/link";
 import { Target, Sparkles } from "lucide-react";
 import { BlogPostLayout } from "@/components/blog/BlogPostLayout";
 import { buildPostMetadata } from "@/lib/blog/metadata";
-import { Stat, Callout, TLDR, SectionTitle, BlogCTA } from "@/components/blog/blocks";
+import { Stat, Callout, TLDR, SectionTitle, BlogCTA, FAQ } from "@/components/blog/blocks";
 
 export const post = {
   slug: "15-linkedin-lead-generation-tips",
   title: "15 LinkedIn Lead Generation Tips You Can Use Today",
   description:
-    "Practical, human LinkedIn lead-gen plays for SMB marketers—turn posts and comments into booked calls without spamming.",
+    "Practical, human LinkedIn lead-gen plays for SMB marketers: turn posts and comments into booked calls without spamming.",
   category: "Strategy",
   publishedAt: "2025-12-08",
   updatedAt: "2026-06-20",
@@ -42,7 +47,26 @@ export const post = {
     { id: "live-teardown", label: "13) Host live teardowns" },
     { id: "multichannel", label: "14) Multichannel nudge" },
     { id: "measure", label: "15) Measure & adjust" },
+    { id: "faq", label: "FAQ" },
     { id: "cta", label: "Turn engagement into pipeline" },
+  ],
+  faq: [
+    {
+      q: "How do I generate leads on LinkedIn without paid ads?",
+      a: "Post consistently about a specific pain, comment every day where your buyers already are, capture everyone who engages, and DM with context tied to what they said. The 15 tips here turn that into a repeatable weekly routine.",
+    },
+    {
+      q: "What reply rate can I expect on LinkedIn DMs versus cold email?",
+      a: "Warm, contextual LinkedIn DMs land around 12% to 18%, versus roughly 1% for generic cold email, and you tend to reach a first meeting 2 to 3 times faster when you act on fresh engagement.",
+    },
+    {
+      q: "How often should I post on LinkedIn for lead generation?",
+      a: "One dependable weekly signal post beats five random ones. Call out a specific pain, give a short fix, and invite a reply. Add a monthly LinkedIn Article and a group post to widen your reach.",
+    },
+    {
+      q: "How quickly should I follow up after someone engages?",
+      a: "While the intent is still hot. Capture the commenter or reactor the moment they engage and reach out with context instead of letting it scroll away. For Lead Gen Form fills, follow up within 24 hours.",
+    },
   ],
   relatedPosts: [
     { slug: "linkedin-engagement-leads", title: "Your Next 50 Leads Are Already in the LinkedIn Comments" },
@@ -56,106 +80,106 @@ export const metadata = buildPostMetadata(post);
 <BlogPostLayout post={post}>
 
 <TLDR>
-  <strong>The gist:</strong> Cold email reply rates hover at ~1%. These 15 LinkedIn moves help small teams capture intent that’s already in the open—comments, reactions, and posts—then turn it into warm, contextual outreach.
+  Cold email reply rates hover around 1%. These 15 LinkedIn moves help small teams catch the intent that's already out in the open (comments, reactions, posts) and turn it into warm, contextual outreach.
 </TLDR>
 
 <div className="lead text-xl md:text-2xl text-foreground font-medium mb-8 leading-relaxed">
-  LinkedIn is where your buyers say what they need in public. The trick is catching those signals quickly and responding like a human—not an auto-sender.
+  LinkedIn is where your buyers say what they need out loud. The trick is catching those signals fast and replying like a human, not an auto-sender.
 </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 not-prose my-10">
-  <Stat label="Reply Rate" value="12–18%" sub="Warm LinkedIn DMs" />
+  <Stat label="Reply Rate" value="12-18%" sub="Warm LinkedIn DMs" />
   <Stat label="Reply Rate" value="~1%" sub="Generic cold email" />
-  <Stat label="Time to first meeting" value="2–3x faster" sub="When you act on fresh engagement" />
+  <Stat label="Time to first meeting" value="2-3x faster" sub="When you act on fresh engagement" />
 </div>
 
 <div id="optimize-profile">
   <SectionTitle title="1) Tighten your buyer line">
-    State who you help, with what, and the outcome. One line beats jargon. Example: “We turn LinkedIn post engagement into booked calls for B2B teams.”
+    State who you help, with what, and the result. One plain line beats jargon. For example: "We turn LinkedIn post engagement into booked calls for B2B teams."
   </SectionTitle>
 </div>
 
 <div id="pinned-post">
   <SectionTitle title="2) Pin a post that sells softly">
-    Share a mini case win and invite people to comment “playbook” for the resource. Your pinned post becomes a steady, low-friction lead magnet.
+    Share a small case win and invite people to comment "playbook" for the resource. Your pinned post turns into a steady, low-friction lead magnet.
   </SectionTitle>
 </div>
 
 <div id="signal-post">
   <SectionTitle title="3) Ship a weekly signal post">
-    Call out a specific pain (e.g., “reply rates stuck at 1%”), add a 3-step fix, and end with “DM me ‘signals’ for the checklist.” One dependable post beats five random ones.
+    Call out a specific pain (say, "reply rates stuck at 1%"), add a three-step fix, and end with "DM me 'signals' for the checklist." One dependable post beats five random ones.
   </SectionTitle>
 </div>
 
 <div id="comment-first">
   <SectionTitle title="4) Comment-first, post-second">
-    Spend 15 minutes daily commenting on big creators your ICP follows. Add one crisp insight or datapoint—comments ride their reach and earn profile clicks from the right buyers.
+    Spend 15 minutes a day commenting on the big creators your ICP follows. Add one crisp insight or datapoint. Your comments ride their reach and earn profile clicks from the right buyers.
   </SectionTitle>
 </div>
 
 <div id="personalize-requests">
   <SectionTitle title="5) Personalize connection requests">
-    Reference something real (“Saw your post on SDR ramp times—loved the ramp-to-first-meeting metric.”). Skip pitching. You’re building a door, not forcing it.
+    Reference something real ("Saw your post on SDR ramp times, loved the ramp-to-first-meeting metric."). Skip the pitch. You're building a door, not forcing one.
   </SectionTitle>
 </div>
 
 <div id="capture-engagement">
   <SectionTitle title="6) Capture every engager">
-    Every comment on a relevant post is intent. Capture names, roles, and context before it scrolls away. If you’re posting, <Link href="/signup">Guffles</Link> can auto-pull commenters and reactors into a clean list so you don’t lose the moment.
+    Every comment on a relevant post is intent. Capture names, roles, and context before it scrolls away. If you're posting, <Link href="/signup">Guffles</Link> can auto-pull commenters and reactors into a clean list so you don't lose the moment.
   </SectionTitle>
 </div>
 
 <div id="dm-context">
   <SectionTitle title="7) DM with context, not scripts">
-    Lead with why you’re reaching out, anchor to their comment, and offer a tiny next step (a 90-second loom, a checklist, a one-liner fix). No walls of text.
+    Lead with why you're reaching out, anchor to their comment, and offer a tiny next step: a 90-second Loom, a checklist, a one-line fix. Skip the wall of text.
   </SectionTitle>
 </div>
 
 <div id="value-assets">
   <SectionTitle title="8) Rotate 3 value assets">
-    Keep three ready: a checklist, a mini case, and a 2–3 slide teardown. Swap based on the prospect’s role and pain. Assets beat adjectives.
+    Keep three ready: a checklist, a mini case study, and a two or three slide teardown. Swap them based on the prospect's role and pain. Assets beat adjectives.
   </SectionTitle>
 </div>
 
 <div id="navigator-filters">
   <SectionTitle title="9) Use Sales Navigator filters that actually matter">
-    Filter by job title + company size + industry + “posted on LinkedIn in 30 days.” Active posters reply faster. Save 3–5 searches and work them weekly.
+    Filter by job title, company size, industry, and "posted on LinkedIn in the last 30 days." Active posters reply faster. Save three to five searches and work them weekly.
   </SectionTitle>
 </div>
 
 <div id="groups">
-  <SectionTitle title="10) Join 3–5 relevant groups (and post)">
-    Drop one useful post per week in groups your ICP reads. End with a question that invites replies (“What’s your best opener this quarter?”).
+  <SectionTitle title="10) Join 3-5 relevant groups (and post)">
+    Drop one useful post a week into the groups your ICP actually reads. End with a question that invites replies ("What's your best opener this quarter?").
   </SectionTitle>
 </div>
 
 <div id="articles">
   <SectionTitle title="11) Publish one LinkedIn Article per month">
-    Repurpose a strong post thread into an article, add a single CTA block (“Comment ‘checklist’”), and let Articles rank in LinkedIn search.
+    Repurpose a strong post or thread into an article, add a single CTA block ("Comment 'checklist'"), and let Articles rank in LinkedIn search.
   </SectionTitle>
 </div>
 
 <div id="lead-gen-forms">
   <SectionTitle title="12) Use Lead Gen Forms sparingly, but smartly">
-    For webinars or downloads, forms reduce friction. Follow up within 24 hours referencing what they grabbed to keep response rates high.
+    For webinars or downloads, forms cut friction. Follow up within 24 hours referencing what they grabbed, and your response rates stay high.
   </SectionTitle>
 </div>
 
 <div id="live-teardown">
   <SectionTitle title="13) Host a 30-minute live teardown">
-    Teardown a prospect’s profile or outbound message live. It’s interactive, shows expertise, and gives you a natural follow-up (“Here’s your before/after doc.”).
+    Tear down a prospect's profile or outbound message live. It's interactive, it shows expertise, and it hands you a natural follow-up ("Here's your before/after doc").
   </SectionTitle>
 </div>
 
 <div id="multichannel">
   <SectionTitle title="14) Multichannel nudge">
-    After a meaningful LinkedIn touch, send a short email referencing that touch. Keep it under 80 words and specific (“We traded comments on Jamie’s post about intent signals…”).
+    After a meaningful LinkedIn touch, send a short email that references it. Keep it under 80 words and specific ("We traded comments on Jamie's post about intent signals...").
   </SectionTitle>
 </div>
 
 <div id="measure">
   <SectionTitle title="15) Measure weekly, adjust monthly">
-    Track connection accept %, reply %, meetings booked, and post saves/comments from ICPs. Trim what isn’t moving replies or meetings. Small teams win by editing fast.
+    Track connection-accept rate, reply rate, meetings booked, and saves/comments from your ICP. Cut whatever isn't moving replies or meetings. Small teams win by editing fast.
   </SectionTitle>
 </div>
 
@@ -170,13 +194,15 @@ export const metadata = buildPostMetadata(post);
   </ul>
 </div>
 
+<FAQ items={post.faq} />
+
 <div id="cta">
   <SectionTitle eyebrow="Where the leads part gets easier" title="Turn engagement into pipeline while intent is hot">
-    If you're already posting, the fastest win is capturing who engages the moment they do. <Link href="/signup">Guffles</Link> can pull commenters/reactors into a tidy list and pair them with your outreach snippets—so you spend time on conversations, not copy/pasting names.
+    If you're already posting, the fastest win is capturing who engages the moment they do. <Link href="/signup">Guffles</Link> can pull commenters and reactors into a tidy list and pair them with your outreach snippets, so you spend your time on conversations instead of copy-pasting names.
   </SectionTitle>
 
   <Callout title="Ready to try it?" icon={<Target className="w-5 h-5 text-primary" />}>
-    Start capturing leads from your LinkedIn posts today. Paste any post URL, and we'll extract every commenter and reactor into a clean, exportable list—complete with their job titles and companies. No more manual copy-pasting.
+    Start capturing leads from your LinkedIn posts today. Paste any post URL and we'll pull every commenter and reactor into a clean, exportable list, complete with job titles and companies. No more manual copy-pasting.
   </Callout>
 </div>
 
